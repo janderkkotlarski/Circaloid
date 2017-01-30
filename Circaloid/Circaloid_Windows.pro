@@ -4,7 +4,8 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp \
-    simulation.cpp
+    simulation.cpp \
+    circloid.cpp
 
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra
 
