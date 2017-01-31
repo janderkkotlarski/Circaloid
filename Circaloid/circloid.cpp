@@ -2,7 +2,7 @@
 
 Circloid::Circloid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf::Vector2f &speed,
                    const float radius, const sf::Color &color, const int div, const float frame)
-    : m_windims(windims), m_speed(speed), m_circle(), m_div(div), m_frame(frame),
+    : m_windims(windims), m_speed(speed), m_circle(), m_mircle(), m_div(div), m_frame(frame),
       m_subframe(frame/static_cast<float>(div))
 {
     assert(windims.x > 0.0f);
