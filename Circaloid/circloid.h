@@ -17,6 +17,8 @@ class Circloid
 
     const float m_frame;
 
+    const float m_subframe;
+
 public:
 
     Circloid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf::Vector2f &speed,
@@ -24,8 +26,14 @@ public:
 
     void move();
 
+    void check_border();
+
     void display(sf::RenderWindow &window);
 
 };
+
+float squr(const float scalar);
+
+float vectralize(const sf::Vector2f &vectol);
 
 #endif // CIRCLOID_H
