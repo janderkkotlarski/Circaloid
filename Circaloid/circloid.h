@@ -13,11 +13,15 @@ class Circloid
 
     sf::CircleShape m_circle;
 
+    sf::CircleShape m_mircle;
+
     const int m_div;
 
     const float m_frame;
 
     const float m_subframe;
+
+    void set_circle(const float radius, const sf::Vector2f &posit, const sf::Color &color);
 
 public:
 

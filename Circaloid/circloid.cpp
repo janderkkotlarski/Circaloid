@@ -23,6 +23,11 @@ Circloid::Circloid(const sf::Vector2f &windims, const sf::Vector2f &posit, const
     m_circle.setFillColor(color);
 }
 
+void Circloid::set_circle(const float radius, const sf::Vector2f &posit, const sf::Color &color)
+{
+
+}
+
 void Circloid::move()
 {
     m_circle.move(m_frame*m_speed);
