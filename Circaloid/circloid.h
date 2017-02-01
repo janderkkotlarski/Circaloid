@@ -47,6 +47,6 @@ float squr(const float scalar);
 
 float vectralize(const sf::Vector2f &vectol);
 
-sf::Vector2f mirrorize(const float boundary, const sf::Vector2f &posit);
+sf::Vector2f mirrorize(const float boundary, const sf::Vector2f &posit, const sf::Vector2f &speed);
 
 #endif // CIRCLOID_H

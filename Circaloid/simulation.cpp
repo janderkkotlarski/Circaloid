@@ -20,7 +20,11 @@ void Simulation::run()
 {
     const sf::Color circolor{127, 127, 63};
 
-    Circloid circle{m_windims, 0.0f*m_windims, 0.01f*m_windims, 0.02f*m_windims.x, circolor, 100, m_frame};
+    const sf::Vector2f posit{0.0f*m_windims};
+    const sf::Vector2f speed{0.05f*m_windims.x, 0.03f*m_windims.y};
+    const float radius{0.02f*m_windims.x};
+
+    Circloid circle{m_windims, posit, speed, radius, circolor, 100, m_frame};
 
     while (m_window.isOpen())
     {
