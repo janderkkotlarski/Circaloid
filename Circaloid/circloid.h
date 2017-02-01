@@ -1,7 +1,9 @@
 #ifndef CIRCLOID_H
 #define CIRCLOID_H
 
+#include <iostream>
 #include <cassert>
+#include <cmath>
 
 #include "SFML/Graphics.hpp"
 
@@ -9,11 +11,15 @@ class Circloid
 {
     const sf::Vector2f m_windims;
 
+    const float m_boundary;
+
     sf::Vector2f m_speed;
 
     sf::CircleShape m_circle;
 
     sf::CircleShape m_mircle;
+
+    sf::CircleShape m_bircle;
 
     const int m_div;
 
@@ -21,7 +27,7 @@ class Circloid
 
     const float m_subframe;
 
-    void set_circle(const float radius, const sf::Vector2f &posit, const sf::Color &color);
+    void check_border();
 
 public:
 
@@ -30,14 +36,17 @@ public:
 
     void move();
 
-    void check_border();
-
     void display(sf::RenderWindow &window);
 
 };
 
+void set_circle(const float radius, const sf::Vector2f &posit, const sf::Color &color,
+                sf::CircleShape &circle);
+
 float squr(const float scalar);
 
 float vectralize(const sf::Vector2f &vectol);
+
+sf::Vector2f mirrorize(const float boundary, const sf::Vector2f &posit);
 
 #endif // CIRCLOID_H

@@ -18,7 +18,7 @@ Simulation::Simulation()
 
 void Simulation::run()
 {
-    const sf::Color circolor{191, 127, 63};
+    const sf::Color circolor{127, 127, 63};
 
     Circloid circle{m_windims, 0.0f*m_windims, 0.01f*m_windims, 0.02f*m_windims.x, circolor, 100, m_frame};
 
