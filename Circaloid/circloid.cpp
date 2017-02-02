@@ -31,6 +31,8 @@ Circloid::Circloid(const sf::Vector2f &windims, const sf::Vector2f &posit, const
         m_keypressed.push_back(false);
     }
 
+    assert(m_keys.size() == m_keypressed.size());
+
     set_circle(radius, posit, color, m_circle);
     set_circle(radius, mirrorize(m_boundary, m_circle.getPosition(), m_speed), sf::Color(63, 127, 191), m_mircle);
 
@@ -51,8 +53,33 @@ void Circloid::check_border()
     }
 }
 
+void Circloid::check_keys()
+{
+    const int aleph{static_cast<int>('a')};
+
+    sf::Event event;
+
+
+
+    if (sf::Event::KeyPressed)
+    {
+        std::cout << sf::Keyboard::Escape << "\n";
+
+        for (unsigned count{0}; count < m_keys.size(); ++count)
+        {
+            if (event.key.code == (static_cast<int>(m_keys[count]) - aleph))
+            {
+                std::cout << static_cast<int>(m_keys[count] - aleph) << "\n";
+            }
+        }
+    }
+
+}
+
 void Circloid::move()
 {
+    check_keys();
+
     m_circle.move(m_subframe*m_speed);
 
     check_border();
