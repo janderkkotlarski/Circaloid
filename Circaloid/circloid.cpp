@@ -44,7 +44,7 @@ void Circloid::check_border()
 
 void Circloid::move()
 {
-    m_circle.move(m_frame*m_speed);
+    m_circle.move(m_subframe*m_speed);
 
     check_border();
 
