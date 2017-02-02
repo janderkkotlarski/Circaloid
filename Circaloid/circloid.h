@@ -27,12 +27,16 @@ class Circloid
 
     const float m_subframe;
 
+    std::vector <char> m_keys;
+
+    std::vector <bool> m_keypressed;
+
     void check_border();
 
 public:
 
     Circloid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf::Vector2f &speed,
-             const float radius, const sf::Color &color, const int div, const float frame);
+             const float radius, const sf::Color &color, const int div, const float frame, const std::vector<char> &keys);
 
     void move();
 

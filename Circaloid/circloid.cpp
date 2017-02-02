@@ -1,9 +1,11 @@
 #include "circloid.h"
 
 Circloid::Circloid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf::Vector2f &speed,
-                   const float radius, const sf::Color &color, const int div, const float frame)
+                   const float radius, const sf::Color &color, const int div, const float frame,
+                   const std::vector <char> &keys)
     : m_windims(windims), m_boundary(0.05f*windims.x), m_speed(speed), m_circle(), m_mircle(), m_bircle(),
-      m_div(div), m_frame(frame), m_subframe(frame/static_cast<float>(div))
+      m_div(div), m_frame(frame), m_subframe(frame/static_cast<float>(div)), m_keys(keys),
+      m_keypressed()
 {
     // std::cout << windims.x << "\n";
     assert(windims.x > 0.0f);
@@ -21,6 +23,13 @@ Circloid::Circloid(const sf::Vector2f &windims, const sf::Vector2f &posit, const
 
     assert(m_div > 0);
     assert(m_frame > 0.0f);
+
+    assert(m_keys.size() > 0);
+
+    for (unsigned count{0}; count < m_keys.size(); ++count)
+    {
+        m_keypressed.push_back(false);
+    }
 
     set_circle(radius, posit, color, m_circle);
     set_circle(radius, mirrorize(m_boundary, m_circle.getPosition(), m_speed), sf::Color(63, 127, 191), m_mircle);
