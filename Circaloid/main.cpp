@@ -6,5 +6,10 @@ int main()
 
     simul.run();
 
+    // Simulation simula;
+
+    // simula.run();
+
+
     return 0;
 }

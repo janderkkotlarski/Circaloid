@@ -2,7 +2,7 @@
 
 Circloid::Circloid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf::Vector2f &speed,
                    const float radius, const sf::Color &color, const int div, const float frame,
-                   const std::vector <char> &keys)
+                   const std::vector <sf::Keyboard::Key> &keys)
     : m_windims(windims), m_boundary(0.05f*windims.x), m_speed(speed), m_circle(), m_mircle(), m_bircle(),
       m_div(div), m_frame(frame), m_subframe(frame/static_cast<float>(div)), m_keys(keys),
       m_keypressed()
@@ -16,8 +16,7 @@ Circloid::Circloid(const sf::Vector2f &windims, const sf::Vector2f &posit, const
     assert(posit.y <= windims.y);
     assert(radius >= 0.0f);
 
-    // std::cout << radius << "\n";
-    // std::cout << m_windims.x << "\n";
+
     assert(radius <= 0.5f*windims.x);
     assert(radius <= 0.5f*windims.y);
 
@@ -55,25 +54,10 @@ void Circloid::check_border()
 
 void Circloid::check_keys()
 {
-    const int aleph{static_cast<int>('a')};
-
-    sf::Event event;
-
-
-
-    if (sf::Event::KeyPressed)
+    for (sf::Keyboard::Key key: m_keys)
     {
-        std::cout << sf::Keyboard::Escape << "\n";
 
-        for (unsigned count{0}; count < m_keys.size(); ++count)
-        {
-            if (event.key.code == (static_cast<int>(m_keys[count]) - aleph))
-            {
-                std::cout << static_cast<int>(m_keys[count] - aleph) << "\n";
-            }
-        }
     }
-
 }
 
 void Circloid::move()

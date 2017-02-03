@@ -27,7 +27,7 @@ class Circloid
 
     const float m_subframe;
 
-    const std::vector <char> m_keys;
+    const std::vector <sf::Keyboard::Key> m_keys;
 
     std::vector <bool> m_keypressed;
 
@@ -36,7 +36,8 @@ class Circloid
 public:
 
     Circloid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf::Vector2f &speed,
-             const float radius, const sf::Color &color, const int div, const float frame, const std::vector<char> &keys);
+             const float radius, const sf::Color &color, const int div, const float frame,
+             const std::vector<sf::Keyboard::Key> &keys);
 
     void check_keys();
 

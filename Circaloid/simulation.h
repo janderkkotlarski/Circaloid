@@ -27,4 +27,6 @@ public:
     void run();
 };
 
+std::vector <sf::Keyboard::Key> chars2keys(const std::vector <char> &charas);
+
 #endif // SIMULATION_H

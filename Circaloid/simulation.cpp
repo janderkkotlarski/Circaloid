@@ -24,7 +24,9 @@ void Simulation::run()
     const sf::Vector2f speed{0.05f*m_windims.x, 0.03f*m_windims.y};
     const float radius{0.02f*m_windims.x};
 
-    const std::vector <char> keys{'w', 's', 'd', 'a'};
+    const std::vector <char> charas{'w', 's', 'd', 'a'};
+
+    const std::vector <sf::Keyboard::Key> keys{chars2keys(charas)};
 
     Circloid circle{m_windims, posit, speed, radius, circolor, 100, m_frame, keys};
 
@@ -58,4 +60,21 @@ void Simulation::run()
             time = clock.getElapsedTime();
         }
     }
+}
+
+std::vector <sf::Keyboard::Key> chars2keys(const std::vector <char> &charas)
+{
+    assert(charas.size() > 0);
+    const char aleph{'a'};
+
+    std::vector <sf::Keyboard::Key> keys;
+
+    for (char chara : charas)
+    {
+        keys.push_back(static_cast<sf::Keyboard::Key>(chara - aleph));
+
+        std::cout << chara - aleph << "\n";
+    }
+
+    return keys;
 }
