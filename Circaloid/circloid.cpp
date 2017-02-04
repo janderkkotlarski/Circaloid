@@ -7,7 +7,6 @@ Circloid::Circloid(const sf::Vector2f &windims, const sf::Vector2f &posit, const
       m_div(div), m_frame(frame), m_subframe(frame/static_cast<float>(div)), m_keys(keys),
       m_keypressed()
 {
-    // std::cout << windims.x << "\n";
     assert(windims.x > 0.0f);
     assert(windims.y > 0.0f);
     assert(posit.x >= 0.0f);
@@ -15,7 +14,6 @@ Circloid::Circloid(const sf::Vector2f &windims, const sf::Vector2f &posit, const
     assert(posit.x <= windims.x);
     assert(posit.y <= windims.y);
     assert(radius >= 0.0f);
-
 
     assert(radius <= 0.5f*windims.x);
     assert(radius <= 0.5f*windims.y);
@@ -25,7 +23,7 @@ Circloid::Circloid(const sf::Vector2f &windims, const sf::Vector2f &posit, const
 
     assert(m_keys.size() > 0);
 
-    for (unsigned count{0}; count < m_keys.size(); ++count)
+    for (int count{0}; count < static_cast<int>(m_keys.size()); ++count)
     {
         m_keypressed.push_back(false);
     }
@@ -35,8 +33,6 @@ Circloid::Circloid(const sf::Vector2f &windims, const sf::Vector2f &posit, const
     set_circle(radius, posit, color, m_circle);
     set_circle(radius, mirrorize(m_boundary, m_circle.getPosition(), m_speed), sf::Color(63, 127, 191), m_mircle);
 
-
-
     set_circle(m_boundary, posit, sf::Color(191, 191, 191), m_bircle);
 }
 
@@ -44,19 +40,24 @@ void Circloid::check_border()
 {
     if (vectralize(m_circle.getPosition()) > squr(m_boundary))
     {
-        std::cout << vectralize(m_circle.getPosition()) << "\n";
-        std::cout << squr(m_boundary) << "\n";
-
         m_circle.setPosition(mirrorize(m_boundary, m_circle.getPosition(), m_speed));
-
     }
 }
 
 void Circloid::check_keys()
 {
-    for (sf::Keyboard::Key key: m_keys)
-    {
+    sf::Event event;
 
+    for (int count{0}; count < static_cast<int>(m_keys.size()); ++count)
+    {
+        if (sf::Keyboard::isKeyPressed(m_keys[count]))
+        {
+            m_keypressed[count] = true;
+        }
+        else
+        {
+            m_keypressed[count] = false;
+        }
     }
 }
 
@@ -73,7 +74,24 @@ void Circloid::move()
 
 void Circloid::display(sf::RenderWindow &window)
 {
-    window.draw(m_bircle);
+    bool fulland{true};
+
+    for (int count{0}; count < static_cast<int>(m_keypressed.size()); ++count)
+    {
+        std::cout << fulland << "\n";
+        std::cout << m_keypressed[count] << "\n";
+
+        fulland = fulland && m_keypressed[count];
+
+        std::cout << fulland << "\n";
+        std::cout << "\n";
+    }
+
+    if (fulland)
+    {
+        window.draw(m_bircle);
+    }
+
     window.draw(m_circle);
     window.draw(m_mircle);
 }
@@ -99,13 +117,10 @@ float vectralize(const sf::Vector2f &vectol)
 
 sf::Vector2f mirrorize(const float boundary, const sf::Vector2f &posit, const sf::Vector2f &speed)
 {
-    // return (1.0f - 2.0f*boundary/std::sqrt(vectralize(posit)))*posit;
-
     if (vectralize(posit) == 0.0f)
     {
         return (1.0f - 2.0f*boundary/std::sqrt(vectralize(speed)))*speed;
     }
-
 
     return (1.0f - 2.0f*boundary/std::sqrt(vectralize(posit)))*posit;
 }
