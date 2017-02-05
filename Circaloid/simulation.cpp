@@ -24,9 +24,9 @@ void Simulation::run()
     const sf::Vector2f posit{0.0f*m_windims};
     const sf::Vector2f speed{0.0f*m_windims.x, 0.0f*m_windims.y};
 
-    const float light{0.03f*m_windims.x};
+    const float light{0.02f*m_windims.x};
 
-    const float accel{0.0001f*m_windims.x};
+    const float accel{0.00001f*m_windims.x};
     const float pheta{0.01f*M_PI};
 
     const float radius{0.02f*m_windims.x};
@@ -37,11 +37,22 @@ void Simulation::run()
 
     const std::vector <sf::Keyboard::Key> keys{chars2keys(charas)};
 
+    const std::string filename{"Frame.png"};
 
+    sf::Texture texture;
 
-    sf::Texture frame;
+    if (!texture.loadFromFile(filename))
+    {
+        std::cerr << "Failed to load " << filename << "\n";
+    }
 
+    texture.setSmooth(true);
 
+    sf::Sprite sprite;
+
+    sprite.setTexture(texture);
+    sprite.setOrigin(0.5f*m_windims);
+    sprite.setPosition(0.0f*m_windims);
 
     Circloid circle{m_windims, posit, speed, light, accel, pheta, radius, points, circolor, m_div, m_frame, keys};
 
@@ -65,6 +76,8 @@ void Simulation::run()
         circle.move();
 
         circle.display(m_window);
+
+        m_window.draw(sprite);
 
         m_window.display();
 

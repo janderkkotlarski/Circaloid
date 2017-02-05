@@ -3,8 +3,9 @@
 Circloid::Circloid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf::Vector2f &speed, const float light,
                    const float accel, const float pheta, const float radius, const int points, const sf::Color &color,
                    const int div, const float frame, const std::vector <sf::Keyboard::Key> &keys)
-    : m_windims(windims), m_boundary(0.25f*windims.x), m_speed(speed), m_light(squr(light)), m_relative(1.0f), m_accel(accel), m_pheta(pheta),
-      m_circle(), m_mircle(), m_bircle(), m_div(div), m_frame(frame), m_subframe(frame/static_cast<float>(div)),
+    : m_windims(windims), m_boundary(0.5f*windims.x), m_speed(speed), m_light(squr(light)), m_relative(1.0f),
+      m_accel(accel), m_pheta(pheta), m_quinergy(1.0f), m_questore(0.02f), m_quove(-0.02f), m_circle(), m_mircle(), m_bircle(),
+      m_div(div), m_frame(frame), m_subframe(frame/static_cast<float>(div)),
       m_keys(keys), m_keypressed()
 {
     assert(windims.x > 0.0f);
@@ -33,23 +34,24 @@ Circloid::Circloid(const sf::Vector2f &windims, const sf::Vector2f &posit, const
     assert(m_keys.size() == m_keypressed.size());
 
     set_circle(radius, posit, points, color, m_circle);
-    set_circle(radius, mirrorize(m_boundary, m_circle.getPosition(), m_speed), points, sf::Color(63, 127, 191), m_mircle);
+    set_circle(radius, mirrorize(m_boundary, m_circle.getPosition(), m_speed), points, color, m_mircle);
 
     set_circle(m_boundary, posit, 100, sf::Color(191, 191, 191), m_bircle);
 }
 
 void Circloid::relativate()
 {
+    const float minim{0.25f};
+
     if (vectralize(m_speed) < squr(m_light))
     {
-        m_relative = sqrt(1 - vectralize(m_speed)/squr(m_light));
-    }
-    else
-    {
-        m_relative = 0.0f;
+        m_relative = (1.0f - minim)*sqrt(1 - vectralize(m_speed)/squr(m_light)) + minim;
     }
 
-    m_relative += 0.001f;
+    if (m_relative < minim)
+    {
+        m_relative = minim;
+    }
 }
 
 void Circloid::accelerate()
@@ -59,17 +61,30 @@ void Circloid::accelerate()
         const float divide{M_PI/180};
 
         const sf::Vector2f accer{m_relative*m_accel*sf::Vector2f(std::sin(divide*m_circle.getRotation()),
-                                                               -std::cos(divide*m_circle.getRotation()))};
+                                                                 -std::cos(divide*m_circle.getRotation()))};
 
-        m_speed += accer;
+        if (m_keypressed[0])
+        {
+            m_speed += accer;
+
+            m_quinergy += m_subframe*m_quove;
+        }
 
         if (m_keypressed[1])
         {
-            m_speed -= 2.0f*accer;
+            m_speed -= accer;
+
+            m_quinergy += m_subframe*m_quove;
         }
     }
+}
 
-
+void Circloid::ceiling()
+{
+    if (vectralize(m_speed) > squr(m_light))
+    {
+        m_speed *= m_light/std::sqrt(vectralize(m_speed));
+    }
 }
 
 void Circloid::rotate()
@@ -78,12 +93,32 @@ void Circloid::rotate()
     {
         m_circle.rotate(m_relative*m_pheta);
         m_mircle.rotate(m_relative*m_pheta);
+
+        m_quinergy += m_subframe*m_quove;
     }
 
     if (m_keypressed[3])
     {
         m_circle.rotate(-m_relative*m_pheta);
         m_mircle.rotate(-m_relative*m_pheta);
+
+        m_quinergy += m_subframe*m_quove;
+    }
+}
+
+void Circloid::scale_radius()
+{
+    m_circle.setScale(m_quinergy, m_quinergy);
+    m_mircle.setScale(m_quinergy, m_quinergy);
+}
+
+void Circloid::quinergy_restore()
+{
+    m_quinergy += m_subframe*m_questore;
+
+    if (m_quinergy > 1.0f)
+    {
+        m_quinergy = 1.0f;
     }
 }
 
@@ -126,13 +161,14 @@ void Circloid::move()
         relativate();
         rotate();
         accelerate();
+        ceiling();
+        quinergy_restore();
+        scale_radius();
     }
 }
 
 void Circloid::display(sf::RenderWindow &window)
 {
-    window.draw(m_bircle);
-
     window.draw(m_circle);
 
     if (vectralize(m_mircle.getPosition()) < squr(m_boundary + m_mircle.getRadius()))

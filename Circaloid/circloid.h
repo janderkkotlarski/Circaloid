@@ -22,6 +22,11 @@ class Circloid
 
     const float m_pheta;
 
+    float m_quinergy;
+
+    const float m_questore;
+    const float m_quove;
+
     sf::CircleShape m_circle;
     sf::CircleShape m_mircle;
 
@@ -38,13 +43,17 @@ class Circloid
     std::vector <bool> m_keypressed;
 
     void relativate();
-
     void accelerate();
+
+    void ceiling();
 
     void rotate();
 
-    void check_border();
+    void scale_radius();
 
+    void quinergy_restore();
+
+    void check_border();
 
 
 public:
