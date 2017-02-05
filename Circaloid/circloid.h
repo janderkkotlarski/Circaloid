@@ -27,10 +27,11 @@ class Circloid
     const float m_questore;
     const float m_quove;
 
-    sf::CircleShape m_circle;
-    sf::CircleShape m_mircle;
+    sf::Texture m_texture;
 
-    sf::CircleShape m_bircle;
+    sf::Sprite m_sprite;
+    sf::Sprite m_smite;
+
 
     const int m_div;
 
@@ -59,8 +60,8 @@ class Circloid
 public:
 
     Circloid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf::Vector2f &speed, const float light,
-             const float accel, const float pheta, const float radius, const int points, const sf::Color &color,
-             const int div, const float frame, const std::vector<sf::Keyboard::Key> &keys);
+             const float accel, const float pheta, const std::__cxx11::string &image_name, const int div,
+             const float frame, const std::vector<sf::Keyboard::Key> &keys);
 
     void check_keys();
 
@@ -70,12 +71,11 @@ public:
 
 };
 
-void set_circle(const float radius, const sf::Vector2f &posit, const int points,
-                const sf::Color &color, sf::CircleShape &circle);
+void set_sprite(const sf::Vector2f &posit, sf::Sprite &sprite);
 
-float squr(const float scalar);
+float squr(const float scalar) noexcept;
 
-float vectralize(const sf::Vector2f &vectol);
+float vectralize(const sf::Vector2f &vectol) noexcept;
 
 sf::Vector2f mirrorize(const float boundary, const sf::Vector2f &posit, const sf::Vector2f &speed);
 
