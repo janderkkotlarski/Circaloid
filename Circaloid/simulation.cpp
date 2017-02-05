@@ -4,7 +4,8 @@
 Simulation::Simulation()
     : m_winame("Circaloid"), m_windims(600.0f, 600.0f),
       m_window(sf::VideoMode(m_windims.x, m_windims.y), m_winame, sf::Style::Default),
-      m_view(0.0f*m_windims, m_windims), m_background(0, 0, 0), m_fps(60), m_frame(1.0f/static_cast<float>(m_fps))
+      m_view(0.0f*m_windims, m_windims), m_background(0, 0, 0),
+      m_fps(60), m_frame(1.0f/static_cast<float>(m_fps)), m_div(100)
 {
     assert(m_winame != "");
     assert(m_windims.x > 0.0f);
@@ -21,14 +22,28 @@ void Simulation::run()
     const sf::Color circolor{127, 127, 63};
 
     const sf::Vector2f posit{0.0f*m_windims};
-    const sf::Vector2f speed{0.05f*m_windims.x, 0.03f*m_windims.y};
+    const sf::Vector2f speed{0.0f*m_windims.x, 0.0f*m_windims.y};
+
+    const float light{0.03f*m_windims.x};
+
+    const float accel{0.0001f*m_windims.x};
+    const float pheta{0.01f*M_PI};
+
     const float radius{0.02f*m_windims.x};
 
-    const std::vector <char> charas{'w', 'a', 's', 'd'};
+    const int points{3};
+
+    const std::vector <char> charas{'w', 's', 'd', 'a'};
 
     const std::vector <sf::Keyboard::Key> keys{chars2keys(charas)};
 
-    Circloid circle{m_windims, posit, speed, radius, circolor, 100, m_frame, keys};
+
+
+    sf::Texture frame;
+
+
+
+    Circloid circle{m_windims, posit, speed, light, accel, pheta, radius, points, circolor, m_div, m_frame, keys};
 
     while (m_window.isOpen())
     {

@@ -2,6 +2,7 @@
 #define SIMULATION_H
 
 #include <cassert>
+#include <iostream>
 #include <string>
 
 #include "SFML/Graphics.hpp"
@@ -19,6 +20,7 @@ class Simulation
 
     const int m_fps;
     const float m_frame;
+    const int m_div;
 
 public:
 

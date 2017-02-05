@@ -15,8 +15,14 @@ class Circloid
 
     sf::Vector2f m_speed;
 
-    sf::CircleShape m_circle;
+    const float m_light;
+    float m_relative;
 
+    const float m_accel;
+
+    const float m_pheta;
+
+    sf::CircleShape m_circle;
     sf::CircleShape m_mircle;
 
     sf::CircleShape m_bircle;
@@ -31,13 +37,21 @@ class Circloid
 
     std::vector <bool> m_keypressed;
 
+    void relativate();
+
+    void accelerate();
+
+    void rotate();
+
     void check_border();
+
+
 
 public:
 
-    Circloid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf::Vector2f &speed,
-             const float radius, const sf::Color &color, const int div, const float frame,
-             const std::vector<sf::Keyboard::Key> &keys);
+    Circloid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf::Vector2f &speed, const float light,
+             const float accel, const float pheta, const float radius, const int points, const sf::Color &color,
+             const int div, const float frame, const std::vector<sf::Keyboard::Key> &keys);
 
     void check_keys();
 
@@ -47,8 +61,8 @@ public:
 
 };
 
-void set_circle(const float radius, const sf::Vector2f &posit, const sf::Color &color,
-                sf::CircleShape &circle);
+void set_circle(const float radius, const sf::Vector2f &posit, const int points,
+                const sf::Color &color, sf::CircleShape &circle);
 
 float squr(const float scalar);
 
