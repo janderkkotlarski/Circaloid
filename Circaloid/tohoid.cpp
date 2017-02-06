@@ -1,6 +1,6 @@
-#include "circloid.h"
+#include "tohoid.h"
 
-Circloid::Circloid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf::Vector2f &speed, const float light,
+Tohoid::Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf::Vector2f &speed, const float light,
                    const float accel, const float pheta, const std::string &image_name,
                    const int div, const float frame, const std::vector <sf::Keyboard::Key> &keys)
     : m_windims(windims), m_boundary(0.5f*windims.x), m_speed(speed), m_light(squr(light)), m_relative(1.0f),
@@ -43,7 +43,7 @@ Circloid::Circloid(const sf::Vector2f &windims, const sf::Vector2f &posit, const
     set_sprite(posit, m_smite);
 }
 
-void Circloid::relativate()
+void Tohoid::relativate()
 {
     const float minim{0.25f};
 
@@ -60,7 +60,7 @@ void Circloid::relativate()
     }
 }
 
-void Circloid::accelerate()
+void Tohoid::accelerate()
 {
     if (m_keypressed[0] || m_keypressed[1])
     {
@@ -85,7 +85,7 @@ void Circloid::accelerate()
     }
 }
 
-void Circloid::ceiling()
+void Tohoid::ceiling()
 {
     if (vectralize(m_speed) > squr(m_light))
     {
@@ -93,7 +93,7 @@ void Circloid::ceiling()
     }
 }
 
-void Circloid::rotate()
+void Tohoid::rotate()
 {
     if (m_keypressed[2])
     {
@@ -112,13 +112,13 @@ void Circloid::rotate()
     }
 }
 
-void Circloid::scale_radius()
+void Tohoid::scale_radius()
 {
     m_sprite.setScale(m_quinergy, m_quinergy);
     m_smite.setScale(m_quinergy, m_quinergy);
 }
 
-void Circloid::quinergy_restore()
+void Tohoid::quinergy_restore()
 {
     m_quinergy += m_subframe*m_questore;
 
@@ -128,7 +128,7 @@ void Circloid::quinergy_restore()
     }
 }
 
-void Circloid::check_border()
+void Tohoid::check_border()
 {
     if (vectralize(m_sprite.getPosition()) > squr(m_boundary))
     {
@@ -136,7 +136,7 @@ void Circloid::check_border()
     }
 }
 
-void Circloid::check_keys()
+void Tohoid::check_keys()
 {
     for (int count{0}; count < static_cast<int>(m_keys.size()); ++count)
     {
@@ -151,7 +151,7 @@ void Circloid::check_keys()
     }
 }
 
-void Circloid::move()
+void Tohoid::move()
 {
     check_keys();
 
@@ -173,7 +173,7 @@ void Circloid::move()
     scale_radius();
 }
 
-void Circloid::display(sf::RenderWindow &window)
+void Tohoid::display(sf::RenderWindow &window)
 {
     window.draw(m_sprite);
 

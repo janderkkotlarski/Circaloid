@@ -5,7 +5,8 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     simulation.cpp \
-    circloid.cpp
+    tohoid.cpp \
+    bullet.cpp
 
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra
 
@@ -17,5 +18,6 @@ LIBS += -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 HEADERS += \
     simulation.h \
-    circloid.h
+    bullet.h \
+    tohoid.h
 

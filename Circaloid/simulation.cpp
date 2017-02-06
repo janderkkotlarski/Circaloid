@@ -1,5 +1,5 @@
 #include "simulation.h"
-#include "circloid.h"
+
 
 Simulation::Simulation()
     : m_winame("Circaloid"), m_windims(750.0f, 750.0f),
@@ -51,11 +51,11 @@ void Simulation::run()
                                                              chars2keys(charas_2),
                                                              chars2keys(charas_3)};
 
-    Circloid patchouli{m_windims, posits[0], speed, light, accel, pheta, image_names[0], m_div, m_frame, keys[0]};
-    Circloid meiling{m_windims, posits[1], speed, light, accel, pheta, image_names[1], m_div, m_frame, keys[1]};
-    Circloid sakuya{m_windims, posits[2], speed, light, accel, pheta, image_names[2], m_div, m_frame, keys[2]};
+    Tohoid patchouli{m_windims, posits[0], speed, light, accel, pheta, image_names[0], m_div, m_frame, keys[0]};
+    Tohoid meiling{m_windims, posits[1], speed, light, accel, pheta, image_names[1], m_div, m_frame, keys[1]};
+    Tohoid sakuya{m_windims, posits[2], speed, light, accel, pheta, image_names[2], m_div, m_frame, keys[2]};
 
-    std::vector <Circloid> touhous{patchouli, meiling, sakuya};
+    std::vector <Tohoid> touhous{patchouli, meiling, sakuya};
 
     const int amount{static_cast<int>(touhous.size())};
 

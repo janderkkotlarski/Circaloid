@@ -7,6 +7,8 @@
 
 #include "SFML/Graphics.hpp"
 
+#include "tohoid.h"
+
 class Simulation
 {
     const std::string m_winame;

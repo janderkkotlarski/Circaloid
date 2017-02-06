@@ -1,5 +1,5 @@
-#ifndef CIRCLOID_H
-#define CIRCLOID_H
+#ifndef TOHOID_H
+#define TOHOID_H
 
 #include <iostream>
 #include <cassert>
@@ -7,7 +7,7 @@
 
 #include "SFML/Graphics.hpp"
 
-class Circloid
+class Tohoid
 {
     const sf::Vector2f m_windims;
 
@@ -19,7 +19,6 @@ class Circloid
     float m_relative;
 
     const float m_accel;
-
     const float m_pheta;
 
     float m_quinergy;
@@ -34,9 +33,7 @@ class Circloid
 
 
     const int m_div;
-
     const float m_frame;
-
     const float m_subframe;
 
     const std::vector <sf::Keyboard::Key> m_keys;
@@ -59,7 +56,7 @@ class Circloid
 
 public:
 
-    Circloid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf::Vector2f &speed, const float light,
+    Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf::Vector2f &speed, const float light,
              const float accel, const float pheta, const std::__cxx11::string &image_name, const int div,
              const float frame, const std::vector<sf::Keyboard::Key> &keys);
 
@@ -79,4 +76,4 @@ float vectralize(const sf::Vector2f &vectol) noexcept;
 
 sf::Vector2f mirrorize(const float boundary, const sf::Vector2f &posit, const sf::Vector2f &speed);
 
-#endif // CIRCLOID_H
+#endif // TOHOID_H
