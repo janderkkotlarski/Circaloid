@@ -158,13 +158,13 @@ void Tohoid::bullet_shoot()
     {
         if (!m_bullet_shot)
         {
-            const float qi_loss{-0.005f};
+            const float qi_loss{-0.01f};
 
             m_quinergy += qi_loss;
 
             m_bullets.push_back(Bullet(m_windims, m_boundary, m_sprite.getPosition(), m_light, rotation2direction(m_sprite.getRotation()), m_subframe));
 
-            const sf::Vector2f leap{(0.75f*m_sprite.getLocalBounds().height + m_bullets.back().get_radius())*rotation2direction(m_sprite.getRotation())};
+            const sf::Vector2f leap{(0.55f*m_sprite.getGlobalBounds().height + 1.1f*m_bullets.back().get_radius())*rotation2direction(m_sprite.getRotation())};
 
             m_bullets.back().jump(leap);
 
@@ -191,7 +191,7 @@ void Tohoid::check_bullet_border()
     {
         for (int count{0}; count < static_cast<int>(m_bullets.size()); ++count)
         {
-            if (vectralize(m_bullets[count].get_posit()) > squr(m_boundary + m_bullets[count].get_radius()))
+            if (vectralize(m_bullets[count].get_posit()) > squr(m_boundary - m_bullets[count].get_radius()))
             {
                 m_bullets[count] = m_bullets.back();
 
@@ -215,7 +215,20 @@ void Tohoid::bullets_hurt(std::vector <Tohoid> &touhous)
             {
                 for (int count{0}; count < static_cast<int>(m_bullets.size()); ++count)
                 {
-                    if (vectralize(m_bullets[count].get_posit() - touhous[iter].get_posit()) <= squr(m_bullets[count].get_radius() + touhous[iter].get_radius()))
+                    const float dist_2{vectralize(m_bullets[count].get_posit() - touhous[iter].get_posit())};
+
+                    const float mist_2{vectralize(m_bullets[count].get_posit() - touhous[iter].get_mosit())};
+
+                    const float radi_2{squr(m_bullets[count].get_radius() + touhous[iter].get_radius())};
+
+                    const float madi_2{squr(m_bullets[count].get_radius() + touhous[iter].get_madius())};
+
+                    const float bound_2{squr(m_boundary + touhous[iter].get_madius())};
+
+                    const float mosit_2{vectralize(touhous[iter].get_mosit())};
+
+                    if ((dist_2 <= radi_2) ||
+                        ((mist_2 <= madi_2) && (mosit_2 <= bound_2)))
                     {
                         m_bullets[count] = m_bullets.back();
 

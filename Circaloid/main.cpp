@@ -1,10 +1,8 @@
-#include "simulation.h"
+#include "menu.h"
 
 int main()
 {
-    Simulation simul;
-
-    simul.run();
+    menu();
 
     return 0;
 }

@@ -24,6 +24,8 @@ class Simulation
     const float m_frame;
     const int m_div;
 
+    int return_type;
+
 public:
 
     Simulation();
@@ -32,7 +34,7 @@ public:
 
     void touhous_die(std::vector <Tohoid> &touhous);
 
-    void run();
+    int run();
 };
 
 std::vector <sf::Keyboard::Key> chars2keys(const std::vector <char> &charas);

@@ -84,7 +84,9 @@ public:
     ~Tohoid();
 
     sf::Vector2f get_posit() const noexcept {return m_sprite.getPosition();}
+    sf::Vector2f get_mosit() const noexcept {return m_smite.getPosition();}
     float get_radius() const noexcept {return 0.25f*(m_sprite.getGlobalBounds().width + m_sprite.getGlobalBounds().height);}
+    float get_madius() const noexcept {return 0.25f*(m_smite.getGlobalBounds().width + m_smite.getGlobalBounds().height);}
     float get_quinergy() const noexcept {return m_quinergy;}
     bool get_vivid() const noexcept {return m_alive;}
 

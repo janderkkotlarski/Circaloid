@@ -4,7 +4,8 @@ Simulation::Simulation()
     : m_winame("Circaloid"), m_windims(750.0f, 750.0f),
       m_window(sf::VideoMode(m_windims.x, m_windims.y), m_winame, sf::Style::Default),
       m_view(0.0f*m_windims, m_windims), m_background(0, 0, 0),
-      m_fps(60), m_frame(1.0f/static_cast<float>(m_fps)), m_div(100)
+      m_fps(60), m_frame(1.0f/static_cast<float>(m_fps)), m_div(100),
+      return_type(1)
 {
     assert(m_winame != "");
     assert(m_windims.x > 0.0f);
@@ -20,7 +21,7 @@ Simulation::~Simulation()
 {
 }
 
-void Simulation::run()
+int Simulation::run()
 {
     const std::vector <std::string> image_names{"Patchouli_64.png",
                                            "Meiling_64.png",
@@ -92,8 +93,15 @@ void Simulation::run()
         while (m_window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed ||
-                sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) ||
+                sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace))
             {
+                if (event.type == sf::Event::Closed ||
+                    sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace))
+                {
+                    return_type = 0;
+                }
+
                 m_window.close();
             }
         }
@@ -124,6 +132,8 @@ void Simulation::run()
             time = clock.getElapsedTime();
         }
     }
+
+    return return_type;
 }
 
 void Simulation::touhous_die(std::vector <Tohoid> &touhous)
