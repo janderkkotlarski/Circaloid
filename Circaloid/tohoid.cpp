@@ -6,7 +6,7 @@ Tohoid::Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf:
     : m_windims(windims), m_boundary(0.5f*windims.x), m_speed(speed), m_light(squr(light)), m_relative(1.0f),
       m_accel(accel), m_pheta(pheta), m_quinergy(1.0f), m_questore(0.02f), m_quove(-0.02f), m_texture(), m_sprite(), m_smite(),
       m_div(div), m_frame(frame), m_subframe(frame/static_cast<float>(div)),
-      m_keys(keys), m_keypressed()
+      m_keys(keys), m_keypressed(), m_bullets(), m_bullet_shot(false), m_alive(true)
 {
     assert(windims.x > 0.0f);
     assert(windims.y > 0.0f);
@@ -43,6 +43,10 @@ Tohoid::Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf:
     set_sprite(posit, m_smite);
 }
 
+Tohoid::~Tohoid()
+{
+}
+
 void Tohoid::relativate()
 {
     const float minim{0.25f};
@@ -64,10 +68,7 @@ void Tohoid::accelerate()
 {
     if (m_keypressed[0] || m_keypressed[1])
     {
-        const float divide{M_PI/180};
-
-        const sf::Vector2f accer{m_relative*m_accel*sf::Vector2f(std::sin(divide*m_sprite.getRotation()),
-                                                                 -std::cos(divide*m_sprite.getRotation()))};
+        const sf::Vector2f accer{m_relative*m_accel*rotation2direction(m_sprite.getRotation())};
 
         if (m_keypressed[0])
         {
@@ -128,14 +129,6 @@ void Tohoid::quinergy_restore()
     }
 }
 
-void Tohoid::check_border()
-{
-    if (vectralize(m_sprite.getPosition()) > squr(m_boundary))
-    {
-        m_sprite.setPosition(mirrorize(m_boundary, m_sprite.getPosition(), m_speed));
-    }
-}
-
 void Tohoid::check_keys()
 {
     for (int count{0}; count < static_cast<int>(m_keys.size()); ++count)
@@ -151,36 +144,155 @@ void Tohoid::check_keys()
     }
 }
 
-void Tohoid::move()
+void Tohoid::check_border()
 {
-    check_keys();
-
-    for (int count{0}; count < m_div; ++count)
+    if (vectralize(m_sprite.getPosition()) > squr(m_boundary))
     {
-        m_sprite.move(m_subframe*m_speed);
-
-        check_border();
-
-        m_smite.setPosition(mirrorize(m_boundary, m_sprite.getPosition(), m_speed));
-
-        relativate();
-        rotate();
-        accelerate();
-        ceiling();
-        quinergy_restore();
+        m_sprite.setPosition(mirrorize(m_boundary, m_sprite.getPosition(), m_speed));
     }
+}
 
-    scale_radius();
+void Tohoid::bullet_shoot()
+{
+    if (m_keypressed[4])
+    {
+        if (!m_bullet_shot)
+        {
+            const float qi_loss{-0.005f};
+
+            m_quinergy += qi_loss;
+
+            m_bullets.push_back(Bullet(m_windims, m_boundary, m_sprite.getPosition(), m_light, rotation2direction(m_sprite.getRotation()), m_subframe));
+
+            const sf::Vector2f leap{(0.75f*m_sprite.getLocalBounds().height + m_bullets.back().get_radius())*rotation2direction(m_sprite.getRotation())};
+
+            m_bullets.back().jump(leap);
+
+            m_bullet_shot = true;
+        }
+    }
+    else
+    {
+        m_bullet_shot = false;
+    }
+}
+
+void Tohoid::move_bullets()
+{
+    for (int count{0}; count < static_cast<int>(m_bullets.size()); ++count)
+    {
+        m_bullets[count].move();
+    }
+}
+
+void Tohoid::check_bullet_border()
+{
+    if (m_bullets.size() > 0)
+    {
+        for (int count{0}; count < static_cast<int>(m_bullets.size()); ++count)
+        {
+            if (vectralize(m_bullets[count].get_posit()) > squr(m_boundary + m_bullets[count].get_radius()))
+            {
+                m_bullets[count] = m_bullets.back();
+
+                m_bullets.pop_back();
+
+                --count;
+            }
+        }
+    }
+}
+
+void Tohoid::bullets_hurt(std::vector <Tohoid> &touhous)
+{
+    if ((m_bullets.size() > 0) && (touhous.size() > 0))
+    {
+        const float qi_hurt{-0.05f};
+
+        for (int iter{0}; iter < static_cast<int>(touhous.size()); ++iter)
+        {
+            if (touhous[iter].get_vivid())
+            {
+
+                for (int count{0}; count < static_cast<int>(m_bullets.size()); ++count)
+                {
+                    if (vectralize(m_bullets[count].get_posit() - touhous[iter].get_posit()) <= squr(m_bullets[count].get_radius() + touhous[iter].get_radius()))
+                    {
+                        m_bullets[count] = m_bullets.back();
+
+                        m_bullets.pop_back();
+
+                        touhous[iter].qi_damage(qi_hurt);
+
+                        --count;
+                    }
+                }
+            }
+        }
+    }
+}
+
+void Tohoid::display_bullets(sf::RenderWindow &window)
+{
+    for (Bullet bull : m_bullets)
+    {
+        bull.display(window);
+    }
+}
+
+void Tohoid::move(std::vector <Tohoid> &touhous)
+{
+    if(m_alive)
+    {
+        check_keys();
+
+        for (int count{0}; count < m_div; ++count)
+        {
+            move_bullets();
+
+            check_bullet_border();
+
+            m_sprite.move(m_subframe*m_speed);
+
+            check_border();
+
+            m_smite.setPosition(mirrorize(m_boundary, m_sprite.getPosition(), m_speed));
+
+            relativate();
+            rotate();
+            accelerate();
+            ceiling();
+
+            bullets_hurt(touhous);
+            quinergy_restore();
+        }
+
+        bullet_shoot();
+        scale_radius();
+    }
 }
 
 void Tohoid::display(sf::RenderWindow &window)
 {
-    window.draw(m_sprite);
-
-    if (vectralize(m_smite.getPosition()) < squr(m_boundary + m_smite.getLocalBounds().width))
+    if(m_alive)
     {
-        window.draw(m_smite);
+        display_bullets(window);
+
+        window.draw(m_sprite);
+
+        if (vectralize(m_smite.getPosition()) < squr(m_boundary + m_smite.getLocalBounds().width))
+        {
+            window.draw(m_smite);
+        }
     }
+}
+
+
+sf::Vector2f rotation2direction(const float rotation)
+{
+    const float divide{M_PI/180};
+
+    return sf::Vector2f(std::sin(divide*rotation), -std::cos(divide*rotation));
 }
 
 void set_sprite(const sf::Vector2f &posit, sf::Sprite &sprite)

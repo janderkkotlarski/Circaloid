@@ -1,7 +1,7 @@
 #include "bullet.h"
 
 Bullet::Bullet(const sf::Vector2f &windims, const float boundary, const sf::Vector2f &posit, const float veloc,
-               const sf::Vector2f &direction, const float subframe, const sf::Color &color)
+               const sf::Vector2f &direction, const float subframe)
     : m_boundary(boundary), m_veloc(veloc), m_direction(direction), m_subframe(subframe),
       m_circle()
 {
@@ -19,13 +19,17 @@ Bullet::Bullet(const sf::Vector2f &windims, const float boundary, const sf::Vect
 
     const float radius{part*windims.x};
 
-    set_circle(radius, posit, color);
-
-
+    set_circle(radius, posit);
 }
 
-void Bullet::set_circle(const float radius, const sf::Vector2f &posit, const sf::Color &color)
+Bullet::~Bullet()
 {
+}
+
+void Bullet::set_circle(const float radius, const sf::Vector2f &posit)
+{
+    const sf::Color color{191, 63, 63};
+
     m_circle.setRadius(radius);
     m_circle.setOrigin(radius, radius);
     m_circle.setPosition(posit);

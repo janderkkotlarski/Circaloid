@@ -17,6 +17,10 @@ Simulation::Simulation()
     m_window.setView(m_view);
 }
 
+Simulation::~Simulation()
+{
+}
+
 void Simulation::run()
 {
     const std::vector <std::string> image_names{"Patchouli_64.png",
@@ -30,8 +34,6 @@ void Simulation::run()
         assert(name != "");
     }
 
-    const sf::Color circolor{127, 127, 63};
-
     const std::vector <sf::Vector2f> posits{sf::Vector2f(0.0f*m_windims.x, -0.35f*m_windims.y),
                                            sf::Vector2f(0.3f*m_windims.x, 0.175f*m_windims.y),
                                            sf::Vector2f(-0.3f*m_windims.x, 0.175f*m_windims.y)};
@@ -43,9 +45,9 @@ void Simulation::run()
     const float pheta{0.01f*M_PI};
     assert(pheta > 0.0f);
 
-    const std::vector <char> charas_1{'w', 's', 'd', 'a'};
-    const std::vector <char> charas_2{'t', 'g', 'h', 'f'};
-    const std::vector <char> charas_3{'i', 'k', 'l', 'j'};
+    const std::vector <char> charas_1{'w', 's', 'd', 'a', 'x'};
+    const std::vector <char> charas_2{'t', 'g', 'h', 'f', 'b'};
+    const std::vector <char> charas_3{'i', 'k', 'l', 'j', 'm'};
 
     const std::vector <std::vector <sf::Keyboard::Key>> keys{chars2keys(charas_1),
                                                              chars2keys(charas_2),
@@ -60,42 +62,16 @@ void Simulation::run()
     const int amount{static_cast<int>(touhous.size())};
 
     const std::string filetatami{"Tatami.png"};
-    assert(filetatami != "");
-
     sf::Texture textami;
-
-    if (!textami.loadFromFile(filetatami))
-    {
-        std::cerr << filetatami << "not found!\n";
-    }
-
-    textami.setSmooth(true);
-
     sf::Sprite spritami;
 
-    spritami.setTexture(textami);
-    spritami.setOrigin(0.5f*m_windims);
-    spritami.setPosition(0.0f*m_windims);
+    set_image(filetatami, m_windims, textami, spritami);
 
-
-    const std::string filename{"Frame.png"};
-    assert(filename != "");
-
-    sf::Texture texture;
-
-    if (!texture.loadFromFile(filename))
-    {
-        std::cerr << filename << "not found!\n";
-    }
-
-    texture.setSmooth(true);
-
+    const std::string filename{"Frame.png"};    
+    sf::Texture texture;    
     sf::Sprite sprite;
 
-    sprite.setTexture(texture);
-    sprite.setOrigin(0.5f*m_windims);
-    sprite.setPosition(0.0f*m_windims);
-
+    set_image(filename, m_windims, texture, sprite);
 
     while (m_window.isOpen())
     {
@@ -118,23 +94,35 @@ void Simulation::run()
 
         for (int count{0}; count < amount; ++count)
         {
-            touhous[count].move();
-        }
-
-        for (int count{0}; count < amount; ++count)
-        {
             touhous[count].display(m_window);
         }
 
         m_window.draw(sprite);
-
         m_window.display();
+
+        for (int count{0}; count < amount; ++count)
+        {
+            touhous[count].move(touhous);
+        }
+
+        touhous_die(touhous);
 
         time = clock.getElapsedTime();
 
         while(time.asSeconds() < m_frame)
         {
             time = clock.getElapsedTime();
+        }
+    }
+}
+
+void Simulation::touhous_die(std::vector <Tohoid> &touhous)
+{
+    for (int count{0}; count < static_cast<int>(touhous.size()); ++count)
+    {
+        if ((touhous[count].get_quinergy() <= 0.0f) && touhous[count].get_vivid())
+        {
+            touhous[count].dies();
         }
     }
 }
@@ -152,4 +140,21 @@ std::vector <sf::Keyboard::Key> chars2keys(const std::vector <char> &charas)
     }
 
     return keys;
+}
+
+void set_image(const std::string &name, const sf::Vector2f &windims,
+               sf::Texture &texture, sf::Sprite &sprite)
+{
+    assert(name != "");
+
+    if (!texture.loadFromFile(name))
+    {
+        std::cerr << name << "not found!\n";
+    }
+
+    texture.setSmooth(true);
+
+    sprite.setTexture(texture);
+    sprite.setOrigin(0.5f*windims);
+    sprite.setPosition(0.0f*windims);
 }

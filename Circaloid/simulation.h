@@ -28,9 +28,16 @@ public:
 
     Simulation();
 
+    ~Simulation();
+
+    void touhous_die(std::vector <Tohoid> &touhous);
+
     void run();
 };
 
 std::vector <sf::Keyboard::Key> chars2keys(const std::vector <char> &charas);
+
+void set_image(const std::string &name, const sf::Vector2f &windims,
+               sf::Texture &texture, sf::Sprite &sprite);
 
 #endif // SIMULATION_H
