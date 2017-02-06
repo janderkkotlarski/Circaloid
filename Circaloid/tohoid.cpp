@@ -1,7 +1,7 @@
 #include "tohoid.h"
 
 Tohoid::Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf::Vector2f &speed, const float light,
-                   const float accel, const float pheta, const std::string &image_name,
+                   const float accel, const float rotation, const float pheta, const std::string &image_name,
                    const int div, const float frame, const std::vector <sf::Keyboard::Key> &keys)
     : m_windims(windims), m_boundary(0.5f*windims.x), m_speed(speed), m_light(squr(light)), m_relative(1.0f),
       m_accel(accel), m_pheta(pheta), m_quinergy(1.0f), m_questore(0.02f), m_quove(-0.02f), m_texture(), m_sprite(), m_smite(),
@@ -39,8 +39,8 @@ Tohoid::Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf:
     m_sprite.setTexture(m_texture);
     m_smite.setTexture(m_texture);
 
-    set_sprite(posit, m_sprite);
-    set_sprite(posit, m_smite);
+    set_sprite(posit, rotation, m_sprite);
+    set_sprite(posit, rotation, m_smite);
 }
 
 Tohoid::~Tohoid()
@@ -213,7 +213,6 @@ void Tohoid::bullets_hurt(std::vector <Tohoid> &touhous)
         {
             if (touhous[iter].get_vivid())
             {
-
                 for (int count{0}; count < static_cast<int>(m_bullets.size()); ++count)
                 {
                     if (vectralize(m_bullets[count].get_posit() - touhous[iter].get_posit()) <= squr(m_bullets[count].get_radius() + touhous[iter].get_radius()))
@@ -287,7 +286,6 @@ void Tohoid::display(sf::RenderWindow &window)
     }
 }
 
-
 sf::Vector2f rotation2direction(const float rotation)
 {
     const float divide{M_PI/180};
@@ -295,10 +293,11 @@ sf::Vector2f rotation2direction(const float rotation)
     return sf::Vector2f(std::sin(divide*rotation), -std::cos(divide*rotation));
 }
 
-void set_sprite(const sf::Vector2f &posit, sf::Sprite &sprite)
+void set_sprite(const sf::Vector2f &posit, const float rotation, sf::Sprite &sprite)
 {
     sprite.setOrigin(0.5f*sprite.getLocalBounds().width, 0.5f*sprite.getLocalBounds().height);
     sprite.setPosition(posit);
+    sprite.setRotation(rotation);
 }
 
 float squr(const float scalar) noexcept

@@ -1,6 +1,5 @@
 #include "simulation.h"
 
-
 Simulation::Simulation()
     : m_winame("Circaloid"), m_windims(750.0f, 750.0f),
       m_window(sf::VideoMode(m_windims.x, m_windims.y), m_winame, sf::Style::Default),
@@ -34,17 +33,6 @@ void Simulation::run()
         assert(name != "");
     }
 
-    const std::vector <sf::Vector2f> posits{sf::Vector2f(0.0f*m_windims.x, -0.35f*m_windims.y),
-                                           sf::Vector2f(0.3f*m_windims.x, 0.175f*m_windims.y),
-                                           sf::Vector2f(-0.3f*m_windims.x, 0.175f*m_windims.y)};
-    const sf::Vector2f speed{0.0f*m_windims.x, 0.0f*m_windims.y};
-
-    const float light{0.02f*m_windims.x};
-
-    const float accel{0.00001f*m_windims.x};
-    const float pheta{0.01f*M_PI};
-    assert(pheta > 0.0f);
-
     const std::vector <char> charas_1{'w', 's', 'd', 'a', 'x'};
     const std::vector <char> charas_2{'t', 'g', 'h', 'f', 'b'};
     const std::vector <char> charas_3{'i', 'k', 'l', 'j', 'm'};
@@ -53,13 +41,35 @@ void Simulation::run()
                                                              chars2keys(charas_2),
                                                              chars2keys(charas_3)};
 
-    Tohoid patchouli{m_windims, posits[0], speed, light, accel, pheta, image_names[0], m_div, m_frame, keys[0]};
-    Tohoid meiling{m_windims, posits[1], speed, light, accel, pheta, image_names[1], m_div, m_frame, keys[1]};
-    Tohoid sakuya{m_windims, posits[2], speed, light, accel, pheta, image_names[2], m_div, m_frame, keys[2]};
+    const int amount{static_cast<int>(keys.size())};
+
+    std::vector <float> rotats;
+
+    for (int count {0}; count < amount; ++count)
+    {
+        rotats.push_back(static_cast<float>(count)*360.0f/static_cast<float>(amount));
+    }
+
+    std::vector <sf::Vector2f> posits;
+
+    for (int count {0}; count < amount; ++count)
+    {
+        posits.push_back(-0.7f*m_windims.x*rotation2direction(rotats[count]));
+    }
+
+    const sf::Vector2f speed{0.0f*m_windims.x, 0.0f*m_windims.y};
+
+    const float light{0.02f*m_windims.x};
+
+    const float accel{0.00001f*m_windims.x};
+    const float pheta{0.01f*M_PI};
+    assert(pheta > 0.0f);    
+
+    Tohoid patchouli{m_windims, posits[0], speed, light, accel, rotats[0], pheta, image_names[0], m_div, m_frame, keys[0]};
+    Tohoid meiling{m_windims, posits[1], speed, light, accel, rotats[1], pheta, image_names[1], m_div, m_frame, keys[1]};
+    Tohoid sakuya{m_windims, posits[2], speed, light, accel, rotats[2], pheta, image_names[2], m_div, m_frame, keys[2]};
 
     std::vector <Tohoid> touhous{patchouli, meiling, sakuya};
-
-    const int amount{static_cast<int>(touhous.size())};
 
     const std::string filetatami{"Tatami.png"};
     sf::Texture textami;

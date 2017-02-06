@@ -78,7 +78,7 @@ class Tohoid
 public:
 
     Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf::Vector2f &speed, const float light,
-             const float accel, const float pheta, const std::__cxx11::string &image_name, const int div,
+             const float accel, const float rotation, const float pheta, const std::string &image_name, const int div,
              const float frame, const std::vector<sf::Keyboard::Key> &keys);    
 
     ~Tohoid();
@@ -100,7 +100,7 @@ public:
 
 sf::Vector2f rotation2direction(const float rotation);
 
-void set_sprite(const sf::Vector2f &posit, sf::Sprite &sprite);
+void set_sprite(const sf::Vector2f &posit, const float rotation, sf::Sprite &sprite);
 
 float squr(const float scalar) noexcept;
 
