@@ -94,10 +94,10 @@ int Simulation::run()
         {
             if (event.type == sf::Event::Closed ||
                 sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) ||
-                sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace))
+                sf::Keyboard::isKeyPressed(sf::Keyboard::Delete))
             {
                 if (event.type == sf::Event::Closed ||
-                    sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace))
+                    sf::Keyboard::isKeyPressed(sf::Keyboard::Delete))
                 {
                     return_type = 0;
                 }

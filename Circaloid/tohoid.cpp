@@ -164,7 +164,7 @@ void Tohoid::bullet_shoot()
 
             m_bullets.push_back(Bullet(m_windims, m_boundary, m_sprite.getPosition(), m_light, rotation2direction(m_sprite.getRotation()), m_subframe));
 
-            const sf::Vector2f leap{(0.55f*m_sprite.getGlobalBounds().height + 1.1f*m_bullets.back().get_radius())*rotation2direction(m_sprite.getRotation())};
+            const sf::Vector2f leap{(0.505f*m_sprite.getGlobalBounds().height + 1.01f*m_bullets.back().get_radius())*rotation2direction(m_sprite.getRotation())};
 
             m_bullets.back().jump(leap);
 
