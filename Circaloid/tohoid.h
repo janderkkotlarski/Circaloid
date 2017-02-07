@@ -48,6 +48,7 @@ class Tohoid
 
     std::vector <Bullet> m_bullets;
     bool m_bullet_shot;
+    bool m_danmaku_shot;
 
     bool m_alive;
 
@@ -68,6 +69,8 @@ class Tohoid
     void check_border();
 
     void bullet_shoot();
+    void danmaku_shoot();
+
     void move_bullets();
     void check_bullet_border();
     void bullets_hurt(std::vector <Tohoid> &touhous);

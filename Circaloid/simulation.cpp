@@ -34,9 +34,9 @@ int Simulation::run()
         assert(name != "");
     }
 
-    const std::vector <char> charas_1{'w', 's', 'd', 'a', 'x'};
-    const std::vector <char> charas_2{'t', 'g', 'h', 'f', 'b'};
-    const std::vector <char> charas_3{'i', 'k', 'l', 'j', 'm'};
+    const std::vector <char> charas_1{'w', 's', 'd', 'a', 'x', 'z'};
+    const std::vector <char> charas_2{'t', 'g', 'h', 'f', 'b', 'v'};
+    const std::vector <char> charas_3{'i', 'k', 'l', 'j', 'm', 'n'};
 
     const std::vector <std::vector <sf::Keyboard::Key>> keys{chars2keys(charas_1),
                                                              chars2keys(charas_2),
@@ -97,7 +97,7 @@ int Simulation::run()
                 sf::Keyboard::isKeyPressed(sf::Keyboard::Delete))
             {
                 if (event.type == sf::Event::Closed ||
-                    sf::Keyboard::isKeyPressed(sf::Keyboard::Delete))
+                    sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 {
                     return_type = 0;
                 }

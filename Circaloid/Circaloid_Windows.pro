@@ -21,5 +21,6 @@ HEADERS += \
     simulation.h \
     bullet.h \
     tohoid.h \
-    menu.h
+    menu.h \
+    danmaku.h
 

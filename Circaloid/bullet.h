@@ -5,6 +5,12 @@
 
 #include "SFML/Graphics.hpp"
 
+enum class bullet_type
+{
+    normal,
+    danmaku
+};
+
 class Bullet
 {
     float m_boundary;
@@ -17,10 +23,12 @@ class Bullet
 
     sf::CircleShape m_circle;
 
+    bullet_type m_type;
+
 public:
 
     Bullet(const sf::Vector2f &windims, const float boundary, const sf::Vector2f &posit, const float veloc,
-           const sf::Vector2f &direction, const float subframe);
+           const sf::Vector2f &direction, const float subframe, const bullet_type &type);
 
     ~Bullet();
 

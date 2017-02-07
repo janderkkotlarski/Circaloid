@@ -6,7 +6,7 @@ Tohoid::Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf:
     : m_windims(windims), m_boundary(0.5f*windims.x), m_speed(speed), m_light(squr(light)), m_relative(1.0f),
       m_accel(accel), m_pheta(pheta), m_quinergy(1.0f), m_questore(0.02f), m_quove(-0.02f), m_texture(), m_sprite(), m_smite(),
       m_div(div), m_frame(frame), m_subframe(frame/static_cast<float>(div)),
-      m_keys(keys), m_keypressed(), m_bullets(), m_bullet_shot(false), m_alive(true)
+      m_keys(keys), m_keypressed(), m_bullets(), m_bullet_shot(false), m_danmaku_shot(false), m_alive(true)
 {
     assert(windims.x > 0.0f);
     assert(windims.y > 0.0f);
@@ -162,7 +162,8 @@ void Tohoid::bullet_shoot()
 
             m_quinergy += qi_loss;
 
-            m_bullets.push_back(Bullet(m_windims, m_boundary, m_sprite.getPosition(), m_light, rotation2direction(m_sprite.getRotation()), m_subframe));
+            m_bullets.push_back(Bullet(m_windims, m_boundary, m_sprite.getPosition(), m_light,
+                                       rotation2direction(m_sprite.getRotation()), m_subframe, bullet_type::normal));
 
             const sf::Vector2f leap{(0.505f*m_sprite.getGlobalBounds().height + 1.01f*m_bullets.back().get_radius())*rotation2direction(m_sprite.getRotation())};
 
@@ -174,6 +175,49 @@ void Tohoid::bullet_shoot()
     else
     {
         m_bullet_shot = false;
+    }
+}
+
+void Tohoid::danmaku_shoot()
+{
+    if (m_keypressed[5])
+    {
+        if (!m_danmaku_shot)
+        {
+            const float qi_loss{-0.07f};
+            assert(qi_loss < 0.0f);
+
+            m_quinergy += qi_loss;
+
+            const int number{8};
+            assert(number > 1);
+
+            const float delta_rotate{180.0f/static_cast<float>(number)};
+
+            float rotate{(0.5f - static_cast<float>(number/2))*delta_rotate};
+
+            for (int count{0}; count < number; ++count)
+            {
+                const float rotation{rotate + m_sprite.getRotation()};
+
+                const sf::Vector2f direction{rotation2direction(rotation)};
+
+                m_bullets.push_back(Bullet(m_windims, m_boundary, m_sprite.getPosition(), m_light,
+                                           direction, m_subframe, bullet_type::danmaku));
+
+                const sf::Vector2f leap{(0.505f*m_sprite.getGlobalBounds().height + 1.01f*m_bullets.back().get_radius())*direction};
+
+                m_bullets.back().jump(leap);
+
+                rotate += delta_rotate;
+            }
+
+            m_danmaku_shot = true;
+        }
+    }
+    else
+    {
+        m_danmaku_shot = false;
     }
 }
 
@@ -280,6 +324,8 @@ void Tohoid::move(std::vector <Tohoid> &touhous)
         }
 
         bullet_shoot();
+        danmaku_shoot();
+
         scale_radius();
     }
 }
