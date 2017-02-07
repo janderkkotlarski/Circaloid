@@ -146,9 +146,9 @@ void Tohoid::check_keys()
 
 void Tohoid::check_border()
 {
-    if (vectralize(m_sprite.getPosition()) > squr(m_boundary))
+    if (vectralize(get_posit()) > squr(m_boundary))
     {
-        m_sprite.setPosition(mirrorize(m_boundary, m_sprite.getPosition(), m_speed));
+        m_sprite.setPosition(mirrorize(m_boundary, get_posit(), m_speed));
     }
 }
 
@@ -162,7 +162,7 @@ void Tohoid::bullet_shoot()
 
             m_quinergy += qi_loss;
 
-            m_bullets.push_back(Bullet(m_windims, m_boundary, m_sprite.getPosition(), m_light,
+            m_bullets.push_back(Bullet(m_windims, m_boundary, get_posit(), m_light,
                                        rotation2direction(m_sprite.getRotation()), m_subframe, bullet_type::normal));
 
             const sf::Vector2f leap{(0.505f*m_sprite.getGlobalBounds().height + 1.01f*m_bullets.back().get_radius())*rotation2direction(m_sprite.getRotation())};
@@ -202,7 +202,7 @@ void Tohoid::danmaku_shoot()
 
                 const sf::Vector2f direction{rotation2direction(rotation)};
 
-                m_bullets.push_back(Bullet(m_windims, m_boundary, m_sprite.getPosition(), m_light,
+                m_bullets.push_back(Bullet(m_windims, m_boundary, get_posit(), m_light,
                                            direction, m_subframe, bullet_type::danmaku));
 
                 const sf::Vector2f leap{(0.505f*m_sprite.getGlobalBounds().height + 1.01f*m_bullets.back().get_radius())*direction};
@@ -221,11 +221,11 @@ void Tohoid::danmaku_shoot()
     }
 }
 
-void Tohoid::move_bullets(std::vector <Tohoid> &touhous)
+void Tohoid::move_bullets(std::vector <sf::Vector2f> &posits)
 {
     for (int count{0}; count < static_cast<int>(m_bullets.size()); ++count)
     {
-        m_bullets[count].bullet_speed(m_light, touhous2posits(touhous), get_posit());
+        m_bullets[count].bullet_speed(m_light, posits, get_posit());
         m_bullets[count].move();
     }
 }
@@ -303,11 +303,13 @@ void Tohoid::move(std::vector <Tohoid> &touhous)
 {
     if(m_alive)
     {
+        std::vector <sf::Vector2f> posits{touhous2posits(touhous)};
+
         check_keys();
 
         for (int count{0}; count < m_div; ++count)
         {
-            move_bullets(touhous);
+            move_bullets(posits);
 
             check_bullet_border();
 
@@ -315,7 +317,7 @@ void Tohoid::move(std::vector <Tohoid> &touhous)
 
             check_border();
 
-            m_smite.setPosition(mirrorize(m_boundary, m_sprite.getPosition(), m_speed));
+            m_smite.setPosition(mirrorize(m_boundary, get_posit(), m_speed));
 
             relativate();
             rotate();
@@ -341,7 +343,7 @@ void Tohoid::display(sf::RenderWindow &window)
 
         window.draw(m_sprite);
 
-        if (vectralize(m_smite.getPosition()) < squr(m_boundary + m_smite.getLocalBounds().width))
+        if (vectralize(get_mosit()) < squr(m_boundary + m_smite.getLocalBounds().width))
         {
             window.draw(m_smite);
         }
