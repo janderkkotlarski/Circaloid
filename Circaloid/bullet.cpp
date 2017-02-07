@@ -35,3 +35,25 @@ void Bullet::set_circle(const float radius, const sf::Vector2f &posit)
     m_circle.setPosition(posit);
     m_circle.setFillColor(color);
 }
+
+void Bullet::bullet_speed(const float light)
+{
+    if (m_type == bullet_type::danmaku)
+    {
+        const float delta_veloc{-0.0001f*light};
+
+        m_veloc += delta_veloc;
+    }
+
+    if (m_veloc < 0.0f)
+    {
+        m_veloc = 0.0f;
+
+        if (m_type == bullet_type::danmaku)
+        {
+
+        }
+    }
+}
+
+

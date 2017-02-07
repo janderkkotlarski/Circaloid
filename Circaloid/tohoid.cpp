@@ -225,6 +225,7 @@ void Tohoid::move_bullets()
 {
     for (int count{0}; count < static_cast<int>(m_bullets.size()); ++count)
     {
+        m_bullets[count].bullet_speed(m_light);
         m_bullets[count].move();
     }
 }

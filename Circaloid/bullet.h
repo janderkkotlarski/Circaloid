@@ -44,6 +44,9 @@ public:
     void move() noexcept{m_circle.move(m_subframe*m_veloc*m_direction);}
 
     void display(sf::RenderWindow &window) {window.draw(m_circle);}
+
+    void bullet_speed(const float light);
+
 };
 
 #endif // BULLET_H
