@@ -52,12 +52,38 @@ void Bullet::bullet_speed(const float light, const std::vector <sf::Vector2f> &t
 
         if (m_type == bullet_type::danmaku)
         {
+            danmaku_transform(targets, otaku);
 
+            m_veloc = light;
+
+            m_type = bullet_type::normal;
         }
     }
 }
 
-void Bullet::danmaku_transform()
+void Bullet::danmaku_transform(const std::vector <sf::Vector2f> &targets, const sf::Vector2f &otaku)
 {
+    int marked{-1};
 
+    float min_2{1.0e10f};
+
+    const float max_2{10.0f};
+
+    for (int count{0}; count < static_cast<int>(targets.size()); ++count)
+    {
+        const float devi_2{vectralize(targets[count] - otaku)};
+
+        if (devi_2 > max_2)
+        {
+            const float dist_2{vectralize(targets[count] - get_posit())};
+
+            if(dist_2 < min_2)
+            {
+                min_2 = dist_2;
+                marked = count;
+            }
+        }
+    }
+
+    set_direction(normalize_direction(targets[marked] - get_posit()));
 }

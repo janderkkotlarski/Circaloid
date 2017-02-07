@@ -68,7 +68,7 @@ void Tohoid::accelerate()
 {
     if (m_keypressed[0] || m_keypressed[1])
     {
-        const sf::Vector2f accer{m_relative*m_accel*rotation2direction(m_sprite.getRotation())};
+        const sf::Vector2f accer{m_relative*m_accel*rotation2direction(get_rotate())};
 
         if (m_keypressed[0])
         {
@@ -158,14 +158,17 @@ void Tohoid::bullet_shoot()
     {
         if (!m_bullet_shot)
         {
+            const float scale{1.01f};
+
             const float qi_loss{-0.01f};
+            assert(qi_loss < 0.0f);
 
             m_quinergy += qi_loss;
 
             m_bullets.push_back(Bullet(m_windims, m_boundary, get_posit(), m_light,
-                                       rotation2direction(m_sprite.getRotation()), m_subframe, bullet_type::normal));
+                                       rotation2direction(get_rotate()), m_subframe, bullet_type::normal));
 
-            const sf::Vector2f leap{(0.505f*m_sprite.getGlobalBounds().height + 1.01f*m_bullets.back().get_radius())*rotation2direction(m_sprite.getRotation())};
+            const sf::Vector2f leap{(scale*get_radius() + scale*m_bullets.back().get_radius())*rotation2direction(get_rotate())};
 
             m_bullets.back().jump(leap);
 
@@ -184,6 +187,8 @@ void Tohoid::danmaku_shoot()
     {
         if (!m_danmaku_shot)
         {
+            const float scale{1.01f};
+
             const float qi_loss{-0.07f};
             assert(qi_loss < 0.0f);
 
@@ -198,14 +203,14 @@ void Tohoid::danmaku_shoot()
 
             for (int count{0}; count < number; ++count)
             {
-                const float rotation{rotate + m_sprite.getRotation()};
+                const float rotation{rotate + get_rotate()};
 
                 const sf::Vector2f direction{rotation2direction(rotation)};
 
                 m_bullets.push_back(Bullet(m_windims, m_boundary, get_posit(), m_light,
                                            direction, m_subframe, bullet_type::danmaku));
 
-                const sf::Vector2f leap{(0.505f*m_sprite.getGlobalBounds().height + 1.01f*m_bullets.back().get_radius())*direction};
+                const sf::Vector2f leap{(scale*get_radius() + scale*m_bullets.back().get_radius())*direction};
 
                 m_bullets.back().jump(leap);
 
@@ -253,8 +258,9 @@ void Tohoid::bullets_hurt(std::vector <Tohoid> &touhous)
     if ((m_bullets.size() > 0) && (touhous.size() > 0))
     {
         const float qi_hurt{-0.05f};
+        assert(qi_hurt < 0.0f);
 
-        const float scale{0.75f};
+        const float scale{0.85f};
 
         for (int iter{0}; iter < static_cast<int>(touhous.size()); ++iter)
         {
@@ -348,40 +354,6 @@ void Tohoid::display(sf::RenderWindow &window)
             window.draw(m_smite);
         }
     }
-}
-
-sf::Vector2f rotation2direction(const float rotation)
-{
-    const float divide{M_PI/180};
-
-    return sf::Vector2f(std::sin(divide*rotation), -std::cos(divide*rotation));
-}
-
-void set_sprite(const sf::Vector2f &posit, const float rotation, sf::Sprite &sprite)
-{
-    sprite.setOrigin(0.5f*sprite.getLocalBounds().width, 0.5f*sprite.getLocalBounds().height);
-    sprite.setPosition(posit);
-    sprite.setRotation(rotation);
-}
-
-float squr(const float scalar) noexcept
-{
-    return scalar*scalar;
-}
-
-float vectralize(const sf::Vector2f &vectol) noexcept
-{
-    return squr(vectol.x) + squr(vectol.y);
-}
-
-sf::Vector2f mirrorize(const float boundary, const sf::Vector2f &posit, const sf::Vector2f &speed)
-{
-    if (vectralize(posit) == 0.0f)
-    {
-        return (1.0f - 2.0f*boundary/std::sqrt(vectralize(speed)))*speed;
-    }
-
-    return (1.0f - 2.0f*boundary/std::sqrt(vectralize(posit)))*posit;
 }
 
 std::vector <sf::Vector2f> touhous2posits(std::vector <Tohoid> &touhous)

@@ -7,7 +7,8 @@ SOURCES += main.cpp \
     simulation.cpp \
     bullet.cpp \
     tohoid.cpp \
-    menu.cpp
+    menu.cpp \
+    functions.cpp
 
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra
 
@@ -21,5 +22,6 @@ HEADERS += \
     simulation.h \
     bullet.h \
     tohoid.h \
-    menu.h
+    menu.h \
+    functions.h
 

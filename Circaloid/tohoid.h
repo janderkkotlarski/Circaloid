@@ -7,6 +7,8 @@
 
 #include "SFML/Graphics.hpp"
 
+
+#include "functions.h"
 #include "bullet.h"
 
 class Tohoid
@@ -52,7 +54,7 @@ class Tohoid
 
     bool m_alive;
 
-
+    ///////////////////////////////////////////////////////////////////////////
 
     void relativate();
     void accelerate();
@@ -77,7 +79,6 @@ class Tohoid
 
     void display_bullets(sf::RenderWindow &window);
 
-
 public:
 
     Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf::Vector2f &speed, const float light,
@@ -90,6 +91,8 @@ public:
     sf::Vector2f get_mosit() const noexcept {return m_smite.getPosition();}
     float get_radius() const noexcept {return 0.25f*(m_sprite.getGlobalBounds().width + m_sprite.getGlobalBounds().height);}
     float get_madius() const noexcept {return 0.25f*(m_smite.getGlobalBounds().width + m_smite.getGlobalBounds().height);}
+    float get_rotate() const noexcept {return m_sprite.getRotation();}
+
     float get_quinergy() const noexcept {return m_quinergy;}
     bool get_vivid() const noexcept {return m_alive;}
 
@@ -102,16 +105,6 @@ public:
     void display(sf::RenderWindow &window);
 
 };
-
-sf::Vector2f rotation2direction(const float rotation);
-
-void set_sprite(const sf::Vector2f &posit, const float rotation, sf::Sprite &sprite);
-
-float squr(const float scalar) noexcept;
-
-float vectralize(const sf::Vector2f &vectol) noexcept;
-
-sf::Vector2f mirrorize(const float boundary, const sf::Vector2f &posit, const sf::Vector2f &speed);
 
 std::vector <sf::Vector2f> touhous2posits(std::vector <Tohoid> &touhous);
 

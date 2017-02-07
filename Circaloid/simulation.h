@@ -7,6 +7,7 @@
 
 #include "SFML/Graphics.hpp"
 
+#include "functions.h"
 #include "tohoid.h"
 
 class Simulation

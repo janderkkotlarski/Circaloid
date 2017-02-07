@@ -2,8 +2,11 @@
 #define BULLET_H
 
 #include <cassert>
+#include <iostream>
 
 #include "SFML/Graphics.hpp"
+
+#include "functions.h"
 
 enum class bullet_type
 {
@@ -25,7 +28,7 @@ class Bullet
 
     bullet_type m_type;
 
-    void danmaku_transform();
+    void danmaku_transform(const std::vector<sf::Vector2f> &targets, const sf::Vector2f &otaku);
 
 public:
 
