@@ -36,7 +36,8 @@ void Bullet::set_circle(const float radius, const sf::Vector2f &posit)
     m_circle.setFillColor(color);
 }
 
-void Bullet::bullet_speed(const float light)
+void Bullet::bullet_speed(const float light, const std::vector <sf::Vector2f> &targets,
+                          const sf::Vector2f &otaku)
 {
     if (m_type == bullet_type::danmaku)
     {
@@ -56,4 +57,7 @@ void Bullet::bullet_speed(const float light)
     }
 }
 
+void Bullet::danmaku_transform()
+{
 
+}

@@ -221,11 +221,11 @@ void Tohoid::danmaku_shoot()
     }
 }
 
-void Tohoid::move_bullets()
+void Tohoid::move_bullets(std::vector <Tohoid> &touhous)
 {
     for (int count{0}; count < static_cast<int>(m_bullets.size()); ++count)
     {
-        m_bullets[count].bullet_speed(m_light);
+        m_bullets[count].bullet_speed(m_light, touhous2posits(touhous), get_posit());
         m_bullets[count].move();
     }
 }
@@ -254,6 +254,8 @@ void Tohoid::bullets_hurt(std::vector <Tohoid> &touhous)
     {
         const float qi_hurt{-0.05f};
 
+        const float scale{0.75f};
+
         for (int iter{0}; iter < static_cast<int>(touhous.size()); ++iter)
         {
             if (touhous[iter].get_vivid())
@@ -264,11 +266,11 @@ void Tohoid::bullets_hurt(std::vector <Tohoid> &touhous)
 
                     const float mist_2{vectralize(m_bullets[count].get_posit() - touhous[iter].get_mosit())};
 
-                    const float radi_2{squr(m_bullets[count].get_radius() + touhous[iter].get_radius())};
+                    const float radi_2{squr(m_bullets[count].get_radius() + scale*touhous[iter].get_radius())};
 
-                    const float madi_2{squr(m_bullets[count].get_radius() + touhous[iter].get_madius())};
+                    const float madi_2{squr(m_bullets[count].get_radius() + scale*touhous[iter].get_madius())};
 
-                    const float bound_2{squr(m_boundary + touhous[iter].get_madius())};
+                    const float bound_2{squr(m_boundary + scale*touhous[iter].get_madius())};
 
                     const float mosit_2{vectralize(touhous[iter].get_mosit())};
 
@@ -305,7 +307,7 @@ void Tohoid::move(std::vector <Tohoid> &touhous)
 
         for (int count{0}; count < m_div; ++count)
         {
-            move_bullets();
+            move_bullets(touhous);
 
             check_bullet_border();
 
@@ -378,4 +380,16 @@ sf::Vector2f mirrorize(const float boundary, const sf::Vector2f &posit, const sf
     }
 
     return (1.0f - 2.0f*boundary/std::sqrt(vectralize(posit)))*posit;
+}
+
+std::vector <sf::Vector2f> touhous2posits(std::vector <Tohoid> &touhous)
+{
+    std::vector <sf::Vector2f> posits;
+
+    for (Tohoid toho : touhous)
+    {
+        posits.push_back(toho.get_posit());
+    }
+
+    return posits;
 }

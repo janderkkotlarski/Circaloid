@@ -25,6 +25,8 @@ class Bullet
 
     bullet_type m_type;
 
+    void danmaku_transform();
+
 public:
 
     Bullet(const sf::Vector2f &windims, const float boundary, const sf::Vector2f &posit, const float veloc,
@@ -45,7 +47,9 @@ public:
 
     void display(sf::RenderWindow &window) {window.draw(m_circle);}
 
-    void bullet_speed(const float light);
+    void bullet_speed(const float light, const std::vector <sf::Vector2f> &targets,
+                      const sf::Vector2f &otaku);
+
 
 };
 

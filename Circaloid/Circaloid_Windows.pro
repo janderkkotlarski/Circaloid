@@ -5,8 +5,8 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     simulation.cpp \
-    tohoid.cpp \
     bullet.cpp \
+    tohoid.cpp \
     menu.cpp
 
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra
@@ -21,6 +21,5 @@ HEADERS += \
     simulation.h \
     bullet.h \
     tohoid.h \
-    menu.h \
-    danmaku.h
+    menu.h
 

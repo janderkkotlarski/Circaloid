@@ -71,7 +71,7 @@ class Tohoid
     void bullet_shoot();
     void danmaku_shoot();
 
-    void move_bullets();
+    void move_bullets(std::vector<Tohoid> &touhous);
     void check_bullet_border();
     void bullets_hurt(std::vector <Tohoid> &touhous);
 
@@ -112,5 +112,7 @@ float squr(const float scalar) noexcept;
 float vectralize(const sf::Vector2f &vectol) noexcept;
 
 sf::Vector2f mirrorize(const float boundary, const sf::Vector2f &posit, const sf::Vector2f &speed);
+
+std::vector <sf::Vector2f> touhous2posits(std::vector <Tohoid> &touhous);
 
 #endif // TOHOID_H
