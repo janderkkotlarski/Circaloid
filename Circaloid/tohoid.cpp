@@ -226,11 +226,11 @@ void Tohoid::danmaku_shoot()
     }
 }
 
-void Tohoid::move_bullets(std::vector <sf::Vector2f> &posits)
+void Tohoid::move_bullets(const std::vector<bool> &alives, const std::vector <sf::Vector2f> &posits)
 {
     for (int count{0}; count < static_cast<int>(m_bullets.size()); ++count)
     {
-        m_bullets[count].bullet_speed(m_light, posits, get_posit());
+        m_bullets[count].bullet_speed(m_light, alives, posits, get_posit());
         m_bullets[count].move();
     }
 }
@@ -310,12 +310,13 @@ void Tohoid::move(std::vector <Tohoid> &touhous)
     if(m_alive)
     {
         std::vector <sf::Vector2f> posits{touhous2posits(touhous)};
+        std::vector <bool> alives{touhous2alives(touhous)};
 
         check_keys();
 
         for (int count{0}; count < m_div; ++count)
         {
-            move_bullets(posits);
+            move_bullets(alives, posits);
 
             check_bullet_border();
 
@@ -366,4 +367,16 @@ std::vector <sf::Vector2f> touhous2posits(std::vector <Tohoid> &touhous)
     }
 
     return posits;
+}
+
+std::vector <bool> touhous2alives(std::vector <Tohoid> &touhous)
+{
+    std::vector <bool> alives;
+
+    for (Tohoid toho : touhous)
+    {
+        alives.push_back(toho.get_vivid());
+    }
+
+    return alives;
 }

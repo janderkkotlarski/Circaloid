@@ -73,7 +73,7 @@ class Tohoid
     void bullet_shoot();
     void danmaku_shoot();
 
-    void move_bullets(std::vector<sf::Vector2f> &posits);
+    void move_bullets(const std::vector<bool> &alives, const std::vector<sf::Vector2f> &posits);
     void check_bullet_border();
     void bullets_hurt(std::vector<Tohoid> &touhous);
 
@@ -107,5 +107,7 @@ public:
 };
 
 std::vector <sf::Vector2f> touhous2posits(std::vector <Tohoid> &touhous);
+
+std::vector <bool> touhous2alives(std::vector <Tohoid> &touhous);
 
 #endif // TOHOID_H

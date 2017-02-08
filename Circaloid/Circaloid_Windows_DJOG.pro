@@ -6,22 +6,22 @@ CONFIG -= qt
 SOURCES += main.cpp \
     simulation.cpp \
     bullet.cpp \
-    functions.cpp \
+    tohoid.cpp \
     menu.cpp \
-    tohoid.cpp
+    functions.cpp
 
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra
 
-INCLUDEPATH += D:/SFML-2.4.0/include
+INCLUDEPATH += C:\SFML-2.4.1\include
 
+LIBS += -LC:/SFML-2.4.1/lib
+LIBS += -LC:\SFML-2.4.1\\bin
 LIBS += -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
-LIBS += -LD:/SFML-2.4.0/lib
-LIBS += -LD:\SFML-2.4.0\bin
-
 
 HEADERS += \
     simulation.h \
     bullet.h \
-    functions.h \
-    tohoid.h
+    tohoid.h \
+    menu.h \
+    functions.h
 

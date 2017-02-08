@@ -36,7 +36,7 @@ void Bullet::set_circle(const float radius, const sf::Vector2f &posit)
     m_circle.setFillColor(color);
 }
 
-void Bullet::bullet_speed(const float light, const std::vector <sf::Vector2f> &targets,
+void Bullet::bullet_speed(const float light, const std::vector <bool> &alives, const std::vector <sf::Vector2f> &targets,
                           const sf::Vector2f &otaku)
 {
     if (m_type == bullet_type::danmaku)
@@ -52,7 +52,7 @@ void Bullet::bullet_speed(const float light, const std::vector <sf::Vector2f> &t
 
         if (m_type == bullet_type::danmaku)
         {
-            danmaku_transform(targets, otaku);
+            danmaku_transform(alives, targets, otaku);
 
             m_veloc = light;
 
@@ -61,7 +61,8 @@ void Bullet::bullet_speed(const float light, const std::vector <sf::Vector2f> &t
     }
 }
 
-void Bullet::danmaku_transform(const std::vector <sf::Vector2f> &targets, const sf::Vector2f &otaku)
+void Bullet::danmaku_transform(const std::vector <bool> alives,
+                               const std::vector <sf::Vector2f> &targets, const sf::Vector2f &otaku)
 {
     int marked{-1};
 
@@ -73,7 +74,7 @@ void Bullet::danmaku_transform(const std::vector <sf::Vector2f> &targets, const 
     {
         const float devi_2{vectralize(targets[count] - otaku)};
 
-        if (devi_2 > max_2)
+        if ((devi_2 > max_2) && alives[count])
         {
             const float dist_2{vectralize(targets[count] - get_posit())};
 
@@ -85,5 +86,8 @@ void Bullet::danmaku_transform(const std::vector <sf::Vector2f> &targets, const 
         }
     }
 
-    set_direction(normalize_direction(targets[marked] - get_posit()));
+    if (marked != -1)
+    {
+        set_direction(normalize_direction(targets[marked] - get_posit()));
+    }
 }
