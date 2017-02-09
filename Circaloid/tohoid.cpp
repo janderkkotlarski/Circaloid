@@ -266,14 +266,9 @@ void Tohoid::move_bullets(const std::vector<bool> &alives, const std::vector <sf
 
     for (int count(0); count < static_cast<int>(m_seeker.size()); ++count)
     {
-        const int self{m_seeker[count].get_self()};
         const int target{m_seeker[count].get_target()};
 
-        if (target >= 0)
-        {
-            m_seeker[count].set_speed(posits[self], posits[target]);
-        }
-
+        m_seeker[count].set_speed(posits[target]);
         m_seeker[count].move();
     }
 }
@@ -497,7 +492,7 @@ int Tohoid::touhou_target(std::vector <Tohoid> &touhous)
 
     for (int count{0}; count < static_cast<int>(touhous.size()); ++count)
     {
-        if (count != self)
+        if ((count != self) && touhous[count].get_vivid())
         {
             const float dist_2{vectralize(touhous[count].get_posit() - touhous[self].get_posit())};
 

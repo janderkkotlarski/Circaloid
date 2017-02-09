@@ -39,12 +39,14 @@ void Seeker::set_circle(const float radius, const sf::Vector2f &posit)
     m_circle.setFillColor(color);
 }
 
-void Seeker::set_speed(const sf::Vector2f &self_posit, const sf::Vector2f &target_posit)
+void Seeker::set_speed(const sf::Vector2f &target_posit)
 {
-    const sf::Vector2f target_dist{target_posit - get_posit()};
+    if (m_target >= 0)
+    {
+        const sf::Vector2f target_dist{target_posit - get_posit()};
 
-    const sf::Vector2f to_target{normalize_direction(target_dist)};
+        const sf::Vector2f to_target{normalize_direction(target_dist)};
 
-    m_speed += m_subframe*m_accel*to_target;
-
+        m_speed += m_subframe*m_accel*to_target;
+    }
 }

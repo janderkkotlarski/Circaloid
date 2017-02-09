@@ -8,7 +8,8 @@ SOURCES += main.cpp \
     bullet.cpp \
     functions.cpp \
     menu.cpp \
-    tohoid.cpp
+    tohoid.cpp \
+    seeker.cpp
 
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra
 
@@ -23,5 +24,14 @@ HEADERS += \
     simulation.h \
     bullet.h \
     functions.h \
-    tohoid.h
+    tohoid.h \
+    menu.h \
+    seeker.h
+
+SUBDIRS += \
+    Circaloid_Windows_DJOG.pro \
+    Circaloid_Windows.pro
+
+OTHER_FILES += \
+    Circaloid_Linux.pro.user
 

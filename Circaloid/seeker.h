@@ -42,7 +42,7 @@ public:
 
     void jump(const sf::Vector2f &leap) noexcept {m_circle.move(leap);}
 
-    void set_speed(const sf::Vector2f &self_posit, const sf::Vector2f &target_posit);
+    void set_speed(const sf::Vector2f &target_posit);
     void move() noexcept {m_circle.move(m_subframe*m_speed);}
 
     void display(sf::RenderWindow &window) {window.draw(m_circle);}
