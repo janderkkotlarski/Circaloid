@@ -10,6 +10,7 @@
 
 #include "functions.h"
 #include "bullet.h"
+#include "seeker.h"
 
 class Tohoid
 {
@@ -49,8 +50,12 @@ class Tohoid
     std::vector <bool> m_keypressed;
 
     std::vector <Bullet> m_bullets;
+
+    std::vector <Seeker> m_seeker;
+
     bool m_bullet_shot;
     bool m_danmaku_shot;
+    bool m_seeker_shot;
 
     bool m_alive;
 
@@ -72,10 +77,13 @@ class Tohoid
 
     void bullet_shoot();
     void danmaku_shoot();
+    void seeker_shoot(std::vector <Tohoid> &touhous);
 
     void move_bullets(const std::vector<bool> &alives, const std::vector<sf::Vector2f> &posits);
     void check_bullet_border();
-    void bullets_hurt(std::vector<Tohoid> &touhous);
+    void check_seeker_border();
+    void bullets_hurt(std::vector <Tohoid> &touhous);
+    void seeker_hurt(std::vector <Tohoid> &touhous);
 
     void display_bullets(sf::RenderWindow &window);
 
@@ -103,6 +111,8 @@ public:
     void move(std::vector <Tohoid> &touhous);
 
     void display(sf::RenderWindow &window);
+
+    int touhou_self(std::vector <Tohoid> &touhous);
 
 };
 

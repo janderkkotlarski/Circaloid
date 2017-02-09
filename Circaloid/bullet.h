@@ -11,7 +11,7 @@
 enum class bullet_type
 {
     normal,
-    danmaku
+    danmaku,
 };
 
 class Bullet
@@ -28,6 +28,8 @@ class Bullet
 
     bullet_type m_type;
 
+    void set_circle(const float radius, const sf::Vector2f &posit);
+
     void danmaku_transform(const std::vector<bool> alives, const std::vector<sf::Vector2f> &targets, const sf::Vector2f &otaku);
 
 public:
@@ -37,7 +39,7 @@ public:
 
     ~Bullet();
 
-    void set_circle(const float radius, const sf::Vector2f &posit);
+
 
     void set_veloc(const float veloc) noexcept {m_veloc = veloc;}
     void set_direction(const sf::Vector2f &direction) noexcept {m_direction = direction;}
@@ -45,8 +47,8 @@ public:
     sf::Vector2f get_posit() const noexcept {return m_circle.getPosition();}
     float get_radius() const noexcept {return m_circle.getRadius();}
 
-    void jump(const sf::Vector2f &leap) noexcept{m_circle.move(leap);}
-    void move() noexcept{m_circle.move(m_subframe*m_veloc*m_direction);}
+    void jump(const sf::Vector2f &leap) noexcept {m_circle.move(leap);}
+    void move() noexcept {m_circle.move(m_subframe*m_veloc*m_direction);}
 
     void display(sf::RenderWindow &window) {window.draw(m_circle);}
 

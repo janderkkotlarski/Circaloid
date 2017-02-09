@@ -10,6 +10,8 @@ Bullet::Bullet(const sf::Vector2f &windims, const float boundary, const sf::Vect
 
     assert(boundary > 0.0f);
 
+    assert(vectralize(posit) <= squr(boundary));
+
     assert(veloc >= 0.0f);
 
     assert(subframe > 0.0f);
