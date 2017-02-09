@@ -2,6 +2,7 @@
 #define FUNCTIONS_H
 
 #include <cmath>
+#include <iostream>
 
 #include "SFML/Graphics.hpp"
 
