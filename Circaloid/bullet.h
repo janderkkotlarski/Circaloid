@@ -34,7 +34,7 @@ class Bullet
 
 public:
 
-    Bullet(const sf::Vector2f &windims, const float boundary, const sf::Vector2f &posit, const float veloc,
+    explicit Bullet(const sf::Vector2f &windims, const float boundary, const sf::Vector2f &posit, const float veloc,
            const sf::Vector2f &direction, const float subframe, const bullet_type &type);
 
     ~Bullet();

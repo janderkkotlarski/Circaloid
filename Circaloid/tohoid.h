@@ -89,7 +89,7 @@ class Tohoid
 
 public:
 
-    Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf::Vector2f &speed, const float light,
+    explicit Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf::Vector2f &speed, const float light,
              const float accel, const float rotation, const float pheta, const std::string &image_name, const int div,
              const float frame, const std::vector<sf::Keyboard::Key> &keys);    
 
@@ -113,11 +113,13 @@ public:
     void display(sf::RenderWindow &window);
 
     int touhou_self(std::vector <Tohoid> &touhous);
+    int touhou_target(std::vector <Tohoid> &touhous);
 
 };
 
 std::vector <sf::Vector2f> touhous2posits(std::vector <Tohoid> &touhous);
 
 std::vector <bool> touhous2alives(std::vector <Tohoid> &touhous);
+
 
 #endif // TOHOID_H

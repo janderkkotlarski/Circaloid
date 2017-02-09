@@ -18,6 +18,8 @@ class Seeker
 
     float m_subframe;
 
+    int m_self;
+
     int m_target;
 
     sf::CircleShape m_circle;
@@ -26,18 +28,21 @@ class Seeker
 
 public:
 
-    Seeker(const sf::Vector2f &windims, const float boundary, const sf::Vector2f &posit,
+    explicit Seeker(const sf::Vector2f &windims, const float boundary, const sf::Vector2f &posit,
            const sf::Vector2f &speed, const float &light, const float subframe,
-           const int target, const int self);
+           const int self, const int target);
 
     ~Seeker();
 
     sf::Vector2f get_posit() const noexcept {return m_circle.getPosition();}
     float get_radius() const noexcept {return m_circle.getRadius();}
 
+    int get_self() const noexcept {return m_self;}
+    int get_target() const noexcept {return m_target;}
+
     void jump(const sf::Vector2f &leap) noexcept {m_circle.move(leap);}
 
-    void set_speed();
+    void set_speed(const sf::Vector2f &self_posit, const sf::Vector2f &target_posit);
     void move() noexcept {m_circle.move(m_subframe*m_speed);}
 
     void display(sf::RenderWindow &window) {window.draw(m_circle);}

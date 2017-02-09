@@ -235,12 +235,13 @@ void Tohoid::seeker_shoot(std::vector <Tohoid> &touhous)
         {
             const float scale{1.01f};
 
-            const float qi_loss{-0.1f};
+            const float qi_loss{-0.25f};
             assert(qi_loss < 0.0f);
 
             m_quinergy += qi_loss;
 
-            m_seeker.push_back(Seeker(m_windims, m_boundary, get_posit(), m_speed, m_light, m_subframe, 1, 0));
+            m_seeker.push_back(Seeker(m_windims, m_boundary, get_posit(), m_speed, m_light, m_subframe,
+                                      touhou_self(touhous), touhou_target(touhous)));
 
             const sf::Vector2f leap{(scale*get_radius() + scale*m_seeker.back().get_radius())*rotation2direction(get_rotate())};
 
@@ -265,7 +266,15 @@ void Tohoid::move_bullets(const std::vector<bool> &alives, const std::vector <sf
 
     for (int count(0); count < static_cast<int>(m_seeker.size()); ++count)
     {
-         m_seeker[count].move();
+        const int self{m_seeker[count].get_self()};
+        const int target{m_seeker[count].get_target()};
+
+        if (target >= 0)
+        {
+            m_seeker[count].set_speed(posits[self], posits[target]);
+        }
+
+        m_seeker[count].move();
     }
 }
 
@@ -355,7 +364,7 @@ void Tohoid::seeker_hurt(std::vector <Tohoid> &touhous)
 {
     if ((m_seeker.size() > 0) && (touhous.size() > 0))
     {
-        const float qi_hurt{-0.5f};
+        const float qi_hurt{-1.01f};
         assert(qi_hurt < 0.0f);
 
         const float scale{0.85f};
@@ -476,6 +485,31 @@ int Tohoid::touhou_self(std::vector<Tohoid> &touhous)
     }
 
     return self;
+}
+
+int Tohoid::touhou_target(std::vector <Tohoid> &touhous)
+{
+    int target{-1};
+
+    const int self{touhou_self(touhous)};
+
+    float max_2{1.0e10f};
+
+    for (int count{0}; count < static_cast<int>(touhous.size()); ++count)
+    {
+        if (count != self)
+        {
+            const float dist_2{vectralize(touhous[count].get_posit() - touhous[self].get_posit())};
+
+            if (dist_2 < max_2)
+            {
+                target = count;
+                max_2 = dist_2;
+            }
+        }
+    }
+
+    return target;
 }
 
 std::vector <sf::Vector2f> touhous2posits(std::vector <Tohoid> &touhous)
