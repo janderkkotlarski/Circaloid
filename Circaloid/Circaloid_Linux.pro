@@ -4,7 +4,7 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp \
-    simulation.cpp \
+    game.cpp \
     bullet.cpp \
     functions.cpp \
     menu.cpp \
@@ -21,7 +21,7 @@ LIBS += -LD:\SFML-2.4.0\bin
 
 
 HEADERS += \
-    simulation.h \
+    game.h \
     bullet.h \
     functions.h \
     tohoid.h \

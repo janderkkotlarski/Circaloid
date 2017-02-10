@@ -12,20 +12,10 @@
 
 class Game
 {
-    const std::string m_winame;
-    const sf::Vector2f m_windims;
-
-    sf::RenderWindow m_window;
-
-    sf::View m_view;
-
-    const sf::Color m_background;
-
     const int m_fps;
     const float m_frame;
     const int m_div;
-
-    int return_type;
+    bool m_loop;
 
 public:
 
@@ -35,7 +25,7 @@ public:
 
     void touhous_die(std::vector <Tohoid> &touhous);
 
-    int run();
+    void run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::Color &background);
 };
 
 std::vector <sf::Keyboard::Key> chars2keys(const std::vector <char> &charas);
