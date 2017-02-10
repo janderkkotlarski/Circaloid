@@ -1,5 +1,5 @@
-#ifndef SIMULATION_H
-#define SIMULATION_H
+#ifndef GAME_H
+#define GAME_H
 
 #include <cassert>
 #include <iostream>
@@ -10,7 +10,7 @@
 #include "functions.h"
 #include "tohoid.h"
 
-class Simulation
+class Game
 {
     const std::string m_winame;
     const sf::Vector2f m_windims;
@@ -29,9 +29,9 @@ class Simulation
 
 public:
 
-    explicit Simulation();
+    explicit Game();
 
-    ~Simulation();
+    ~Game();
 
     void touhous_die(std::vector <Tohoid> &touhous);
 
@@ -43,4 +43,4 @@ std::vector <sf::Keyboard::Key> chars2keys(const std::vector <char> &charas);
 void set_image(const std::string &name, const sf::Vector2f &windims,
                sf::Texture &texture, sf::Sprite &sprite);
 
-#endif // SIMULATION_H
+#endif // GAME_H

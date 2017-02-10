@@ -1,6 +1,6 @@
-#include "simulation.h"
+#include "game.h"
 
-Simulation::Simulation()
+Game::Game()
     : m_winame("Circaloid"), m_windims(750.0f, 750.0f),
       m_window(sf::VideoMode(m_windims.x, m_windims.y), m_winame, sf::Style::Default),
       m_view(0.0f*m_windims, m_windims), m_background(0, 0, 0),
@@ -17,11 +17,11 @@ Simulation::Simulation()
     m_window.setView(m_view);
 }
 
-Simulation::~Simulation()
+Game::~Game()
 {
 }
 
-int Simulation::run()
+int Game::run()
 {
     const std::vector <std::string> image_names{"Patchouli_64.png",
                                            "Meiling_64.png",
@@ -136,7 +136,7 @@ int Simulation::run()
     return return_type;
 }
 
-void Simulation::touhous_die(std::vector <Tohoid> &touhous)
+void Game::touhous_die(std::vector <Tohoid> &touhous)
 {
     for (int count{0}; count < static_cast<int>(touhous.size()); ++count)
     {

@@ -2,7 +2,9 @@
 
 int main()
 {
-    menu();
+    Menu menu;
+
+    menu.start();
 
     return 0;
 }
