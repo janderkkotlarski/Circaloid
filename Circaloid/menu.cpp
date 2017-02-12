@@ -17,7 +17,6 @@ void Menu::start()
     const sf::Vector2f windims{m_side, m_side};
 
     sf::View view(0.0f*windims, windims);
-
     m_window.setView(view);
 
     while (m_window.isOpen())
@@ -26,5 +25,4 @@ void Menu::start()
 
         game.run(m_window, windims, m_background);
     }
-
 }

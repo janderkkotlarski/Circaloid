@@ -24,16 +24,12 @@ Tohoid::Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf:
     assert(m_keys.size() > 0);
 
     for (int count{0}; count < static_cast<int>(m_keys.size()); ++count)
-    {
-        m_keypressed.push_back(false);
-    }
+    { m_keypressed.push_back(false); }
 
     assert(m_keys.size() == m_keypressed.size());
 
     if (!m_texture.loadFromFile(image_name))
-    {
-        std::cerr << image_name << "not found!\n";
-    }
+    { std::cerr << image_name << "not found!\n"; }
 
     m_texture.setSmooth(true);
 
@@ -55,14 +51,10 @@ void Tohoid::relativate()
     assert(minim > 0.0f);
 
     if (vectralize(m_speed) < squr(m_light))
-    {
-        m_relative = (1.0f - minim)*sqrt(1 - vectralize(m_speed)/squr(m_light)) + minim;
-    }
+    { m_relative = (1.0f - minim)*sqrt(1 - vectralize(m_speed)/squr(m_light)) + minim; }
 
     if (m_relative < minim)
-    {
-        m_relative = minim;
-    }
+    { m_relative = minim; }
 }
 
 void Tohoid::accelerate()

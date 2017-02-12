@@ -17,7 +17,6 @@ Game::~Game()
 
 void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::Color &background)
 {
-
     const int amount{3};
 
     const std::string patchy{"Patchouli_64.png"};

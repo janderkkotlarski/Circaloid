@@ -34,18 +34,28 @@ public:
 
     ~Seeker();
 
-    sf::Vector2f get_posit() const noexcept {return m_circle.getPosition();}
-    float get_radius() const noexcept {return m_circle.getRadius();}
+    sf::Vector2f get_posit() const noexcept
+    { return m_circle.getPosition(); }
 
-    int get_self() const noexcept {return m_self;}
-    int get_target() const noexcept {return m_target;}
+    float get_radius() const noexcept
+    { return m_circle.getRadius(); }
 
-    void jump(const sf::Vector2f &leap) noexcept {m_circle.move(leap);}
+    int get_self() const noexcept
+    { return m_self; }
+
+    int get_target() const noexcept
+    { return m_target; }
+
+    void jump(const sf::Vector2f &leap) noexcept
+    { m_circle.move(leap); }
 
     void set_speed(const sf::Vector2f &target_posit);
-    void move() noexcept {m_circle.move(m_subframe*m_speed);}
 
-    void display(sf::RenderWindow &window) {window.draw(m_circle);}
+    void move() noexcept
+    { m_circle.move(m_subframe*m_speed); }
+
+    void display(sf::RenderWindow &window)
+    { window.draw(m_circle); }
 
 };
 

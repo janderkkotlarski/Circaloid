@@ -9,7 +9,6 @@ Bullet::Bullet(const sf::Vector2f &windims, const float boundary, const sf::Vect
     assert(windims.y > 0.0f);
 
     assert(boundary > 0.0f);
-
     assert(vectralize(posit) <= squr(boundary));
 
     assert(veloc >= 0.0f);
@@ -44,7 +43,6 @@ void Bullet::bullet_speed(const float light, const std::vector <bool> &alives, c
     if (m_type == bullet_type::danmaku)
     {
         const float delta_veloc{-0.0001f*light};
-
         m_veloc += delta_veloc;
     }
 
@@ -55,9 +53,7 @@ void Bullet::bullet_speed(const float light, const std::vector <bool> &alives, c
         if (m_type == bullet_type::danmaku)
         {
             danmaku_transform(alives, targets, otaku);
-
             m_veloc = light;
-
             m_type = bullet_type::normal;
         }
     }
@@ -67,10 +63,13 @@ void Bullet::danmaku_transform(const std::vector <bool> alives,
                                const std::vector <sf::Vector2f> &targets, const sf::Vector2f &otaku)
 {
     int marked{-1};
+    assert(marked == -1);
 
     float min_2{1.0e10f};
+    assert(min_2 >= 1.0e10f);
 
     const float max_2{10.0f};
+    assert(max_2 <= 10.0f);
 
     for (int count{0}; count < static_cast<int>(targets.size()); ++count)
     {

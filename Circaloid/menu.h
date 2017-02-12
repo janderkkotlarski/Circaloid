@@ -9,21 +9,15 @@
 class Menu
 {
     std::string m_name;
-
     const float m_side;
-
     sf::Color m_background;
-
     sf::RenderWindow m_window;
 
 public:
 
-    Menu();
+    explicit Menu();
 
     void start();
-
 };
-
-
 
 #endif // MENU_H

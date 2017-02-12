@@ -19,7 +19,6 @@ class Bullet
     float m_boundary;
 
     float m_veloc;
-
     sf::Vector2f m_direction;
 
     float m_subframe;
@@ -39,23 +38,29 @@ public:
 
     ~Bullet();
 
+    void set_veloc(const float veloc) noexcept
+    { m_veloc = veloc; }
 
+    void set_direction(const sf::Vector2f &direction) noexcept
+    { m_direction = direction; }
 
-    void set_veloc(const float veloc) noexcept {m_veloc = veloc;}
-    void set_direction(const sf::Vector2f &direction) noexcept {m_direction = direction;}
+    sf::Vector2f get_posit() const noexcept
+    { return m_circle.getPosition(); }
 
-    sf::Vector2f get_posit() const noexcept {return m_circle.getPosition();}
-    float get_radius() const noexcept {return m_circle.getRadius();}
+    float get_radius() const noexcept
+    { return m_circle.getRadius(); }
 
-    void jump(const sf::Vector2f &leap) noexcept {m_circle.move(leap);}
-    void move() noexcept {m_circle.move(m_subframe*m_veloc*m_direction);}
+    void jump(const sf::Vector2f &leap) noexcept
+    { m_circle.move(leap); }
 
-    void display(sf::RenderWindow &window) {window.draw(m_circle);}
+    void move() noexcept
+    { m_circle.move(m_subframe*m_veloc*m_direction); }
+
+    void display(sf::RenderWindow &window)
+    { window.draw(m_circle); }
 
     void bullet_speed(const float light, const std::vector<bool> &alives, const std::vector <sf::Vector2f> &targets,
                       const sf::Vector2f &otaku);
-
-
 };
 
 #endif // BULLET_H
