@@ -33,8 +33,20 @@ float direction2rotation(const sf::Vector2f &direction)
 sf::Vector2f normalize_direction(const sf::Vector2f &direction)
 { return direction/std::sqrt(vectralize(direction)); }
 
-void set_sprite(const sf::Vector2f &posit, const float rotation, sf::Sprite &sprite)
+void set_texture(const std::string &filename, sf::Texture &texture)
 {
+    assert(filename != "");
+
+    if (!texture.loadFromFile(filename))
+    { std::cerr << filename << " not found!\n"; }
+
+    texture.setSmooth(true);
+}
+
+void set_sprite(const sf::Vector2f &posit, const float rotation,
+                sf::Texture &texture, sf::Sprite &sprite)
+{
+    sprite.setTexture(texture);
     sprite.setOrigin(0.5f*sprite.getLocalBounds().width, 0.5f*sprite.getLocalBounds().height);
     sprite.setPosition(posit);
     sprite.setRotation(rotation);

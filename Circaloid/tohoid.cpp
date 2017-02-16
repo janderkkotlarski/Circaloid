@@ -7,6 +7,7 @@ Tohoid::Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf:
       m_accel(accel), m_pheta(pheta), m_quinergy(1.0f), m_questore(0.02f), m_quove(-0.02f),
       m_texture(), m_sprite(), m_smite(),
       m_dexture(), m_direct(), m_disect(),
+      m_tophics(image_name, posit, rotation),
       m_div(div), m_frame(frame), m_subframe(frame/static_cast<float>(div)),
       m_keys(keys), m_keypressed(), m_bullets(),
       m_bullet_shot(false), m_danmaku_shot(false), m_alive(true)
@@ -30,30 +31,18 @@ Tohoid::Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf:
 
     assert(m_keys.size() == m_keypressed.size());
 
-    if (!m_texture.loadFromFile(image_name))
-    { std::cerr << image_name << " not found!\n"; }
+    set_texture(image_name, m_texture);
 
-    m_texture.setSmooth(true);
-
-    m_sprite.setTexture(m_texture);
-    m_smite.setTexture(m_texture);
-
-    set_sprite(posit, rotation, m_sprite);
-    set_sprite(posit, rotation, m_smite);
+    set_sprite(posit, rotation, m_texture, m_sprite);
+    set_sprite(posit, rotation, m_texture, m_smite);
 
     const std::string direct_name{"Direction_64.png"};
     assert(direct_name != "");
 
-    if (!m_dexture.loadFromFile(direct_name))
-    { std::cerr << direct_name << " not found!\n"; }
+    set_texture(direct_name, m_dexture);
 
-    m_dexture.setSmooth(true);
-
-    m_direct.setTexture(m_dexture);
-    m_disect.setTexture(m_dexture);
-
-    set_sprite(posit, rotation, m_direct);
-    set_sprite(posit, rotation, m_disect);
+    set_sprite(posit, rotation, m_dexture, m_direct);
+    set_sprite(posit, rotation, m_dexture, m_disect);
 
 }
 
@@ -106,22 +95,26 @@ void Tohoid::ceiling()
 
 void Tohoid::rotate()
 {
+    float rotation{m_relative*m_pheta};
+
     if (m_keypressed[2])
     {
-        m_sprite.rotate(m_relative*m_pheta);
-        m_smite.rotate(m_relative*m_pheta);
-        m_direct.rotate(m_relative*m_pheta);
-        m_disect.rotate(m_relative*m_pheta);
+        float rotation{m_relative*m_pheta};
+
+        m_sprite.rotate(rotation);
+        m_smite.rotate(rotation);
+        m_direct.rotate(rotation);
+        m_disect.rotate(rotation);
 
         m_quinergy += m_subframe*m_quove;
     }
 
     if (m_keypressed[3])
     {
-        m_sprite.rotate(-m_relative*m_pheta);
-        m_smite.rotate(-m_relative*m_pheta);
-        m_direct.rotate(-m_relative*m_pheta);
-        m_disect.rotate(-m_relative*m_pheta);
+        m_sprite.rotate(-rotation);
+        m_smite.rotate(-rotation);
+        m_direct.rotate(-rotation);
+        m_disect.rotate(-rotation);
 
         m_quinergy += m_subframe*m_quove;
     }
@@ -341,26 +334,20 @@ void Tohoid::bullets_hurt(std::vector <Tohoid> &touhous)
                 for (int count{0}; count < static_cast<int>(m_bullets.size()); ++count)
                 {
                     const float dist_2{vectralize(m_bullets[count].get_posit() - touhous[iter].get_posit())};
-
                     const float mist_2{vectralize(m_bullets[count].get_posit() - touhous[iter].get_mosit())};
 
                     const float radi_2{squr(m_bullets[count].get_radius() + scale*touhous[iter].get_radius())};
-
                     const float madi_2{squr(m_bullets[count].get_radius() + scale*touhous[iter].get_madius())};
 
                     const float bound_2{squr(m_boundary + scale*touhous[iter].get_madius())};
-
                     const float mosit_2{vectralize(touhous[iter].get_mosit())};
 
                     if ((dist_2 <= radi_2) ||
                         ((mist_2 <= madi_2) && (mosit_2 <= bound_2)))
                     {
                         m_bullets[count] = m_bullets.back();
-
                         m_bullets.pop_back();
-
                         touhous[iter].qi_damage(qi_hurt);
-
                         --count;
                     }
                 }
@@ -377,6 +364,7 @@ void Tohoid::seeker_hurt(std::vector <Tohoid> &touhous)
         assert(qi_hurt < 0.0f);
 
         const float scale{0.85f};
+        assert(scale > 0.0f);
 
         for (int iter{0}; iter < static_cast<int>(touhous.size()); ++iter)
         {
@@ -385,26 +373,20 @@ void Tohoid::seeker_hurt(std::vector <Tohoid> &touhous)
                 for (int count{0}; count < static_cast<int>(m_seeker.size()); ++count)
                 {
                     const float dist_2{vectralize(m_seeker[count].get_posit() - touhous[iter].get_posit())};
-
                     const float mist_2{vectralize(m_seeker[count].get_posit() - touhous[iter].get_mosit())};
 
                     const float radi_2{squr(m_seeker[count].get_radius() + scale*touhous[iter].get_radius())};
-
                     const float madi_2{squr(m_seeker[count].get_radius() + scale*touhous[iter].get_madius())};
 
                     const float bound_2{squr(m_boundary + scale*touhous[iter].get_madius())};
-
                     const float mosit_2{vectralize(touhous[iter].get_mosit())};
 
                     if ((dist_2 <= radi_2) ||
                         ((mist_2 <= madi_2) && (mosit_2 <= bound_2)))
                     {
                         m_seeker[count] = m_seeker.back();
-
                         m_seeker.pop_back();
-
                         touhous[iter].qi_damage(qi_hurt);
-
                         --count;
                     }
                 }
@@ -441,6 +423,7 @@ void Tohoid::move(std::vector <Tohoid> &touhous)
 
             check_bullet_border();
             check_seeker_border();
+
 
             m_sprite.move(m_subframe*m_speed);
             m_direct.move(m_subframe*m_speed);

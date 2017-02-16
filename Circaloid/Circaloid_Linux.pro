@@ -9,7 +9,8 @@ SOURCES += main.cpp \
     functions.cpp \
     menu.cpp \
     tohoid.cpp \
-    seeker.cpp
+    seeker.cpp \
+    tophics.cpp
 
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra
 
@@ -26,7 +27,8 @@ HEADERS += \
     functions.h \
     tohoid.h \
     menu.h \
-    seeker.h
+    seeker.h \
+    tophics.h
 
 SUBDIRS += \
     Circaloid_Windows_DJOG.pro \

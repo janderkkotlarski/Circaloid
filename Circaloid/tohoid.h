@@ -9,6 +9,7 @@
 
 
 #include "functions.h"
+#include "tophics.h"
 #include "bullet.h"
 #include "seeker.h"
 
@@ -43,6 +44,8 @@ class Tohoid
 
     sf::Sprite m_direct;
     sf::Sprite m_disect;
+
+    Tophics m_tophics;
 
     const int m_div;
 
