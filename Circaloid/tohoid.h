@@ -39,6 +39,11 @@ class Tohoid
     sf::Sprite m_sprite;
     sf::Sprite m_smite;
 
+    sf::Texture m_dexture;
+
+    sf::Sprite m_direct;
+    sf::Sprite m_disect;
+
     const int m_div;
 
     const float m_frame;

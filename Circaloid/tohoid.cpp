@@ -4,7 +4,9 @@ Tohoid::Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf:
                    const float accel, const float rotation, const float pheta, const std::string &image_name,
                    const int div, const float frame, const std::vector <sf::Keyboard::Key> &keys)
     : m_windims(windims), m_boundary(0.5f*windims.x), m_speed(speed), m_light(squr(light)), m_relative(1.0f),
-      m_accel(accel), m_pheta(pheta), m_quinergy(1.0f), m_questore(0.02f), m_quove(-0.02f), m_texture(), m_sprite(), m_smite(),
+      m_accel(accel), m_pheta(pheta), m_quinergy(1.0f), m_questore(0.02f), m_quove(-0.02f),
+      m_texture(), m_sprite(), m_smite(),
+      m_dexture(), m_direct(), m_disect(),
       m_div(div), m_frame(frame), m_subframe(frame/static_cast<float>(div)),
       m_keys(keys), m_keypressed(), m_bullets(),
       m_bullet_shot(false), m_danmaku_shot(false), m_alive(true)
@@ -29,7 +31,7 @@ Tohoid::Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf:
     assert(m_keys.size() == m_keypressed.size());
 
     if (!m_texture.loadFromFile(image_name))
-    { std::cerr << image_name << "not found!\n"; }
+    { std::cerr << image_name << " not found!\n"; }
 
     m_texture.setSmooth(true);
 
@@ -38,6 +40,21 @@ Tohoid::Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf:
 
     set_sprite(posit, rotation, m_sprite);
     set_sprite(posit, rotation, m_smite);
+
+    const std::string direct_name{"Direction_64.png"};
+    assert(direct_name != "");
+
+    if (!m_dexture.loadFromFile(direct_name))
+    { std::cerr << direct_name << " not found!\n"; }
+
+    m_dexture.setSmooth(true);
+
+    m_direct.setTexture(m_dexture);
+    m_disect.setTexture(m_dexture);
+
+    set_sprite(posit, rotation, m_direct);
+    set_sprite(posit, rotation, m_disect);
+
 }
 
 Tohoid::~Tohoid()
@@ -93,6 +110,8 @@ void Tohoid::rotate()
     {
         m_sprite.rotate(m_relative*m_pheta);
         m_smite.rotate(m_relative*m_pheta);
+        m_direct.rotate(m_relative*m_pheta);
+        m_disect.rotate(m_relative*m_pheta);
 
         m_quinergy += m_subframe*m_quove;
     }
@@ -101,6 +120,8 @@ void Tohoid::rotate()
     {
         m_sprite.rotate(-m_relative*m_pheta);
         m_smite.rotate(-m_relative*m_pheta);
+        m_direct.rotate(-m_relative*m_pheta);
+        m_disect.rotate(-m_relative*m_pheta);
 
         m_quinergy += m_subframe*m_quove;
     }
@@ -142,6 +163,7 @@ void Tohoid::check_border()
     if (vectralize(get_posit()) > squr(m_boundary))
     {
         m_sprite.setPosition(mirrorize(m_boundary, get_posit(), m_speed));
+        m_direct.setPosition(m_sprite.getPosition());
     }
 }
 
@@ -421,10 +443,12 @@ void Tohoid::move(std::vector <Tohoid> &touhous)
             check_seeker_border();
 
             m_sprite.move(m_subframe*m_speed);
+            m_direct.move(m_subframe*m_speed);
 
             check_border();
 
             m_smite.setPosition(mirrorize(m_boundary, get_posit(), m_speed));
+            m_disect.setPosition( m_smite.getPosition());
 
             relativate();
             rotate();
@@ -450,10 +474,12 @@ void Tohoid::display(sf::RenderWindow &window)
     {
         display_bullets(window);
 
+        window.draw(m_direct);
         window.draw(m_sprite);
 
         if (vectralize(get_mosit()) < squr(m_boundary + m_smite.getLocalBounds().width))
         {
+            window.draw(m_disect);
             window.draw(m_smite);
         }
     }
