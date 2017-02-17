@@ -99,23 +99,13 @@ void Tohoid::rotate()
 
     if (m_keypressed[2])
     {
-        float rotation{m_relative*m_pheta};
-
-        m_sprite.rotate(rotation);
-        m_smite.rotate(rotation);
-        m_direct.rotate(rotation);
-        m_disect.rotate(rotation);
-
+        m_tophics.rotate(rotation);
         m_quinergy += m_subframe*m_quove;
     }
 
     if (m_keypressed[3])
     {
-        m_sprite.rotate(-rotation);
-        m_smite.rotate(-rotation);
-        m_direct.rotate(-rotation);
-        m_disect.rotate(-rotation);
-
+        m_tophics.rotate(-rotation);
         m_quinergy += m_subframe*m_quove;
     }
 }
@@ -156,7 +146,7 @@ void Tohoid::check_border()
     if (vectralize(get_posit()) > squr(m_boundary))
     {
         m_sprite.setPosition(mirrorize(m_boundary, get_posit(), m_speed));
-        m_direct.setPosition(m_sprite.getPosition());
+        m_direct.setPosition(get_posit());
     }
 }
 
@@ -431,7 +421,7 @@ void Tohoid::move(std::vector <Tohoid> &touhous)
             check_border();
 
             m_smite.setPosition(mirrorize(m_boundary, get_posit(), m_speed));
-            m_disect.setPosition( m_smite.getPosition());
+            m_disect.setPosition(m_smite.getPosition());
 
             relativate();
             rotate();

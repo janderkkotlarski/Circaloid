@@ -30,6 +30,16 @@ public:
 
     ~Tophics();
 
+    sf::Vector2f get_posit() const noexcept
+    { return m_sprite.getPosition();}
+
+    void rotate(const float rotation);
+
+    void move_sprite(const sf::Vector2f &delta_posit);
+
+    void check_border(const float boundary, const sf::Vector2f &speed);
+
+    void move_smite();
 };
 
 #endif // TOPHICS_H
