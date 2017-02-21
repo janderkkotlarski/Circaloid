@@ -17,9 +17,9 @@ float direction2rotation(const sf::Vector2f &direction)
     if (direction.x == 0.0f)
     {
         if (direction.y < 0.0f)
-        { return 90; }
+        { return 90.0f; }
         else
-        { return -90; }
+        { return -90.0f; }
     }
     else
     {
@@ -57,4 +57,9 @@ sf::Vector2f mirrorize(const float boundary, const sf::Vector2f &posit, const sf
     if (vectralize(posit) == 0.0f) { return (1.0f - 2.0f*boundary/std::sqrt(vectralize(speed)))*speed; }
 
     return (1.0f - 2.0f*boundary/std::sqrt(vectralize(posit)))*posit;
+}
+
+float sprite_radius(sf::Sprite &sprite)
+{
+    return 0.25f*(sprite.getGlobalBounds().width + sprite.getGlobalBounds().height);
 }

@@ -46,3 +46,12 @@ void Tophics::check_border(const float boundary, const sf::Vector2f &speed)
         m_direct.setPosition(get_posit());
     }
 }
+
+void Tophics::display(sf::RenderWindow &window)
+{
+    window.draw(m_direct);
+    window.draw(m_sprite);
+
+    window.draw(m_disect);
+    window.draw(m_smite);
+}

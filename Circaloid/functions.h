@@ -23,4 +23,6 @@ void set_sprite(const sf::Vector2f &posit, const float rotation, sf::Texture &te
 
 sf::Vector2f mirrorize(const float boundary, const sf::Vector2f &posit, const sf::Vector2f &speed);
 
+float sprite_radius(sf::Sprite &sprite);
+
 #endif // FUNCTIONS_H

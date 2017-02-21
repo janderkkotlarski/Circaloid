@@ -40,6 +40,8 @@ public:
     void check_border(const float boundary, const sf::Vector2f &speed);
 
     void move_smite();
+
+    void display(sf::RenderWindow &window);
 };
 
 #endif // TOPHICS_H
