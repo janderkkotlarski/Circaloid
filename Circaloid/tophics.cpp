@@ -47,11 +47,14 @@ void Tophics::check_border(const float boundary, const sf::Vector2f &speed)
     }
 }
 
-void Tophics::display(sf::RenderWindow &window)
+void Tophics::display(sf::RenderWindow &window, const float boundary)
 {
     window.draw(m_direct);
     window.draw(m_sprite);
 
-    window.draw(m_disect);
-    window.draw(m_smite);
+    if (vectralize(get_mosit()) < squr(m_boundary + m_smite.getLocalBounds().width))
+    {
+        window.draw(m_disect);
+        window.draw(m_smite);
+    }
 }
