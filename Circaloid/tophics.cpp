@@ -52,7 +52,7 @@ void Tophics::display(sf::RenderWindow &window, const float boundary)
     window.draw(m_direct);
     window.draw(m_sprite);
 
-    if (vectralize(get_mosit()) < squr(m_boundary + m_smite.getLocalBounds().width))
+    if (vectralize(get_mosit()) < squr(boundary + m_smite.getLocalBounds().width))
     {
         window.draw(m_disect);
         window.draw(m_smite);

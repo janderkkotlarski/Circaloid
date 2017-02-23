@@ -65,23 +65,20 @@ void Tohoid::relativate()
 
 void Tohoid::accelerate()
 {
-    if (m_keypressed[0] || m_keypressed[1])
+    const sf::Vector2f accer{m_relative*m_accel*rotation2direction(get_rotate())};
+
+    if (sf::Keyboard::isKeyPressed(m_keys[0]))
     {
-        const sf::Vector2f accer{m_relative*m_accel*rotation2direction(get_rotate())};
+        m_speed += accer;
 
-        if (m_keypressed[0])
-        {
-            m_speed += accer;
+        m_quinergy += m_frame*m_quove;
+    }
 
-            m_quinergy += m_subframe*m_quove;
-        }
+    if (sf::Keyboard::isKeyPressed(m_keys[1]))
+    {
+        m_speed -= accer;
 
-        if (m_keypressed[1])
-        {
-            m_speed -= accer;
-
-            m_quinergy += m_subframe*m_quove;
-        }
+        m_quinergy += m_frame*m_quove;
     }
 }
 
@@ -152,7 +149,7 @@ void Tohoid::check_border()
 
 void Tohoid::bullet_shoot()
 {
-    if (m_keypressed[4])
+    if ((sf::Keyboard::isKeyPressed(m_keys[4])))
     {
         if (!m_bullet_shot)
         {
@@ -405,7 +402,7 @@ void Tohoid::move(std::vector <Tohoid> &touhous)
         std::vector <sf::Vector2f> posits{touhous2posits(touhous)};
         std::vector <bool> alives{touhous2alives(touhous)};
 
-        check_keys();
+        // check_keys();
 
         for (int count{0}; count < m_div; ++count)
         {
