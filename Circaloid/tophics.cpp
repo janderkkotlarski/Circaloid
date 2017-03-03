@@ -1,7 +1,9 @@
 #include "tophics.h"
 
-Tophics::Tophics(const std::string &sprite_name, const sf::Vector2f &posit, const float rotation)
-    : m_texture(), m_sprite(), m_smite(),
+Tophics::Tophics(const std::string &sprite_name, const sf::Vector2f &posit,
+                 const float boundary, const float rotation)
+    : m_boundary(boundary),
+      m_texture(), m_sprite(), m_smite(),
       m_dexture(), m_direct(), m_disect()
 {
     assert(sprite_name != "");
@@ -38,16 +40,28 @@ void Tophics::move_sprite(const sf::Vector2f &delta_posit)
     m_direct.move(delta_posit);
 }
 
-void Tophics::check_border(const float boundary, const sf::Vector2f &speed)
+void Tophics::check_border(const sf::Vector2f &speed)
 {
-    if (vectralize(get_posit()) > squr(boundary))
+    if (vectralize(get_posit()) > squr(m_boundary))
     {
-        m_sprite.setPosition(mirrorize(boundary, get_posit(), speed));
+        m_sprite.setPosition(mirrorize(m_boundary, get_posit(), speed));
         m_direct.setPosition(get_posit());
     }
 }
 
-void Tophics::display(sf::RenderWindow &window, const float boundary)
+void Tophics::move_smite(const sf::Vector2f &speed)
+{
+    m_smite.setPosition(mirrorize(m_boundary, get_posit(), speed));
+    m_disect.setPosition(get_mosit());
+}
+
+void Tophics::set_scale(const float scale)
+{
+    m_sprite.setScale(scale, scale);
+    m_smite.setScale(scale, scale);
+}
+
+void Tophics::display(sf::RenderWindow &window)
 {
     window.draw(m_direct);
     window.draw(m_sprite);

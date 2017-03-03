@@ -1,8 +1,8 @@
 #include "bullet.h"
 
 Bullet::Bullet(const sf::Vector2f &windims, const float boundary, const sf::Vector2f &posit, const float veloc,
-               const sf::Vector2f &direction, const float subframe, const bullet_type &type)
-    : m_boundary(boundary), m_veloc(veloc), m_direction(direction), m_subframe(subframe),
+               const sf::Vector2f &direction, const float frame, const bullet_type &type)
+    : m_boundary(boundary), m_veloc(veloc), m_direction(direction), m_frame(frame),
       m_circle(), m_type(type)
 {
     assert(windims.x > 0.0f);
@@ -13,7 +13,7 @@ Bullet::Bullet(const sf::Vector2f &windims, const float boundary, const sf::Vect
 
     assert(veloc >= 0.0f);
 
-    assert(subframe > 0.0f);
+    assert(frame > 0.0f);
 
     const float part{0.01f};
     assert(part > 0.0f);

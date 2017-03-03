@@ -107,7 +107,7 @@ public:
     sf::Vector2f get_mosit() const noexcept {return m_smite.getPosition();}
     float get_radius() noexcept {return sprite_radius(m_sprite);}
     float get_madius() noexcept {return sprite_radius(m_smite);}
-    float get_rotate() const noexcept {return m_sprite.getRotation();}
+    float get_rotate() const noexcept {return m_tophics.get_rotate();}
 
     float get_quinergy() const noexcept {return m_quinergy;}
     bool get_vivid() const noexcept {return m_alive;}

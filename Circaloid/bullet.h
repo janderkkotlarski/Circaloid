@@ -21,7 +21,7 @@ class Bullet
     float m_veloc;
     sf::Vector2f m_direction;
 
-    float m_subframe;
+    float m_frame;
 
     sf::CircleShape m_circle;
 
@@ -54,7 +54,7 @@ public:
     { m_circle.move(leap); }
 
     void move() noexcept
-    { m_circle.move(m_subframe*m_veloc*m_direction); }
+    { m_circle.move(m_frame*m_veloc*m_direction); }
 
     void display(sf::RenderWindow &window)
     { window.draw(m_circle); }

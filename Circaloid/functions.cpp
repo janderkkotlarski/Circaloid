@@ -54,7 +54,8 @@ void set_sprite(const sf::Vector2f &posit, const float rotation,
 
 sf::Vector2f mirrorize(const float boundary, const sf::Vector2f &posit, const sf::Vector2f &speed)
 {
-    if (vectralize(posit) == 0.0f) { return (1.0f - 2.0f*boundary/std::sqrt(vectralize(speed)))*speed; }
+    if (vectralize(posit) == 0.0f)
+    { return (1.0f - 2.0f*boundary/std::sqrt(vectralize(speed)))*speed; }
 
     return (1.0f - 2.0f*boundary/std::sqrt(vectralize(posit)))*posit;
 }

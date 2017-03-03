@@ -74,8 +74,8 @@ void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::
 
     const float light{0.02f*windims.x};
 
-    const float accel{0.00001f*windims.x};
-    const float pheta{0.01f*M_PI};
+    const float accel{0.001f*windims.x};
+    const float pheta{0.1f*M_PI};
     assert(pheta > 0.0f);    
 
     Tohoid patchouli{windims, posits[0], speed, light, accel, rotats[0], pheta, names[0], m_div, m_frame, keys[0]};
