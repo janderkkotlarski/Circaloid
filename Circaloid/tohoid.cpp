@@ -66,6 +66,7 @@ void Tohoid::relativate()
 void Tohoid::accelerate()
 {
     const sf::Vector2f accer{m_relative*m_accel*rotation2direction(get_rotate())};
+<<<<<<< HEAD
 
     if (sf::Keyboard::isKeyPressed(m_keys[0]))
     {
@@ -76,6 +77,20 @@ void Tohoid::accelerate()
     if (sf::Keyboard::isKeyPressed(m_keys[1]))
     {
         m_speed -= accer;
+=======
+
+    if (sf::Keyboard::isKeyPressed(m_keys[0]))
+    {
+        m_speed += accer;
+
+        m_quinergy += m_frame*m_quove;
+    }
+
+    if (sf::Keyboard::isKeyPressed(m_keys[1]))
+    {
+        m_speed -= accer;
+
+>>>>>>> 84fe39c18b901da5f5ecdda68d0fb4e250be98d8
         m_quinergy += m_frame*m_quove;
     }
 }
