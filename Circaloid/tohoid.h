@@ -103,18 +103,29 @@ public:
 
     ~Tohoid();
 
-    sf::Vector2f get_posit() const noexcept {return m_sprite.getPosition();}
-    sf::Vector2f get_mosit() const noexcept {return m_smite.getPosition();}
-    float get_radius() noexcept {return sprite_radius(m_sprite);}
-    float get_madius() noexcept {return sprite_radius(m_smite);}
-    float get_rotate() const noexcept {return m_tophics.get_rotate();}
+    sf::Vector2f get_posit() const noexcept
+    { return m_tophics.get_posit(); }
+    sf::Vector2f get_mosit() const noexcept
+    { return m_tophics.get_mosit(); }
 
-    float get_quinergy() const noexcept {return m_quinergy;}
-    bool get_vivid() const noexcept {return m_alive;}
+    float get_radius() noexcept
+    { return m_tophics.get_radius(); }
+    float get_madius() noexcept
+    { return m_tophics.get_madius(); }
 
-    void dies() noexcept {m_alive = false;}
+    float get_rotate() const noexcept
+    { return m_tophics.get_rotate(); }
 
-    void qi_damage(const float qi_hurt) noexcept {m_quinergy += qi_hurt;}
+    float get_quinergy() const noexcept
+    { return m_quinergy; }
+    bool get_vivid() const noexcept
+    { return m_alive; }
+
+    void dies() noexcept
+    { m_alive = false; }
+
+    void qi_damage(const float qi_hurt) noexcept
+    { m_quinergy += qi_hurt; }
 
     void move(std::vector <Tohoid> &touhous);
 

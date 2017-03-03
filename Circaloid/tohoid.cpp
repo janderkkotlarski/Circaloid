@@ -31,18 +31,18 @@ Tohoid::Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf:
 
     assert(m_keys.size() == m_keypressed.size());
 
-    set_texture(image_name, m_texture);
+    // set_texture(image_name, m_texture);
 
-    set_sprite(posit, rotation, m_texture, m_sprite);
-    set_sprite(posit, rotation, m_texture, m_smite);
+    // set_sprite(posit, rotation, m_texture, m_sprite);
+    // set_sprite(posit, rotation, m_texture, m_smite);
 
-    const std::string direct_name{"Direction_64.png"};
-    assert(direct_name != "");
+    // const std::string direct_name{"Direction_64.png"};
+    // assert(direct_name != "");
 
-    set_texture(direct_name, m_dexture);
+    // set_texture(direct_name, m_dexture);
 
-    set_sprite(posit, rotation, m_dexture, m_direct);
-    set_sprite(posit, rotation, m_dexture, m_disect);
+    // set_sprite(posit, rotation, m_dexture, m_direct);
+    // set_sprite(posit, rotation, m_dexture, m_disect);
 
 }
 
@@ -66,7 +66,6 @@ void Tohoid::relativate()
 void Tohoid::accelerate()
 {
     const sf::Vector2f accer{m_relative*m_accel*rotation2direction(get_rotate())};
-<<<<<<< HEAD
 
     if (sf::Keyboard::isKeyPressed(m_keys[0]))
     {
@@ -77,20 +76,6 @@ void Tohoid::accelerate()
     if (sf::Keyboard::isKeyPressed(m_keys[1]))
     {
         m_speed -= accer;
-=======
-
-    if (sf::Keyboard::isKeyPressed(m_keys[0]))
-    {
-        m_speed += accer;
-
-        m_quinergy += m_frame*m_quove;
-    }
-
-    if (sf::Keyboard::isKeyPressed(m_keys[1]))
-    {
-        m_speed -= accer;
-
->>>>>>> 84fe39c18b901da5f5ecdda68d0fb4e250be98d8
         m_quinergy += m_frame*m_quove;
     }
 }
@@ -122,8 +107,8 @@ void Tohoid::rotate()
 
 void Tohoid::scale_radius()
 {
-    m_sprite.setScale(m_quinergy, m_quinergy);
-    m_smite.setScale(m_quinergy, m_quinergy);
+    // m_sprite.setScale(m_quinergy, m_quinergy);
+    // m_smite.setScale(m_quinergy, m_quinergy);
 
     m_tophics.set_scale(m_quinergy);
 }
@@ -157,8 +142,8 @@ void Tohoid::check_border()
 {
     if (vectralize(get_posit()) > squr(m_boundary))
     {
-        m_sprite.setPosition(mirrorize(m_boundary, get_posit(), m_speed));
-        m_direct.setPosition(get_posit());
+        // m_sprite.setPosition(mirrorize(m_boundary, get_posit(), m_speed));
+        // m_direct.setPosition(get_posit());
     }
 }
 
@@ -260,9 +245,7 @@ void Tohoid::seeker_shoot(std::vector <Tohoid> &touhous)
         }
     }
     else
-    {
-        m_seeker_shot = false;
-    }
+    { m_seeker_shot = false; }
 }
 
 void Tohoid::move_bullets(const std::vector<bool> &alives, const std::vector <sf::Vector2f> &posits)
@@ -428,8 +411,8 @@ void Tohoid::move(std::vector <Tohoid> &touhous)
         check_seeker_border();
 
 
-        m_sprite.move(del_pos);
-        m_direct.move(del_pos);
+        // m_sprite.move(del_pos);
+        // m_direct.move(del_pos);
 
         m_tophics.move_sprite(del_pos);
 
@@ -437,10 +420,10 @@ void Tohoid::move(std::vector <Tohoid> &touhous)
 
         m_tophics.move_smite(del_pos);
 
-        check_border();
+        // check_border();
 
-        m_smite.setPosition(mirrorize(m_boundary, get_posit(), m_speed));
-        m_disect.setPosition(m_smite.getPosition());
+        // m_smite.setPosition(mirrorize(m_boundary, get_posit(), m_speed));
+        // m_disect.setPosition(m_smite.getPosition());
 
         accelerate();
 
@@ -472,17 +455,6 @@ void Tohoid::display(sf::RenderWindow &window)
         display_bullets(window);
 
         m_tophics.display(window);
-
-        /*
-        window.draw(m_direct);
-        window.draw(m_sprite);
-
-        if (vectralize(get_mosit()) < squr(m_boundary + m_smite.getLocalBounds().width))
-        {
-            window.draw(m_disect);
-            window.draw(m_smite);
-        }
-        */
     }
 }
 
