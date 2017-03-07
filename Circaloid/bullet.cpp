@@ -1,24 +1,20 @@
 #include "bullet.h"
 
-Bullet::Bullet(const sf::Vector2f &windims, const float boundary, const sf::Vector2f &posit, const float veloc,
+Bullet::Bullet(const float boundary, const sf::Vector2f &posit, const float veloc,
                const sf::Vector2f &direction, const float frame, const bullet_type &type)
     : m_boundary(boundary), m_veloc(veloc), m_direction(direction), m_frame(frame),
       m_circle(), m_type(type)
 {
-    assert(windims.x > 0.0f);
-    assert(windims.y > 0.0f);
-
     assert(boundary > 0.0f);
     assert(vectralize(posit) <= squr(boundary));
 
     assert(veloc >= 0.0f);
-
     assert(frame > 0.0f);
 
-    const float part{0.01f};
+    const float part{0.02f};
     assert(part > 0.0f);
 
-    const float radius{part*windims.x};
+    const float radius{part*boundary};
 
     set_circle(radius, posit);
 }
@@ -42,7 +38,7 @@ void Bullet::bullet_speed(const float light, const std::vector <bool> &alives, c
 {
     if (m_type == bullet_type::danmaku)
     {
-        const float delta_veloc{-0.0001f*light};
+        const float delta_veloc{-0.01f*light};
         m_veloc += delta_veloc;
     }
 
@@ -88,7 +84,5 @@ void Bullet::danmaku_transform(const std::vector <bool> alives,
     }
 
     if (marked != -1)
-    {
-        set_direction(normalize_direction(targets[marked] - get_posit()));
-    }
+    { set_direction(normalize_direction(targets[marked] - get_posit())); }
 }

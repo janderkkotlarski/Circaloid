@@ -21,38 +21,38 @@ void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::
 
     const std::string patchy{"Patchouli_64.png"};
     assert(patchy != "");
-
     const std::string meily{"Meiling_64.png"};
     assert(meily != "");
-
     const std::string sakuy{"Sakuya_64.png"};
     assert(sakuy != "");
 
     std::vector <std::string> names;
-    if (amount >= 1) {names.push_back(patchy);}
-    if (amount >= 2) {names.push_back(meily);}
-    if (amount >= 3) {names.push_back(sakuy);}
+    if (amount >= 1)
+    { names.push_back(patchy); }
+    if (amount >= 2)
+    { names.push_back(meily); }
+    if (amount >= 3)
+    { names.push_back(sakuy); }
 
     assert(names.size() > 0);
 
     for (std::string name : names)
-    {
-        assert(name != "");
-    }
+    { assert(name != ""); }
 
     const std::vector <char> charas_1{'w', 's', 'd', 'a', 'x', 'z', 'q'};
     assert(charas_1.size() > 0);
-
     const std::vector <char> charas_2{'t', 'g', 'h', 'f', 'b', 'v', 'r'};
     assert(charas_1.size() == charas_2.size());
-
     const std::vector <char> charas_3{'i', 'k', 'l', 'j', 'm', 'n', 'u'};
     assert(charas_1.size() == charas_3.size());
 
     std::vector <std::vector <sf::Keyboard::Key>> keys;
-    if (amount >= 1) {keys.push_back(chars2keys(charas_1));}
-    if (amount >= 2) {keys.push_back(chars2keys(charas_2));}
-    if (amount >= 3) {keys.push_back(chars2keys(charas_3));}
+    if (amount >= 1)
+    { keys.push_back(chars2keys(charas_1)); }
+    if (amount >= 2)
+    { keys.push_back(chars2keys(charas_2)); }
+    if (amount >= 3)
+    { keys.push_back(chars2keys(charas_3)); }
 
     assert(keys.size() > 0);
 
@@ -70,22 +70,17 @@ void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::
         posits.push_back(-0.7f*windims.x*rotation2direction(rotats[count]));
     }
 
-    const sf::Vector2f speed{0.0f*windims};
-
-    const float light{0.02f*windims.x};
-
-    const float accel{0.001f*windims.x};
-    const float pheta{0.5f*M_PI};
-    assert(pheta > 0.0f);    
-
-    Tohoid patchouli{windims, posits[0], speed, light, accel, rotats[0], pheta, names[0], m_div, m_frame, keys[0]};
-    Tohoid meiling{windims, posits[1], speed, light, accel, rotats[1], pheta, names[1], m_div, m_frame, keys[1]};
-    Tohoid sakuya{windims, posits[2], speed, light, accel, rotats[2], pheta, names[2], m_div, m_frame, keys[2]};
+    Tohoid patchouli{windims, posits[0], rotats[0], names[0], m_frame, keys[0]};
+    Tohoid meiling{windims, posits[1], rotats[1], names[1], m_frame, keys[1]};
+    Tohoid sakuya{windims, posits[2], rotats[2], names[2], m_frame, keys[2]};
 
     std::vector <Tohoid> touhous;
-    if (amount >= 1) {touhous.push_back(patchouli);}
-    if (amount >= 2) {touhous.push_back(meiling);}
-    if (amount >= 3) {touhous.push_back(sakuya);}
+    if (amount >= 1)
+    { touhous.push_back(patchouli); }
+    if (amount >= 2)
+    { touhous.push_back(meiling); }
+    if (amount >= 3)
+    { touhous.push_back(sakuya); }
 
 
     const std::string filetatami{"Tatami.png"};
@@ -114,9 +109,7 @@ void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::
             {
                 if (event.type == sf::Event::Closed ||
                     sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                {
-                    window.close();
-                }
+                { window.close(); }
 
                 m_loop = false;
             }
@@ -127,26 +120,20 @@ void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::
         window.draw(spritami);
 
         for (int count{0}; count < amount; ++count)
-        {
-            touhous[count].display(window);
-        }
+        { touhous[count].display(window); }
 
         window.draw(sprite);
         window.display();
 
         for (int count{0}; count < amount; ++count)
-        {
-            touhous[count].move(touhous);
-        }
+        { touhous[count].move(touhous); }
 
         touhous_die(touhous);
 
         time = clock.getElapsedTime();
 
         while(time.asSeconds() < m_frame)
-        {
-            time = clock.getElapsedTime();
-        }
+        { time = clock.getElapsedTime(); }
     }
 }
 

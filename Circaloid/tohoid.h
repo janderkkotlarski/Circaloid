@@ -15,50 +15,26 @@
 
 class Tohoid
 {
-    const sf::Vector2f m_windims;
-
     const float m_boundary;
 
     sf::Vector2f m_speed;
-
     const float m_light;
 
     float m_relative;
-
     const float m_accel;
 
     const float m_pheta;
 
     float m_quinergy;
-
     const float m_questore;
-
-    const float m_quove;
-
-    sf::Texture m_texture;
-
-    sf::Sprite m_sprite;
-    sf::Sprite m_smite;
-
-    sf::Texture m_dexture;
-
-    sf::Sprite m_direct;
-    sf::Sprite m_disect;
 
     Tophics m_tophics;
 
-    const int m_div;
-
     const float m_frame;
-
-    const float m_subframe;
 
     const std::vector <sf::Keyboard::Key> m_keys;
 
-    std::vector <bool> m_keypressed;
-
     std::vector <Bullet> m_bullets;
-
     std::vector <Seeker> m_seeker;
 
     bool m_bullet_shot;
@@ -75,13 +51,10 @@ class Tohoid
 
     void rotate();
 
-    void scale_radius();
+    void scale_radius()
+    { m_tophics.set_scale(m_quinergy); }
 
     void quinergy_restore();
-
-    void check_keys();
-
-    void check_border();
 
     void bullet_shoot();
     void danmaku_shoot();
@@ -97,9 +70,9 @@ class Tohoid
 
 public:
 
-    explicit Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf::Vector2f &speed, const float light,
-             const float accel, const float rotation, const float pheta, const std::string &image_name, const int div,
-             const float frame, const std::vector<sf::Keyboard::Key> &keys);    
+    explicit Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit,
+                    const float rotation, const std::string &image_name, const float frame,
+                    const std::vector<sf::Keyboard::Key> &keys);
 
     ~Tohoid();
 

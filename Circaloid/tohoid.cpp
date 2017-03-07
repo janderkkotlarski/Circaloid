@@ -1,16 +1,23 @@
 #include "tohoid.h"
 
-Tohoid::Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf::Vector2f &speed, const float light,
-                   const float accel, const float rotation, const float pheta, const std::string &image_name,
-                   const int div, const float frame, const std::vector <sf::Keyboard::Key> &keys)
-    : m_windims(windims), m_boundary(0.5f*windims.x), m_speed(speed), m_light(squr(light)), m_relative(1.0f),
-      m_accel(accel), m_pheta(pheta), m_quinergy(1.0f), m_questore(0.02f), m_quove(-0.0002f),
-      m_texture(), m_sprite(), m_smite(),
-      m_dexture(), m_direct(), m_disect(),
+Tohoid::Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit,
+               const float rotation, const std::string &image_name,
+               const float frame, const std::vector <sf::Keyboard::Key> &keys)
+    : m_boundary(0.5f*windims.x),
+      m_speed(0.0f*windims),
+      m_light(0.3f*m_boundary),
+      m_relative(1.0f),
+      m_accel(0.002f*m_boundary),
+      m_pheta(0.5f*M_PI),
+      m_quinergy(1.0f),
+      m_questore(0.02f),
       m_tophics(image_name, posit, m_boundary, rotation),
-      m_div(div), m_frame(frame), m_subframe(frame/static_cast<float>(div)),
-      m_keys(keys), m_keypressed(), m_bullets(),
-      m_bullet_shot(false), m_danmaku_shot(false), m_alive(true)
+      m_frame(frame),
+      m_keys(keys),
+      m_bullets(),
+      m_bullet_shot(false),
+      m_danmaku_shot(false),
+      m_alive(true)
 {
     assert(windims.x > 0.0f);
     assert(windims.y > 0.0f);
@@ -19,31 +26,9 @@ Tohoid::Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit, const sf:
     assert(posit.x <= windims.x);
     assert(posit.y <= windims.y);
 
-    assert(image_name != "");
-
-    assert(m_div > 0);
-    assert(m_frame > 0.0f);
+    assert(frame > 0.0f);
 
     assert(m_keys.size() > 0);
-
-    for (int count{0}; count < static_cast<int>(m_keys.size()); ++count)
-    { m_keypressed.push_back(false); }
-
-    assert(m_keys.size() == m_keypressed.size());
-
-    // set_texture(image_name, m_texture);
-
-    // set_sprite(posit, rotation, m_texture, m_sprite);
-    // set_sprite(posit, rotation, m_texture, m_smite);
-
-    // const std::string direct_name{"Direction_64.png"};
-    // assert(direct_name != "");
-
-    // set_texture(direct_name, m_dexture);
-
-    // set_sprite(posit, rotation, m_dexture, m_direct);
-    // set_sprite(posit, rotation, m_dexture, m_disect);
-
 }
 
 Tohoid::~Tohoid()
@@ -53,7 +38,6 @@ Tohoid::~Tohoid()
 void Tohoid::relativate()
 {
     const float minim{0.25f};
-
     assert(minim > 0.0f);
 
     if (vectralize(m_speed) < squr(m_light))
@@ -70,13 +54,13 @@ void Tohoid::accelerate()
     if (sf::Keyboard::isKeyPressed(m_keys[0]))
     {
         m_speed += accer;
-        m_quinergy += m_frame*m_quove;
+        m_quinergy -= m_frame*m_questore;
     }
 
     if (sf::Keyboard::isKeyPressed(m_keys[1]))
     {
         m_speed -= accer;
-        m_quinergy += m_frame*m_quove;
+        m_quinergy -= m_frame*m_questore;
     }
 }
 
@@ -95,61 +79,27 @@ void Tohoid::rotate()
     if (sf::Keyboard::isKeyPressed(m_keys[2]))
     {
         m_tophics.rotate(rotation);
-        m_quinergy += m_frame*m_quove;
+        m_quinergy -= m_frame*m_questore;
     }
 
     if (sf::Keyboard::isKeyPressed(m_keys[3]))
     {
         m_tophics.rotate(-rotation);
-        m_quinergy += m_frame*m_quove;
+        m_quinergy -= m_frame*m_questore;
     }
-}
-
-void Tohoid::scale_radius()
-{
-    // m_sprite.setScale(m_quinergy, m_quinergy);
-    // m_smite.setScale(m_quinergy, m_quinergy);
-
-    m_tophics.set_scale(m_quinergy);
 }
 
 void Tohoid::quinergy_restore()
 {
-    m_quinergy += m_subframe*m_questore;
+    m_quinergy += m_frame*m_questore;
 
     if (m_quinergy > 1.0f)
-    {
-        m_quinergy = 1.0f;
-    }
-}
-
-void Tohoid::check_keys()
-{
-    for (int count{0}; count < static_cast<int>(m_keys.size()); ++count)
-    {
-        if (sf::Keyboard::isKeyPressed(m_keys[count]))
-        {
-            m_keypressed[count] = true;
-        }
-        else
-        {
-            m_keypressed[count] = false;
-        }
-    }
-}
-
-void Tohoid::check_border()
-{
-    if (vectralize(get_posit()) > squr(m_boundary))
-    {
-        // m_sprite.setPosition(mirrorize(m_boundary, get_posit(), m_speed));
-        // m_direct.setPosition(get_posit());
-    }
+    { m_quinergy = 1.0f; }
 }
 
 void Tohoid::bullet_shoot()
 {
-    if ((sf::Keyboard::isKeyPressed(m_keys[4])))
+    if (sf::Keyboard::isKeyPressed(m_keys[4]))
     {
         if (!m_bullet_shot)
         {
@@ -160,25 +110,22 @@ void Tohoid::bullet_shoot()
 
             m_quinergy += qi_loss;
 
-            m_bullets.push_back(Bullet(m_windims, m_boundary, get_posit(), m_light,
+            m_bullets.push_back(Bullet(m_boundary, get_posit(), m_light,
                                        rotation2direction(get_rotate()), m_frame, bullet_type::normal));
 
             const sf::Vector2f leap{(scale*get_radius() + scale*m_bullets.back().get_radius())*rotation2direction(get_rotate())};
 
             m_bullets.back().jump(leap);
-
             m_bullet_shot = true;
         }
     }
     else
-    {
-        m_bullet_shot = false;
-    }
+    { m_bullet_shot = false; }
 }
 
 void Tohoid::danmaku_shoot()
 {
-    if (m_keypressed[5])
+    if (sf::Keyboard::isKeyPressed(m_keys[5]))
     {
         if (!m_danmaku_shot)
         {
@@ -199,16 +146,14 @@ void Tohoid::danmaku_shoot()
             for (int count{0}; count < number; ++count)
             {
                 const float rotation{rotate + get_rotate()};
-
                 const sf::Vector2f direction{rotation2direction(rotation)};
 
-                m_bullets.push_back(Bullet(m_windims, m_boundary, get_posit(), m_light,
-                                           direction, m_subframe, bullet_type::danmaku));
+                m_bullets.push_back(Bullet(m_boundary, get_posit(), m_light,
+                                           direction, m_frame, bullet_type::danmaku));
 
                 const sf::Vector2f leap{(scale*get_radius() + scale*m_bullets.back().get_radius())*direction};
 
                 m_bullets.back().jump(leap);
-
                 rotate += delta_rotate;
             }
 
@@ -216,14 +161,12 @@ void Tohoid::danmaku_shoot()
         }
     }
     else
-    {
-        m_danmaku_shot = false;
-    }
+    { m_danmaku_shot = false; }
 }
 
 void Tohoid::seeker_shoot(std::vector <Tohoid> &touhous)
 {
-    if (m_keypressed[6])
+    if (sf::Keyboard::isKeyPressed(m_keys[6]))
     {
         if (!m_seeker_shot && (m_seeker.size() < 1))
         {
@@ -234,13 +177,12 @@ void Tohoid::seeker_shoot(std::vector <Tohoid> &touhous)
 
             m_quinergy += qi_loss;
 
-            m_seeker.push_back(Seeker(m_windims, m_boundary, get_posit(), m_speed, m_light, m_subframe,
+            m_seeker.push_back(Seeker(m_boundary, get_posit(), m_speed, m_frame,
                                       touhou_self(touhous), touhou_target(touhous)));
 
             const sf::Vector2f leap{(scale*get_radius() + scale*m_seeker.back().get_radius())*rotation2direction(get_rotate())};
 
             m_seeker.back().jump(leap);
-
             m_seeker_shot = true;
         }
     }
@@ -276,9 +218,7 @@ void Tohoid::check_bullet_border()
             if (vectralize(m_bullets[count].get_posit()) > squr(m_boundary - m_bullets[count].get_radius()))
             {
                 m_bullets[count] = m_bullets.back();
-
                 m_bullets.pop_back();
-
                 --count;
             }
         }
@@ -294,9 +234,7 @@ void Tohoid::check_seeker_border()
             if (vectralize(m_seeker[count].get_posit()) > squr(m_boundary - m_seeker[count].get_radius()))
             {
                 m_seeker[count] = m_seeker.back();
-
                 m_seeker.pop_back();
-
                 --count;
             }
         }
@@ -383,36 +321,25 @@ void Tohoid::seeker_hurt(std::vector <Tohoid> &touhous)
 void Tohoid::display_bullets(sf::RenderWindow &window)
 {
     for (Bullet bull : m_bullets)
-    {
-        bull.display(window);
-    }
+    { bull.display(window); }
 
     for (Seeker seek : m_seeker)
-    {
-        seek.display(window);
-    }
+    { seek.display(window); }
 }
 
 void Tohoid::move(std::vector <Tohoid> &touhous)
 {
-    if(m_alive)
+    if (m_alive)
     {
         std::vector <sf::Vector2f> posits{touhous2posits(touhous)};
         std::vector <bool> alives{touhous2alives(touhous)};
 
-        // check_keys();
-
         const sf::Vector2f del_pos{m_frame*m_speed};
-
 
         move_bullets(alives, posits);
 
         check_bullet_border();
         check_seeker_border();
-
-
-        // m_sprite.move(del_pos);
-        // m_direct.move(del_pos);
 
         m_tophics.move_sprite(del_pos);
 
@@ -420,17 +347,10 @@ void Tohoid::move(std::vector <Tohoid> &touhous)
 
         m_tophics.move_smite(del_pos);
 
-        // check_border();
-
-        // m_smite.setPosition(mirrorize(m_boundary, get_posit(), m_speed));
-        // m_disect.setPosition(m_smite.getPosition());
-
         accelerate();
 
         relativate();
         rotate();
-
-        // m_tophics.rotate();
 
         ceiling();
 
@@ -443,8 +363,6 @@ void Tohoid::move(std::vector <Tohoid> &touhous)
         seeker_shoot(touhous);
 
         scale_radius();
-
-
     }
 }
 
@@ -453,7 +371,6 @@ void Tohoid::display(sf::RenderWindow &window)
     if(m_alive)
     {
         display_bullets(window);
-
         m_tophics.display(window);
     }
 }
@@ -465,9 +382,7 @@ int Tohoid::touhou_self(std::vector<Tohoid> &touhous)
     for (int count{0}; count < static_cast<int>(touhous.size()); ++count)
     {
         if (vectralize(touhous[count].get_posit() - get_posit()) < 10.0f)
-        {
-            self = count;
-        }
+        { self = count; }
     }
 
     return self;
@@ -503,9 +418,7 @@ std::vector <sf::Vector2f> touhous2posits(std::vector <Tohoid> &touhous)
     std::vector <sf::Vector2f> posits;
 
     for (Tohoid toho : touhous)
-    {
-        posits.push_back(toho.get_posit());
-    }
+    { posits.push_back(toho.get_posit()); }
 
     return posits;
 }
@@ -515,9 +428,7 @@ std::vector <bool> touhous2alives(std::vector <Tohoid> &touhous)
     std::vector <bool> alives;
 
     for (Tohoid toho : touhous)
-    {
-        alives.push_back(toho.get_vivid());
-    }
+    { alives.push_back(toho.get_vivid()); }
 
     return alives;
 }

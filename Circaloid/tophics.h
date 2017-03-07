@@ -47,9 +47,7 @@ public:
     void rotate(const float rotation);
 
     void move_sprite(const sf::Vector2f &delta_posit);
-
     void check_border(const sf::Vector2f &speed);
-
     void move_smite(const sf::Vector2f &speed);
 
     void set_scale(const float scale);
