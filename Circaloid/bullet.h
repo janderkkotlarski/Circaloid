@@ -34,7 +34,7 @@ class Bullet
 public:
 
     explicit Bullet(const float boundary, const sf::Vector2f &posit, const float veloc,
-           const sf::Vector2f &direction, const float subframe, const bullet_type &type);
+                    const sf::Vector2f &direction, const float subframe, const bullet_type &type);
 
     ~Bullet();
 
@@ -59,8 +59,8 @@ public:
     void display(sf::RenderWindow &window)
     { window.draw(m_circle); }
 
-    void bullet_speed(const float light, const std::vector<bool> &alives, const std::vector <sf::Vector2f> &targets,
-                      const sf::Vector2f &otaku);
+    void bullet_speed(const float light, const std::vector<bool> &alives,
+                      const std::vector <sf::Vector2f> &targets, const sf::Vector2f &otaku);
 };
 
 #endif // BULLET_H

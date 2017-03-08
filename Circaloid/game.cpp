@@ -85,6 +85,17 @@ std::vector <std::vector <sf::Keyboard::Key>> Game::init_keybindings()
      return keys;
 }
 
+void Game::touhous_die(std::vector <Tohoid> &touhous)
+{
+    assert(touhous.size() == static_cast<unsigned>(m_amount));
+
+    for (int count{0}; count < m_amount; ++count)
+    {
+        if ((touhous[count].get_quinergy() <= 0.0f) && touhous[count].get_vivid())
+        { touhous[count].dies(); }
+    }
+}
+
 std::vector <Tohoid> Game::init_tohoids(const sf::Vector2f &windims,
                                   const std::vector <sf::Vector2f> &posits,
                                   const std::vector <float> &rotats,
@@ -103,12 +114,13 @@ std::vector <Tohoid> Game::init_tohoids(const sf::Vector2f &windims,
     if (m_amount >= 3)
     { touhous.push_back(sakuya); }
 
+    assert(touhous.size() == static_cast<unsigned>(m_amount));
+
     for (int count{0}; count < m_amount; ++count)
     {
         touhous[count].reimage();
     }
 
-    assert(touhous.size() == static_cast<unsigned>(m_amount));
     return touhous;
 }
 
@@ -148,7 +160,6 @@ void Game::game_loop(sf::RenderWindow &window, const sf::Color &background,
         }
 
         window.clear(background);
-
         window.draw(spritami);
 
         for (int count{0}; count < m_amount; ++count)
@@ -187,15 +198,6 @@ void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::
     { init_tohoids(windims, posits, rotats, names, keys) };
 
     game_loop(window, background, windims, touhous);
-}
-
-void Game::touhous_die(std::vector <Tohoid> &touhous)
-{
-    for (int count{0}; count < static_cast<int>(touhous.size()); ++count)
-    {
-        if ((touhous[count].get_quinergy() <= 0.0f) && touhous[count].get_vivid())
-        { touhous[count].dies(); }
-    }
 }
 
 std::vector <sf::Keyboard::Key> chars2keys(const std::vector <char> &charas)

@@ -61,6 +61,4 @@ sf::Vector2f mirrorize(const float boundary, const sf::Vector2f &posit, const sf
 }
 
 float sprite_radius(sf::Sprite &sprite)
-{
-    return 0.25f*(sprite.getGlobalBounds().width + sprite.getGlobalBounds().height);
-}
+{ return 0.25f*(sprite.getGlobalBounds().width + sprite.getGlobalBounds().height); }

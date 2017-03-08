@@ -3,7 +3,7 @@
 Tohoid::Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit,
                const float rotation, const std::string &image_name,
                const float frame, const std::vector <sf::Keyboard::Key> &keys)
-    : m_boundary(0.5f*windims.x),
+    : m_boundary(0.25f*(windims.x + windims.y)),
       m_speed(0.0f*windims),
       m_light(0.3f*m_boundary),
       m_relative(1.0f),
@@ -206,17 +206,6 @@ void Tohoid::move_bullets(std::vector <Tohoid> &touhous)
         m_bullets[count].bullet_speed(m_light, alives, posits, get_posit());
         m_bullets[count].move();
     }
-
-    // for (auto bullet : m_bullets)
-    // {
-    //     bullet.bullet_speed(m_light, alives, posits, get_posit());
-    //     bullet.move();
-    // }
-
-    // std::for_each(std::begin(m_bullets),
-    //               std::end(m_bullets),
-    //               []()
-    //               { move(); });
 
     for (int count(0); count < static_cast<int>(m_seeker.size()); ++count)
     {

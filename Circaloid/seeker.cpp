@@ -36,6 +36,7 @@ void Seeker::set_speed(const sf::Vector2f &target_posit)
     {
         const sf::Vector2f target_dist{target_posit - get_posit()};
         const sf::Vector2f to_target{normalize_direction(target_dist)};
+
         m_speed += m_frame*m_accel*to_target;
     }
 }
