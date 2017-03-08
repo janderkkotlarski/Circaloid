@@ -15,9 +15,9 @@ Game::~Game()
 {
 }
 
-void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::Color &background)
+std::vector <std::string> Game::init_names(const int amount)
 {
-    const int amount{3};
+    assert(amount > 0);
 
     const std::string patchy{"Patchouli_64.png"};
     assert(patchy != "");
@@ -39,36 +39,57 @@ void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::
     for (std::string name : names)
     { assert(name != ""); }
 
-    const std::vector <char> charas_1{'w', 's', 'd', 'a', 'x', 'z', 'q'};
-    assert(charas_1.size() > 0);
-    const std::vector <char> charas_2{'t', 'g', 'h', 'f', 'b', 'v', 'r'};
-    assert(charas_1.size() == charas_2.size());
-    const std::vector <char> charas_3{'i', 'k', 'l', 'j', 'm', 'n', 'u'};
-    assert(charas_1.size() == charas_3.size());
+    return names;
+}
 
-    std::vector <std::vector <sf::Keyboard::Key>> keys;
-    if (amount >= 1)
-    { keys.push_back(chars2keys(charas_1)); }
-    if (amount >= 2)
-    { keys.push_back(chars2keys(charas_2)); }
-    if (amount >= 3)
-    { keys.push_back(chars2keys(charas_3)); }
+std::vector <std::vector <sf::Keyboard::Key>> Game::init_keybindings(const int amount)
+{
+     assert(amount > 0);
 
+     const std::vector <char> charas_1{'w', 's', 'd', 'a', 'x', 'z', 'q'};
+     assert(charas_1.size() > 0);
+     const std::vector <char> charas_2{'t', 'g', 'h', 'f', 'b', 'v', 'r'};
+     assert(charas_1.size() == charas_2.size());
+     const std::vector <char> charas_3{'i', 'k', 'l', 'j', 'm', 'n', 'u'};
+     assert(charas_1.size() == charas_3.size());
+
+     std::vector <std::vector <sf::Keyboard::Key>> keys;
+     if (amount >= 1)
+     { keys.push_back(chars2keys(charas_1)); }
+     if (amount >= 2)
+     { keys.push_back(chars2keys(charas_2)); }
+     if (amount >= 3)
+     { keys.push_back(chars2keys(charas_3)); }
+
+     assert(keys.size() > 0);
+     return keys;
+}
+
+void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::Color &background)
+{
+    const int amount{3};
+    assert(amount > 0);
+
+    const std::vector <std::string> names
+    { init_names(amount) };
+    assert(names.size() > 0);
+
+    for (std::string name : names)
+    { assert(name != ""); }
+
+    const std::vector <std::vector <sf::Keyboard::Key>> keys
+    { init_keybindings(amount) };
     assert(keys.size() > 0);
 
     std::vector <float> rotats;
 
     for (int count {0}; count < amount; ++count)
-    {
-        rotats.push_back(static_cast<float>(count)*360.0f/static_cast<float>(amount));
-    }
+    { rotats.push_back(static_cast<float>(count)*360.0f/static_cast<float>(amount)); }
 
     std::vector <sf::Vector2f> posits;
 
     for (int count {0}; count < amount; ++count)
-    {
-        posits.push_back(-0.7f*windims.x*rotation2direction(rotats[count]));
-    }
+    { posits.push_back(-0.7f*windims.x*rotation2direction(rotats[count])); }
 
     Tohoid patchouli{windims, posits[0], rotats[0], names[0], m_frame, keys[0]};
     Tohoid meiling{windims, posits[1], rotats[1], names[1], m_frame, keys[1]};
@@ -81,7 +102,6 @@ void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::
     { touhous.push_back(meiling); }
     if (amount >= 3)
     { touhous.push_back(sakuya); }
-
 
     const std::string filetatami{"Tatami.png"};
     sf::Texture textami;
@@ -142,9 +162,7 @@ void Game::touhous_die(std::vector <Tohoid> &touhous)
     for (int count{0}; count < static_cast<int>(touhous.size()); ++count)
     {
         if ((touhous[count].get_quinergy() <= 0.0f) && touhous[count].get_vivid())
-        {
-            touhous[count].dies();
-        }
+        { touhous[count].dies(); }
     }
 }
 
@@ -156,10 +174,9 @@ std::vector <sf::Keyboard::Key> chars2keys(const std::vector <char> &charas)
     std::vector <sf::Keyboard::Key> keys;
 
     for (char chara : charas)
-    {
-        keys.push_back(static_cast<sf::Keyboard::Key>(chara - aleph));
-    }
+    { keys.push_back(static_cast<sf::Keyboard::Key>(chara - aleph)); }
 
+    assert(charas.size() == keys.size());
     return keys;
 }
 
@@ -169,12 +186,9 @@ void set_image(const std::string &name, const sf::Vector2f &windims,
     assert(name != "");
 
     if (!texture.loadFromFile(name))
-    {
-        std::cerr << name << "not found!\n";
-    }
+    { std::cerr << name << "not found!\n"; }
 
     texture.setSmooth(true);
-
     sprite.setTexture(texture);
     sprite.setOrigin(0.5f*windims);
     sprite.setPosition(0.0f*windims);

@@ -60,11 +60,13 @@ class Tohoid
     void danmaku_shoot();
     void seeker_shoot(std::vector <Tohoid> &touhous);
 
-    void move_bullets(const std::vector<bool> &alives, const std::vector<sf::Vector2f> &posits);
+    void move_bullets(std::vector<Tohoid> &touhous);
     void check_bullet_border();
     void check_seeker_border();
     void bullets_hurt(std::vector <Tohoid> &touhous);
     void seeker_hurt(std::vector <Tohoid> &touhous);
+
+    void move_tophics();
 
     void display_bullets(sf::RenderWindow &window);
 

@@ -17,13 +17,17 @@ class Game
     const int m_div;
     bool m_loop;
 
+    std::vector <std::string> init_names(const int amount);
+
+    std::vector <std::vector <sf::Keyboard::Key>> init_keybindings(const int amount);
+
+    void touhous_die(std::vector <Tohoid> &touhous);
+
 public:
 
     explicit Game();
 
-    ~Game();
-
-    void touhous_die(std::vector <Tohoid> &touhous);
+    ~Game();    
 
     void run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::Color &background);
 };

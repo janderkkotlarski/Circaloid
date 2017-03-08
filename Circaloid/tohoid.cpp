@@ -190,13 +190,27 @@ void Tohoid::seeker_shoot(std::vector <Tohoid> &touhous)
     { m_seeker_shot = false; }
 }
 
-void Tohoid::move_bullets(const std::vector<bool> &alives, const std::vector <sf::Vector2f> &posits)
+void Tohoid::move_bullets(std::vector <Tohoid> &touhous)
 {
+    std::vector <sf::Vector2f> posits{touhous2posits(touhous)};
+    std::vector <bool> alives{touhous2alives(touhous)};
+
     for (int count{0}; count < static_cast<int>(m_bullets.size()); ++count)
     {
         m_bullets[count].bullet_speed(m_light, alives, posits, get_posit());
         m_bullets[count].move();
-    }    
+    }
+
+    // for (auto bullet : m_bullets)
+    // {
+    //     bullet.bullet_speed(m_light, alives, posits, get_posit());
+    //     bullet.move();
+    // }
+
+    // std::for_each(std::begin(m_bullets),
+    //               std::end(m_bullets),
+    //               []()
+    //               { move(); });
 
     for (int count(0); count < static_cast<int>(m_seeker.size()); ++count)
     {
@@ -318,6 +332,15 @@ void Tohoid::seeker_hurt(std::vector <Tohoid> &touhous)
     }
 }
 
+void Tohoid::move_tophics()
+{
+    const sf::Vector2f del_pos{m_frame*m_speed};
+
+    m_tophics.move_sprite(del_pos);
+    m_tophics.check_border(del_pos);
+    m_tophics.move_smite(del_pos);
+}
+
 void Tohoid::display_bullets(sf::RenderWindow &window)
 {
     for (Bullet bull : m_bullets)
@@ -331,21 +354,14 @@ void Tohoid::move(std::vector <Tohoid> &touhous)
 {
     if (m_alive)
     {
-        std::vector <sf::Vector2f> posits{touhous2posits(touhous)};
-        std::vector <bool> alives{touhous2alives(touhous)};
 
-        const sf::Vector2f del_pos{m_frame*m_speed};
 
-        move_bullets(alives, posits);
+        move_bullets(touhous);
 
         check_bullet_border();
         check_seeker_border();
 
-        m_tophics.move_sprite(del_pos);
-
-        m_tophics.check_border(del_pos);
-
-        m_tophics.move_smite(del_pos);
+        move_tophics();
 
         accelerate();
 
