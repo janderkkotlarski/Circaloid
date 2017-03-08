@@ -15,6 +15,7 @@ Tohoid::Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit,
       m_frame(frame),
       m_keys(keys),
       m_bullets(),
+      m_seeker(),
       m_bullet_shot(false),
       m_danmaku_shot(false),
       m_alive(true)
@@ -32,7 +33,12 @@ Tohoid::Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit,
 }
 
 Tohoid::~Tohoid()
+{}
+
+void Tohoid::reimage()
 {
+    m_tophics.init_sprite();
+    m_tophics.init_direct();
 }
 
 void Tohoid::relativate()

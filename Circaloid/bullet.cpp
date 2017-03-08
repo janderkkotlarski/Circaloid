@@ -20,8 +20,7 @@ Bullet::Bullet(const float boundary, const sf::Vector2f &posit, const float velo
 }
 
 Bullet::~Bullet()
-{
-}
+{}
 
 void Bullet::set_circle(const float radius, const sf::Vector2f &posit)
 {

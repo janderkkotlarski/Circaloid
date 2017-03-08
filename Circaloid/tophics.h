@@ -14,10 +14,14 @@ class Tophics
 
     const float m_boundary;
 
+    const std::string m_sprite_name;
+
     sf::Texture m_texture;
 
     sf::Sprite m_sprite;
     sf::Sprite m_smite;
+
+    const std::string m_direct_name;
 
     sf::Texture m_dexture;
 
@@ -43,6 +47,9 @@ public:
 
     float get_rotate() const noexcept
     { return m_sprite.getRotation(); }
+
+    void init_sprite();
+    void init_direct();
 
     void rotate(const float rotation);
 

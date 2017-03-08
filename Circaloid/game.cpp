@@ -4,21 +4,43 @@ Game::Game()
     : m_fps(60),
       m_frame(1.0f/static_cast<float>(m_fps)),
       m_div(100),
-      m_loop(true)
+      m_loop(true),
+      m_amount(3)
 {
     assert(m_fps > 0);
     assert(m_div > 0);
     assert(m_loop);
+    assert(m_amount > 0);
 }
 
 Game::~Game()
+{}
+
+std::vector <float> Game::init_rotats()
 {
+    std::vector <float> rotats;
+
+    for (int count {0}; count < m_amount; ++count)
+    { rotats.push_back(static_cast<float>(count)*360.0f/static_cast<float>(m_amount)); }
+
+    assert(rotats.size() == static_cast<unsigned>(m_amount));
+    return rotats;
 }
 
-std::vector <std::string> Game::init_names(const int amount)
+std::vector <sf::Vector2f> Game::init_posits(const sf::Vector2f &windims,
+                                             const std::vector <float> &rotats)
 {
-    assert(amount > 0);
+    std::vector <sf::Vector2f> posits;
 
+    for (int count {0}; count < m_amount; ++count)
+    { posits.push_back(-0.7f*windims.x*rotation2direction(rotats[count])); }
+
+    assert(posits.size() == static_cast<unsigned>(m_amount));
+    return posits;
+}
+
+std::vector <std::string> Game::init_names()
+{
     const std::string patchy{"Patchouli_64.png"};
     assert(patchy != "");
     const std::string meily{"Meiling_64.png"};
@@ -27,14 +49,14 @@ std::vector <std::string> Game::init_names(const int amount)
     assert(sakuy != "");
 
     std::vector <std::string> names;
-    if (amount >= 1)
+    if (m_amount >= 1)
     { names.push_back(patchy); }
-    if (amount >= 2)
+    if (m_amount >= 2)
     { names.push_back(meily); }
-    if (amount >= 3)
+    if (m_amount >= 3)
     { names.push_back(sakuy); }
 
-    assert(names.size() > 0);
+    assert(names.size() == static_cast<unsigned>(m_amount));
 
     for (std::string name : names)
     { assert(name != ""); }
@@ -42,10 +64,8 @@ std::vector <std::string> Game::init_names(const int amount)
     return names;
 }
 
-std::vector <std::vector <sf::Keyboard::Key>> Game::init_keybindings(const int amount)
+std::vector <std::vector <sf::Keyboard::Key>> Game::init_keybindings()
 {
-     assert(amount > 0);
-
      const std::vector <char> charas_1{'w', 's', 'd', 'a', 'x', 'z', 'q'};
      assert(charas_1.size() > 0);
      const std::vector <char> charas_2{'t', 'g', 'h', 'f', 'b', 'v', 'r'};
@@ -54,63 +74,55 @@ std::vector <std::vector <sf::Keyboard::Key>> Game::init_keybindings(const int a
      assert(charas_1.size() == charas_3.size());
 
      std::vector <std::vector <sf::Keyboard::Key>> keys;
-     if (amount >= 1)
+     if (m_amount >= 1)
      { keys.push_back(chars2keys(charas_1)); }
-     if (amount >= 2)
+     if (m_amount >= 2)
      { keys.push_back(chars2keys(charas_2)); }
-     if (amount >= 3)
+     if (m_amount >= 3)
      { keys.push_back(chars2keys(charas_3)); }
 
-     assert(keys.size() > 0);
+     assert(keys.size() == static_cast<unsigned>(m_amount));
      return keys;
 }
 
-void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::Color &background)
+std::vector <Tohoid> Game::init_tohoids(const sf::Vector2f &windims,
+                                  const std::vector <sf::Vector2f> &posits,
+                                  const std::vector <float> &rotats,
+                                  const std::vector <std::string> &names,
+                                  const std::vector <std::vector <sf::Keyboard::Key>> &keys)
 {
-    const int amount{3};
-    assert(amount > 0);
-
-    const std::vector <std::string> names
-    { init_names(amount) };
-    assert(names.size() > 0);
-
-    for (std::string name : names)
-    { assert(name != ""); }
-
-    const std::vector <std::vector <sf::Keyboard::Key>> keys
-    { init_keybindings(amount) };
-    assert(keys.size() > 0);
-
-    std::vector <float> rotats;
-
-    for (int count {0}; count < amount; ++count)
-    { rotats.push_back(static_cast<float>(count)*360.0f/static_cast<float>(amount)); }
-
-    std::vector <sf::Vector2f> posits;
-
-    for (int count {0}; count < amount; ++count)
-    { posits.push_back(-0.7f*windims.x*rotation2direction(rotats[count])); }
-
     Tohoid patchouli{windims, posits[0], rotats[0], names[0], m_frame, keys[0]};
     Tohoid meiling{windims, posits[1], rotats[1], names[1], m_frame, keys[1]};
     Tohoid sakuya{windims, posits[2], rotats[2], names[2], m_frame, keys[2]};
 
     std::vector <Tohoid> touhous;
-    if (amount >= 1)
+    if (m_amount >= 1)
     { touhous.push_back(patchouli); }
-    if (amount >= 2)
+    if (m_amount >= 2)
     { touhous.push_back(meiling); }
-    if (amount >= 3)
+    if (m_amount >= 3)
     { touhous.push_back(sakuya); }
 
+    for (int count{0}; count < m_amount; ++count)
+    {
+        touhous[count].reimage();
+    }
+
+    assert(touhous.size() == static_cast<unsigned>(m_amount));
+    return touhous;
+}
+
+void Game::game_loop(sf::RenderWindow &window, const sf::Color &background,
+                     const sf::Vector2f &windims, std::vector <Tohoid> &touhous)
+{
     const std::string filetatami{"Tatami.png"};
     sf::Texture textami;
     sf::Sprite spritami;
 
     set_image(filetatami, windims, textami, spritami);
 
-    const std::string filename{"Frame.png"};    
-    sf::Texture texture;    
+    const std::string filename{"Frame.png"};
+    sf::Texture texture;
     sf::Sprite sprite;
 
     set_image(filename, windims, texture, sprite);
@@ -139,13 +151,13 @@ void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::
 
         window.draw(spritami);
 
-        for (int count{0}; count < amount; ++count)
+        for (int count{0}; count < m_amount; ++count)
         { touhous[count].display(window); }
 
         window.draw(sprite);
         window.display();
 
-        for (int count{0}; count < amount; ++count)
+        for (int count{0}; count < m_amount; ++count)
         { touhous[count].move(touhous); }
 
         touhous_die(touhous);
@@ -155,6 +167,26 @@ void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::
         while(time.asSeconds() < m_frame)
         { time = clock.getElapsedTime(); }
     }
+}
+
+void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::Color &background)
+{
+    const std::vector <float> rotats
+    { init_rotats() };
+
+    const std::vector <sf::Vector2f> posits
+    { init_posits(windims, rotats) };
+
+    const std::vector <std::string> names
+    { init_names() };
+
+    const std::vector <std::vector <sf::Keyboard::Key>> keys
+    { init_keybindings() };
+
+    std::vector <Tohoid> touhous
+    { init_tohoids(windims, posits, rotats, names, keys) };
+
+    game_loop(window, background, windims, touhous);
 }
 
 void Game::touhous_die(std::vector <Tohoid> &touhous)

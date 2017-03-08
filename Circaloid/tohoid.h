@@ -74,7 +74,7 @@ public:
 
     explicit Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit,
                     const float rotation, const std::string &image_name, const float frame,
-                    const std::vector<sf::Keyboard::Key> &keys);
+                    const std::vector <sf::Keyboard::Key> &keys);
 
     ~Tohoid();
 
@@ -95,6 +95,8 @@ public:
     { return m_quinergy; }
     bool get_vivid() const noexcept
     { return m_alive; }
+
+    void reimage();
 
     void dies() noexcept
     { m_alive = false; }

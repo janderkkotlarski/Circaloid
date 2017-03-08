@@ -12,6 +12,9 @@ Menu::Menu()
     m_window.setVerticalSyncEnabled(true);
 }
 
+Menu::~Menu()
+{}
+
 void Menu::start()
 {
     const sf::Vector2f windims{m_side, m_side};

@@ -16,6 +16,7 @@ class Menu
 public:
 
     explicit Menu();
+    ~Menu();
 
     void start();
 };

@@ -3,27 +3,36 @@
 Tophics::Tophics(const std::string &sprite_name, const sf::Vector2f &posit,
                  const float boundary, const float rotation)
     : m_boundary(boundary),
-      m_texture(), m_sprite(), m_smite(),
-      m_dexture(), m_direct(), m_disect()
+      m_sprite_name(sprite_name), m_texture(), m_sprite(), m_smite(),
+      m_direct_name("Direction_64.png"), m_dexture(), m_direct(), m_disect()
 {
-    assert(sprite_name != "");
+    assert(m_sprite_name != "");
+    assert(m_direct_name != "");
 
-    const std::string direct_name{"Direction_64.png"};
-    assert(direct_name != "");
-
-    set_texture(sprite_name, m_texture);
+    set_texture(m_sprite_name, m_texture);
 
     set_sprite(posit, rotation, m_texture, m_sprite);
     set_sprite(posit, rotation, m_texture, m_smite);
 
-    set_texture(direct_name, m_dexture);
+    set_texture(m_direct_name, m_dexture);
 
     set_sprite(posit, rotation, m_dexture, m_direct);
     set_sprite(posit, rotation, m_dexture, m_disect);
 }
 
 Tophics::~Tophics()
+{}
+
+void Tophics::init_sprite()
 {
+    set_sprite(get_posit(), get_rotate(), m_texture, m_sprite);
+    set_sprite(get_posit(), get_rotate(), m_texture, m_smite);
+}
+
+void Tophics::init_direct()
+{
+    set_sprite(get_posit(), get_rotate(), m_dexture, m_direct);
+    set_sprite(get_posit(), get_rotate(), m_dexture, m_disect);
 }
 
 void Tophics::rotate(const float rotation)
