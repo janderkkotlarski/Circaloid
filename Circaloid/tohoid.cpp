@@ -5,12 +5,12 @@ Tohoid::Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit,
                const float frame, const std::vector <sf::Keyboard::Key> &keys)
     : m_boundary(0.25f*(windims.x + windims.y)),
       m_speed(0.0f*windims),
-      m_light(0.3f*m_boundary),
+      m_light(0.5f*m_boundary),
       m_relative(1.0f),
-      m_accel(0.002f*m_boundary),
-      m_pheta(0.5f*M_PI),
+      m_accel(0.005f*m_boundary),
+      m_pheta(1.0f*M_PI),
       m_quinergy(1.0f),
-      m_questore(0.02f),
+      m_questore(0.05f),
       m_tophics(image_name, posit, m_boundary, rotation),
       m_frame(frame),
       m_keys(keys),
@@ -73,9 +73,7 @@ void Tohoid::accelerate()
 void Tohoid::ceiling()
 {
     if (vectralize(m_speed) > squr(m_light))
-    {
-        m_speed *= m_light/std::sqrt(vectralize(m_speed));
-    }
+    { m_speed *= m_light/std::sqrt(vectralize(m_speed)); }
 }
 
 void Tohoid::rotate()
@@ -111,10 +109,10 @@ void Tohoid::bullet_shoot()
         {
             const float scale{1.01f};
 
-            const float qi_loss{-0.01f};
-            assert(qi_loss < 0.0f);
+            const float qi_bullet{-0.02f};
+            assert(qi_bullet < 0.0f);
 
-            m_quinergy += qi_loss;
+            m_quinergy += qi_bullet;
 
             m_bullets.push_back(Bullet(m_boundary, get_posit(), m_light,
                                        rotation2direction(get_rotate()), m_frame, bullet_type::normal));
@@ -137,10 +135,10 @@ void Tohoid::danmaku_shoot()
         {
             const float scale{1.01f};
 
-            const float qi_loss{-0.07f};
-            assert(qi_loss < 0.0f);
+            const float qi_danmaku{-0.13f};
+            assert(qi_danmaku < 0.0f);
 
-            m_quinergy += qi_loss;
+            m_quinergy += qi_danmaku;
 
             const int number{8};
             assert(number > 1);
@@ -178,7 +176,7 @@ void Tohoid::seeker_shoot(std::vector <Tohoid> &touhous)
         {
             const float scale{1.01f};
 
-            const float qi_loss{-0.25f};
+            const float qi_loss{-0.5f};
             assert(qi_loss < 0.0f);
 
             m_quinergy += qi_loss;
@@ -348,30 +346,28 @@ void Tohoid::display_bullets(sf::RenderWindow &window)
 void Tohoid::move(std::vector <Tohoid> &touhous)
 {
     if (m_alive)
-    {
+    {                
+        accelerate();
+        relativate();
+        ceiling();
 
+        rotate();
+
+        move_tophics();
 
         move_bullets(touhous);
 
         check_bullet_border();
         check_seeker_border();
 
-        move_tophics();
-
-        accelerate();
-
-        relativate();
-        rotate();
-
-        ceiling();
-
-        bullets_hurt(touhous);
-        seeker_hurt(touhous);
-        quinergy_restore();
-
         bullet_shoot();
         danmaku_shoot();
         seeker_shoot(touhous);
+
+        bullets_hurt(touhous);
+        seeker_hurt(touhous);
+
+        quinergy_restore();
 
         scale_radius();
     }
@@ -389,6 +385,7 @@ void Tohoid::display(sf::RenderWindow &window)
 int Tohoid::touhou_self(std::vector<Tohoid> &touhous)
 {
     int self{-1};
+    assert(self == -1);
 
     for (int count{0}; count < static_cast<int>(touhous.size()); ++count)
     {
@@ -402,6 +399,7 @@ int Tohoid::touhou_self(std::vector<Tohoid> &touhous)
 int Tohoid::touhou_target(std::vector <Tohoid> &touhous)
 {
     int target{-1};
+    assert(target == -1);
 
     const int self{touhou_self(touhous)};
 
@@ -443,5 +441,3 @@ std::vector <bool> touhous2alives(std::vector <Tohoid> &touhous)
 
     return alives;
 }
-
-
