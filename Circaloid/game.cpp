@@ -5,7 +5,7 @@ Game::Game()
       m_frame(1.0f/static_cast<float>(m_fps)),
       m_div(100),
       m_loop(true),
-      m_amount(1)
+      m_amount(4)
 {
     assert(m_fps > 0);
     assert(m_div > 0);
@@ -47,6 +47,8 @@ std::vector <std::string> Game::init_names()
     assert(meily != "");
     const std::string sakuy{"Sakuya_64.png"};
     assert(sakuy != "");
+    const std::string keiny{"Keine_64.png"};
+    assert(keiny != "");
 
     std::vector <std::string> names;
     if (m_amount >= 1)
@@ -55,6 +57,8 @@ std::vector <std::string> Game::init_names()
     { names.push_back(meily); }
     if (m_amount >= 3)
     { names.push_back(sakuy); }
+    if (m_amount >= 4)
+    { names.push_back(keiny); }
 
     assert(names.size() == static_cast<unsigned>(m_amount));
 
@@ -73,6 +77,17 @@ std::vector <std::vector <sf::Keyboard::Key>> Game::init_keybindings()
      const std::vector <char> charas_3{'i', 'k', 'l', 'j', 'm', 'n', 'u'};
      assert(charas_1.size() == charas_3.size());
 
+     const std::vector <sf::Keyboard::Key> keyras_4
+     {
+        sf::Keyboard::Numpad8,
+        sf::Keyboard::Numpad5,
+        sf::Keyboard::Numpad6,
+        sf::Keyboard::Numpad4,
+        sf::Keyboard::Numpad2,
+        sf::Keyboard::Numpad1,
+        sf::Keyboard::Numpad7
+     };
+
      std::vector <std::vector <sf::Keyboard::Key>> keys;
      if (m_amount >= 1)
      { keys.push_back(chars2keys(charas_1)); }
@@ -80,6 +95,8 @@ std::vector <std::vector <sf::Keyboard::Key>> Game::init_keybindings()
      { keys.push_back(chars2keys(charas_2)); }
      if (m_amount >= 3)
      { keys.push_back(chars2keys(charas_3)); }
+     if (m_amount >= 4)
+     { keys.push_back(keyras_4); }
 
      assert(keys.size() == static_cast<unsigned>(m_amount));
      return keys;
@@ -117,6 +134,11 @@ std::vector <Tohoid> Game::init_tohoids(const sf::Vector2f &windims,
     {
         Tohoid sakuya{windims, posits[2], rotats[2], names[2], m_frame, keys[2]};
         touhous.push_back(sakuya);
+    }
+    if (m_amount >= 4)
+    {
+        Tohoid keine{windims, posits[3], rotats[3], names[3], m_frame, keys[3]};
+        touhous.push_back(keine);
     }
 
     assert(touhous.size() == static_cast<unsigned>(m_amount));

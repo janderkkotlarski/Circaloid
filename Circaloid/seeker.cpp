@@ -3,7 +3,7 @@
 Seeker::Seeker(const float boundary, const sf::Vector2f &posit,
                const sf::Vector2f &speed, const float frame, const int self,
                const int target)
-    : m_speed(speed), m_accel(0.25f*boundary), m_frame(frame),
+    : m_speed(speed), m_accel(1.0f*boundary), m_frame(frame),
       m_self(self), m_target(target), m_circle()
 {
     assert(boundary > 0.0f);

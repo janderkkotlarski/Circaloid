@@ -37,7 +37,7 @@ void Bullet::bullet_speed(const float light, const std::vector <bool> &alives, c
 {
     if (m_type == bullet_type::danmaku)
     {
-        const float delta_veloc{-0.01f*light};
+        const float delta_veloc{-0.02f*light};
         m_veloc += delta_veloc;
     }
 
