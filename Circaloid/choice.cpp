@@ -4,7 +4,9 @@ Choice::Choice()
     : m_chosen(false),
       m_amount(0),
       m_amount_names(),
-      m_player_names()
+      m_player_names(),
+      m_player_textures(),
+      m_player_sprites()
 {
     m_amount_names.push_back("Zero_64.png");
     m_amount_names.push_back("One_64.png");

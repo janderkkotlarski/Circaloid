@@ -1,8 +1,10 @@
 #include "functions.h"
 
-float squr(const float scalar) noexcept { return scalar*scalar; }
+float squr(const float scalar) noexcept
+{ return scalar*scalar; }
 
-float vectralize(const sf::Vector2f &vectol) noexcept { return squr(vectol.x) + squr(vectol.y); }
+float vectralize(const sf::Vector2f &vectol) noexcept
+{ return squr(vectol.x) + squr(vectol.y); }
 
 sf::Vector2f rotation2direction(const float rotation)
 {

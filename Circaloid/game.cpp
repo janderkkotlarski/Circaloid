@@ -192,6 +192,11 @@ void Game::game_loop(sf::RenderWindow &window, const sf::Color &background,
         for (int count{0}; count < m_amount; ++count)
         { touhous[count].display(window); }
 
+        // std::for_each(std::begin(touhous),
+        //               std::end(touhous),
+        //               [touhous](sf::RenderWindow widow)
+        //               { touhous->display(widow); });
+
         window.draw(sprite);
         window.display();
 
