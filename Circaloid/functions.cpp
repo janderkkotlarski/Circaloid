@@ -6,13 +6,13 @@ float vectralize(const sf::Vector2f &vectol) noexcept { return squr(vectol.x) + 
 
 sf::Vector2f rotation2direction(const float rotation)
 {
-    const float divide{M_PI/180};
+    const float divide{M_PI/180.0f};
     return sf::Vector2f(std::sin(divide*rotation), -std::cos(divide*rotation));
 }
 
 float direction2rotation(const sf::Vector2f &direction)
 {
-    const float multiply{180/M_PI};
+    const float multiply{180.0f/M_PI};
 
     if (direction.x == 0.0f)
     {

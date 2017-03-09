@@ -10,7 +10,8 @@ SOURCES += main.cpp \
     functions.cpp \
     seeker.cpp \
     game.cpp \
-    tophics.cpp
+    tophics.cpp \
+    choice.cpp
 
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra
 
@@ -27,5 +28,6 @@ HEADERS += \
     functions.h \
     seeker.h \
     game.h \
-    tophics.h
+    tophics.h \
+    choice.h
 

@@ -5,7 +5,7 @@ Game::Game()
       m_frame(1.0f/static_cast<float>(m_fps)),
       m_div(100),
       m_loop(true),
-      m_amount(3)
+      m_amount(1)
 {
     assert(m_fps > 0);
     assert(m_div > 0);
@@ -102,17 +102,22 @@ std::vector <Tohoid> Game::init_tohoids(const sf::Vector2f &windims,
                                   const std::vector <std::string> &names,
                                   const std::vector <std::vector <sf::Keyboard::Key>> &keys)
 {
-    Tohoid patchouli{windims, posits[0], rotats[0], names[0], m_frame, keys[0]};
-    Tohoid meiling{windims, posits[1], rotats[1], names[1], m_frame, keys[1]};
-    Tohoid sakuya{windims, posits[2], rotats[2], names[2], m_frame, keys[2]};
-
     std::vector <Tohoid> touhous;
     if (m_amount >= 1)
-    { touhous.push_back(patchouli); }
+    {
+        Tohoid patchouli{windims, posits[0], rotats[0], names[0], m_frame, keys[0]};
+        touhous.push_back(patchouli);
+    }
     if (m_amount >= 2)
-    { touhous.push_back(meiling); }
+    {
+        Tohoid meiling{windims, posits[1], rotats[1], names[1], m_frame, keys[1]};
+        touhous.push_back(meiling);
+    }
     if (m_amount >= 3)
-    { touhous.push_back(sakuya); }
+    {
+        Tohoid sakuya{windims, posits[2], rotats[2], names[2], m_frame, keys[2]};
+        touhous.push_back(sakuya);
+    }
 
     assert(touhous.size() == static_cast<unsigned>(m_amount));
 
@@ -194,8 +199,12 @@ void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::
     const std::vector <std::vector <sf::Keyboard::Key>> keys
     { init_keybindings() };
 
+
+
     std::vector <Tohoid> touhous
     { init_tohoids(windims, posits, rotats, names, keys) };
+
+
 
     game_loop(window, background, windims, touhous);
 }
