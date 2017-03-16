@@ -14,7 +14,6 @@
 class Game
 {
     const int m_div;
-    bool m_loop;
     const float m_amount;
 
     std::vector <float> init_rotats();
@@ -32,19 +31,16 @@ class Game
 
     void touhous_die(std::vector <Tohoid> &touhous);
 
-    void game_loop(sf::RenderWindow &window, const sf::Color &background, const sf::Vector2f &windims, std::vector<Tohoid> &touhous, const float frame);
+    bool game_loop(sf::RenderWindow &window, const sf::Color &background, const sf::Vector2f &windims, std::vector<Tohoid> &touhous, const float frame);
 
 public:
 
     explicit Game();
     ~Game();
 
-    void run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::Color &background, const float frame);
+    void run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::Color &background, const float frame, bool &nope);
 };
 
 std::vector <sf::Keyboard::Key> chars2keys(const std::vector <char> &charas);
-
-void set_image(const std::string &name, const sf::Vector2f &windims,
-               sf::Texture &texture, sf::Sprite &sprite);
 
 #endif // GAME_H

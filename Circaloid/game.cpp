@@ -2,11 +2,9 @@
 
 Game::Game()
     : m_div(100),
-      m_loop(true),
       m_amount(4)
 {
     assert(m_div > 0);
-    assert(m_loop);
     assert(m_amount > 0);
 }
 
@@ -118,6 +116,7 @@ std::vector <Tohoid> Game::init_tohoids(const sf::Vector2f &windims,
                                   const float frame)
 {
     std::vector <Tohoid> touhous;
+
     if (m_amount >= 1)
     {
         Tohoid patchouli{windims, posits[0], rotats[0], names[0], frame, keys[0]};
@@ -149,10 +148,12 @@ std::vector <Tohoid> Game::init_tohoids(const sf::Vector2f &windims,
     return touhous;
 }
 
-void Game::game_loop(sf::RenderWindow &window, const sf::Color &background,
+bool Game::game_loop(sf::RenderWindow &window, const sf::Color &background,
                      const sf::Vector2f &windims, std::vector <Tohoid> &touhous,
                      const float frame)
 {
+    bool loop{true};
+
     const std::string filetatami{"Tatami.png"};
     sf::Texture textami;
     sf::Sprite spritami;
@@ -165,7 +166,7 @@ void Game::game_loop(sf::RenderWindow &window, const sf::Color &background,
 
     set_image(filename, windims, texture, sprite);
 
-    while (m_loop)
+    while (loop)
     {
         sf::Event event;
         sf::Clock clock;
@@ -177,11 +178,14 @@ void Game::game_loop(sf::RenderWindow &window, const sf::Color &background,
                 sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) ||
                 sf::Keyboard::isKeyPressed(sf::Keyboard::Delete))
             {
+                loop = false;
+
                 if (event.type == sf::Event::Closed ||
                     sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                { window.close(); }
-
-                m_loop = false;
+                {
+                    window.close();
+                    return true;
+                }
             }
         }
 
@@ -209,10 +213,13 @@ void Game::game_loop(sf::RenderWindow &window, const sf::Color &background,
         while(time.asSeconds() < frame)
         { time = clock.getElapsedTime(); }
     }
+
+    return false;
 }
 
 void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims,
-               const sf::Color &background, const float frame)
+               const sf::Color &background, const float frame,
+               bool &nope)
 {
     const std::vector <float> rotats
     { init_rotats() };
@@ -229,7 +236,10 @@ void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims,
     std::vector <Tohoid> touhous
     { init_tohoids(windims, posits, rotats, names, keys, frame) };
 
-    game_loop(window, background, windims, touhous, frame);
+    if (!nope)
+    {
+        nope = game_loop(window, background, windims, touhous, frame);
+    }
 }
 
 std::vector <sf::Keyboard::Key> chars2keys(const std::vector <char> &charas)
@@ -244,18 +254,4 @@ std::vector <sf::Keyboard::Key> chars2keys(const std::vector <char> &charas)
 
     assert(charas.size() == keys.size());
     return keys;
-}
-
-void set_image(const std::string &name, const sf::Vector2f &windims,
-               sf::Texture &texture, sf::Sprite &sprite)
-{
-    assert(name != "");
-
-    if (!texture.loadFromFile(name))
-    { std::cerr << name << "not found!\n"; }
-
-    texture.setSmooth(true);
-    sprite.setTexture(texture);
-    sprite.setOrigin(0.5f*windims);
-    sprite.setPosition(0.0f*windims);
 }

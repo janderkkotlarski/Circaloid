@@ -8,6 +8,8 @@
 
 #include "SFML/Graphics.hpp"
 
+#include "functions.h"
+
 class Choice
 {
     bool m_chosen;
@@ -27,7 +29,22 @@ public:
     explicit Choice();
     ~Choice();
 
-    void choose(sf::RenderWindow &window);
+    void init_textures(std::vector <std::string> &names,
+                       std::vector <sf::Texture> &textures);
+
+    void init_sprites(std::vector <sf::Texture> &textures,
+                      std::vector <sf::Sprite> &sprites,
+                      const sf::Vector2f &windims);
+
+    void show_sprites(std::vector <sf::Sprite> &sprites,
+                      sf::RenderWindow &window);
+
+    bool choose_loop(sf::RenderWindow &window, const sf::Color &background,
+                     const float frame, const sf::Vector2f &windims);
+
+    void run(sf::RenderWindow &window, const sf::Vector2f &windims,
+             const sf::Color &background, const float frame,
+             bool &nope);
 
 };
 

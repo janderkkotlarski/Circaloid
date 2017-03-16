@@ -21,6 +21,9 @@ void set_texture(const std::string &filename, sf::Texture &texture);
 
 void set_sprite(const sf::Vector2f &posit, const float rotation, sf::Texture &texture, sf::Sprite &sprite);
 
+void set_image(const std::string &name, const sf::Vector2f &windims,
+               sf::Texture &texture, sf::Sprite &sprite);
+
 sf::Vector2f mirrorize(const float boundary, const sf::Vector2f &posit, const sf::Vector2f &speed);
 
 float sprite_radius(sf::Sprite &sprite);

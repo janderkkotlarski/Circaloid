@@ -20,6 +20,8 @@ Menu::~Menu()
 
 void Menu::start()
 {
+    bool nope{false};
+
     const sf::Vector2f windims{m_side, m_side};
 
     sf::View view(0.0f*windims, windims);
@@ -29,10 +31,10 @@ void Menu::start()
     {
         Choice choice;
 
-
+        choice.run(m_window, windims, m_background, m_frame, nope);
 
         Game game;
 
-        game.run(m_window, windims, m_background, m_frame);
+        game.run(m_window, windims, m_background, m_frame, nope);
     }
 }
