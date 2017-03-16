@@ -4,10 +4,13 @@ Menu::Menu()
     : m_name("Danmakoid"),
       m_side(750.0f),
       m_background(0, 0, 0),
-      m_window(sf::VideoMode(m_side, m_side), m_name, sf::Style::Default)
+      m_window(sf::VideoMode(m_side, m_side), m_name, sf::Style::Default),
+      m_fps(60.0f),
+      m_frame(1/m_fps)
 {
     assert(m_name != "");
     assert(m_side > 0.0f);
+    assert(m_fps > 0.0f);
 
     m_window.setVerticalSyncEnabled(true);
 }
@@ -24,8 +27,12 @@ void Menu::start()
 
     while (m_window.isOpen())
     {
+        Choice choice;
+
+
+
         Game game;
 
-        game.run(m_window, windims, m_background);
+        game.run(m_window, windims, m_background, m_frame);
     }
 }

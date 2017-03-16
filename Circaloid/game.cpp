@@ -1,13 +1,10 @@
 #include "game.h"
 
 Game::Game()
-    : m_fps(60),
-      m_frame(1.0f/static_cast<float>(m_fps)),
-      m_div(100),
+    : m_div(100),
       m_loop(true),
       m_amount(4)
 {
-    assert(m_fps > 0);
     assert(m_div > 0);
     assert(m_loop);
     assert(m_amount > 0);
@@ -117,27 +114,28 @@ std::vector <Tohoid> Game::init_tohoids(const sf::Vector2f &windims,
                                   const std::vector <sf::Vector2f> &posits,
                                   const std::vector <float> &rotats,
                                   const std::vector <std::string> &names,
-                                  const std::vector <std::vector <sf::Keyboard::Key>> &keys)
+                                  const std::vector <std::vector <sf::Keyboard::Key>> &keys,
+                                  const float frame)
 {
     std::vector <Tohoid> touhous;
     if (m_amount >= 1)
     {
-        Tohoid patchouli{windims, posits[0], rotats[0], names[0], m_frame, keys[0]};
+        Tohoid patchouli{windims, posits[0], rotats[0], names[0], frame, keys[0]};
         touhous.push_back(patchouli);
     }
     if (m_amount >= 2)
     {
-        Tohoid meiling{windims, posits[1], rotats[1], names[1], m_frame, keys[1]};
+        Tohoid meiling{windims, posits[1], rotats[1], names[1], frame, keys[1]};
         touhous.push_back(meiling);
     }
     if (m_amount >= 3)
     {
-        Tohoid sakuya{windims, posits[2], rotats[2], names[2], m_frame, keys[2]};
+        Tohoid sakuya{windims, posits[2], rotats[2], names[2], frame, keys[2]};
         touhous.push_back(sakuya);
     }
     if (m_amount >= 4)
     {
-        Tohoid keine{windims, posits[3], rotats[3], names[3], m_frame, keys[3]};
+        Tohoid keine{windims, posits[3], rotats[3], names[3], frame, keys[3]};
         touhous.push_back(keine);
     }
 
@@ -152,7 +150,8 @@ std::vector <Tohoid> Game::init_tohoids(const sf::Vector2f &windims,
 }
 
 void Game::game_loop(sf::RenderWindow &window, const sf::Color &background,
-                     const sf::Vector2f &windims, std::vector <Tohoid> &touhous)
+                     const sf::Vector2f &windims, std::vector <Tohoid> &touhous,
+                     const float frame)
 {
     const std::string filetatami{"Tatami.png"};
     sf::Texture textami;
@@ -207,12 +206,13 @@ void Game::game_loop(sf::RenderWindow &window, const sf::Color &background,
 
         time = clock.getElapsedTime();
 
-        while(time.asSeconds() < m_frame)
+        while(time.asSeconds() < frame)
         { time = clock.getElapsedTime(); }
     }
 }
 
-void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::Color &background)
+void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims,
+               const sf::Color &background, const float frame)
 {
     const std::vector <float> rotats
     { init_rotats() };
@@ -226,14 +226,10 @@ void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::
     const std::vector <std::vector <sf::Keyboard::Key>> keys
     { init_keybindings() };
 
-
-
     std::vector <Tohoid> touhous
-    { init_tohoids(windims, posits, rotats, names, keys) };
+    { init_tohoids(windims, posits, rotats, names, keys, frame) };
 
-
-
-    game_loop(window, background, windims, touhous);
+    game_loop(window, background, windims, touhous, frame);
 }
 
 std::vector <sf::Keyboard::Key> chars2keys(const std::vector <char> &charas)

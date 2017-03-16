@@ -4,6 +4,7 @@
 #include <cassert>
 #include <string>
 
+#include "choice.h"
 #include "game.h"
 
 class Menu
@@ -12,6 +13,9 @@ class Menu
     const float m_side;
     sf::Color m_background;
     sf::RenderWindow m_window;
+
+    const float m_fps;
+    const float m_frame;
 
 public:
 

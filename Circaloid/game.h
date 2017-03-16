@@ -13,8 +13,6 @@
 
 class Game
 {
-    const int m_fps;
-    const float m_frame;
     const int m_div;
     bool m_loop;
     const float m_amount;
@@ -30,18 +28,18 @@ class Game
                                       const std::vector <sf::Vector2f> &posits,
                                       const std::vector <float> &rotats,
                                       const std::vector <std::string> &names,
-                                      const std::vector <std::vector <sf::Keyboard::Key>> &keys);
+                                      const std::vector <std::vector <sf::Keyboard::Key>> &keys, const float frame);
 
     void touhous_die(std::vector <Tohoid> &touhous);
 
-    void game_loop(sf::RenderWindow &window, const sf::Color &background, const sf::Vector2f &windims, std::vector<Tohoid> &touhous);
+    void game_loop(sf::RenderWindow &window, const sf::Color &background, const sf::Vector2f &windims, std::vector<Tohoid> &touhous, const float frame);
 
 public:
 
     explicit Game();
     ~Game();
 
-    void run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::Color &background);
+    void run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::Color &background, const float frame);
 };
 
 std::vector <sf::Keyboard::Key> chars2keys(const std::vector <char> &charas);
