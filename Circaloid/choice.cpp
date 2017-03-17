@@ -102,21 +102,9 @@ bool Choice::choose_loop(sf::RenderWindow &window, const sf::Color &background,
         sf::Clock clock;
         sf::Time time;
 
-        while (window.pollEvent(event))
+        if(polling(window, event, loop))
         {
-            if (event.type == sf::Event::Closed ||
-                sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) ||
-                sf::Keyboard::isKeyPressed(sf::Keyboard::Delete))
-            {
-                loop = false;
-
-                if (event.type == sf::Event::Closed ||
-                    sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                {
-                    window.close();
-                    return true;
-                }
-            }
+            return true;
         }
 
         window.clear(background);

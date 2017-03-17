@@ -79,3 +79,26 @@ sf::Vector2f mirrorize(const float boundary, const sf::Vector2f &posit, const sf
 
 float sprite_radius(sf::Sprite &sprite)
 { return 0.25f*(sprite.getGlobalBounds().width + sprite.getGlobalBounds().height); }
+
+bool polling(sf::RenderWindow &window, sf::Event &event,
+             bool &loop)
+{
+    while (window.pollEvent(event))
+    {
+        if (event.type == sf::Event::Closed ||
+            sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) ||
+            sf::Keyboard::isKeyPressed(sf::Keyboard::Delete))
+        {
+            loop = false;
+
+            if (event.type == sf::Event::Closed ||
+                sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            {
+                window.close();
+                return true;
+            }
+        }
+    }
+
+    return false;
+}

@@ -28,4 +28,6 @@ sf::Vector2f mirrorize(const float boundary, const sf::Vector2f &posit, const sf
 
 float sprite_radius(sf::Sprite &sprite);
 
+bool polling(sf::RenderWindow &window, sf::Event &event, bool &loop);
+
 #endif // FUNCTIONS_H
