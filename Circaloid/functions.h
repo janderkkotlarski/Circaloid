@@ -12,6 +12,8 @@ float squr(const float scalar) noexcept;
 
 float vectralize(const sf::Vector2f &vectol) noexcept;
 
+float average(const sf::Vector2f &vectol);
+
 sf::Vector2f rotation2direction(const float rotation);
 
 float direction2rotation(const sf::Vector2f &direction);

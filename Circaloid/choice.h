@@ -42,7 +42,7 @@ public:
     bool choose_loop(sf::RenderWindow &window, const sf::Color &background,
                      const float frame, const sf::Vector2f &windims);
 
-    void run(sf::RenderWindow &window, const sf::Vector2f &windims,
+    int run(sf::RenderWindow &window, const sf::Vector2f &windims,
              const sf::Color &background, const float frame,
              bool &nope);
 

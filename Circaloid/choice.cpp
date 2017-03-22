@@ -135,7 +135,7 @@ bool Choice::choose_loop(sf::RenderWindow &window, const sf::Color &background,
     return false;
 }
 
-void Choice::run(sf::RenderWindow &window, const sf::Vector2f &windims,
+int Choice::run(sf::RenderWindow &window, const sf::Vector2f &windims,
                  const sf::Color &background, const float frame,
                  bool &nope)
 {
@@ -151,4 +151,6 @@ void Choice::run(sf::RenderWindow &window, const sf::Vector2f &windims,
     {
         nope = choose_loop(window, background, frame, windims);
     }
+
+    return 3; //m_amount;
 }

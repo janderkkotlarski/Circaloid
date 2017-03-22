@@ -14,7 +14,7 @@
 class Game
 {
     const int m_div;
-    const float m_amount;
+    float m_amount;
 
     std::vector <std::string> init_names();
     std::vector <std::vector <sf::Keyboard::Key>> init_keybindings();
@@ -34,7 +34,7 @@ public:
     explicit Game();
     ~Game();
 
-    void run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::Color &background, const float frame, bool &nope);
+    void run(sf::RenderWindow &window, const sf::Vector2f &windims, const sf::Color &background, const float frame, const int amount, bool &nope);
 };
 
 std::vector <sf::Keyboard::Key> chars2keys(const std::vector <char> &charas);

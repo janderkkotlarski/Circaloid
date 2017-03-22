@@ -6,6 +6,9 @@ float squr(const float scalar) noexcept
 float vectralize(const sf::Vector2f &vectol) noexcept
 { return squr(vectol.x) + squr(vectol.y); }
 
+float average(const sf::Vector2f &vectol)
+{ return 0.5f*(vectol.x + vectol.y); }
+
 sf::Vector2f rotation2direction(const float rotation)
 {
     const float divide{M_PI/180.0f};
@@ -121,7 +124,7 @@ std::vector <sf::Vector2f> init_posits(const sf::Vector2f &windims,
     std::vector <sf::Vector2f> posits;
 
     for (int count {0}; count < amount; ++count)
-    { posits.push_back(-0.7f*windims.x*rotation2direction(rotats[count])); }
+    { posits.push_back(-0.7f*average(windims)*rotation2direction(rotats[count])); }
 
     assert(posits.size() == static_cast<unsigned>(amount));
     return posits;

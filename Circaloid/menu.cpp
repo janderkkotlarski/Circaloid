@@ -31,10 +31,11 @@ void Menu::start()
     {
         Choice choice;
 
-        choice.run(m_window, windims, m_background, m_frame, nope);
+        const int m_amount
+        { choice.run(m_window, windims, m_background, m_frame, nope) };
 
         Game game;
 
-        game.run(m_window, windims, m_background, m_frame, nope);
+        game.run(m_window, windims, m_background, m_frame, m_amount, nope);
     }
 }

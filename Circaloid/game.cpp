@@ -196,8 +196,11 @@ bool Game::game_loop(sf::RenderWindow &window, const sf::Color &background,
 
 void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims,
                const sf::Color &background, const float frame,
-               bool &nope)
+               const int amount, bool &nope)
 {
+    assert(amount > 0);
+    m_amount = amount;
+
     const std::vector <float> rotats
     { init_rotats(m_amount) };
 
