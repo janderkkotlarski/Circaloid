@@ -58,13 +58,20 @@ void Choice::init_sprites(std::vector <sf::Texture> &textures,
 
     sf::Sprite sprite;
 
+    const int textures_size = static_cast<int>(textures.size());
+
+    const std::vector <float> rotats
+    { init_rotats(textures_size) };
+
+    const std::vector <sf::Vector2f> posits
+    { init_posits(0.5f*windims, rotats, textures_size) };
 
 
-    for(int count{0}; count < static_cast<int>(textures.size()); ++count)
+    for(int count{0}; count < textures_size; ++count)
     {
         sprites.push_back(sprite);
 
-        set_sprite((0.07f + 0.07f*static_cast<float>(count))*windims, 0.0f, textures[count], sprites[count]);
+        set_sprite(posits[count], 0.0f, textures[count], sprites[count]);
     }
 
     assert(textures.size() == sprites.size());

@@ -35,6 +35,6 @@ std::vector <float> init_rotats(const int amount);
 
 std::vector <sf::Vector2f> init_posits(const sf::Vector2f &windims,
                                        const std::vector <float> &rotats,
-                                       const int amount);
+                                       const float amount);
 
 #endif // FUNCTIONS_H
