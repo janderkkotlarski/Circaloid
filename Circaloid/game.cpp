@@ -11,29 +11,6 @@ Game::Game()
 Game::~Game()
 {}
 
-std::vector <float> Game::init_rotats()
-{
-    std::vector <float> rotats;
-
-    for (int count {0}; count < m_amount; ++count)
-    { rotats.push_back(static_cast<float>(count)*360.0f/static_cast<float>(m_amount)); }
-
-    assert(rotats.size() == static_cast<unsigned>(m_amount));
-    return rotats;
-}
-
-std::vector <sf::Vector2f> Game::init_posits(const sf::Vector2f &windims,
-                                             const std::vector <float> &rotats)
-{
-    std::vector <sf::Vector2f> posits;
-
-    for (int count {0}; count < m_amount; ++count)
-    { posits.push_back(-0.7f*windims.x*rotation2direction(rotats[count])); }
-
-    assert(posits.size() == static_cast<unsigned>(m_amount));
-    return posits;
-}
-
 std::vector <std::string> Game::init_names()
 {
     const std::string patchy{"Patchouli_64.png"};
@@ -222,10 +199,10 @@ void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims,
                bool &nope)
 {
     const std::vector <float> rotats
-    { init_rotats() };
+    { init_rotats(m_amount) };
 
     const std::vector <sf::Vector2f> posits
-    { init_posits(windims, rotats) };
+    { init_posits(windims, rotats, m_amount) };
 
     const std::vector <std::string> names
     { init_names() };
@@ -237,9 +214,7 @@ void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims,
     { init_tohoids(windims, posits, rotats, names, keys, frame) };
 
     if (!nope)
-    {
-        nope = game_loop(window, background, windims, touhous, frame);
-    }
+    { nope = game_loop(window, background, windims, touhous, frame); }
 }
 
 std::vector <sf::Keyboard::Key> chars2keys(const std::vector <char> &charas)

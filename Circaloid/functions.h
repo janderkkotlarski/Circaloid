@@ -4,6 +4,7 @@
 #include <cassert>
 #include <cmath>
 #include <iostream>
+#include <vector>
 
 #include "SFML/Graphics.hpp"
 
@@ -29,5 +30,11 @@ sf::Vector2f mirrorize(const float boundary, const sf::Vector2f &posit, const sf
 float sprite_radius(sf::Sprite &sprite);
 
 bool polling(sf::RenderWindow &window, sf::Event &event, bool &loop);
+
+std::vector <float> init_rotats(const int amount);
+
+std::vector <sf::Vector2f> init_posits(const sf::Vector2f &windims,
+                                       const std::vector <float> &rotats,
+                                       const int amount);
 
 #endif // FUNCTIONS_H

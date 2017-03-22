@@ -58,6 +58,8 @@ void Choice::init_sprites(std::vector <sf::Texture> &textures,
 
     sf::Sprite sprite;
 
+
+
     for(int count{0}; count < static_cast<int>(textures.size()); ++count)
     {
         sprites.push_back(sprite);

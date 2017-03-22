@@ -102,3 +102,27 @@ bool polling(sf::RenderWindow &window, sf::Event &event,
 
     return false;
 }
+
+std::vector <float> init_rotats(const int amount)
+{
+    std::vector <float> rotats;
+
+    for (int count {0}; count < amount; ++count)
+    { rotats.push_back(static_cast<float>(count)*360.0f/static_cast<float>(amount)); }
+
+    assert(rotats.size() == static_cast<unsigned>(amount));
+    return rotats;
+}
+
+std::vector <sf::Vector2f> init_posits(const sf::Vector2f &windims,
+                                       const std::vector <float> &rotats,
+                                       const float amount)
+{
+    std::vector <sf::Vector2f> posits;
+
+    for (int count {0}; count < amount; ++count)
+    { posits.push_back(-0.7f*windims.x*rotation2direction(rotats[count])); }
+
+    assert(posits.size() == static_cast<unsigned>(amount));
+    return posits;
+}

@@ -16,10 +16,6 @@ class Game
     const int m_div;
     const float m_amount;
 
-    std::vector <float> init_rotats();
-    std::vector <sf::Vector2f> init_posits(const sf::Vector2f &windims,
-                                           const std::vector<float> &rotats);
-
     std::vector <std::string> init_names();
     std::vector <std::vector <sf::Keyboard::Key>> init_keybindings();
 
