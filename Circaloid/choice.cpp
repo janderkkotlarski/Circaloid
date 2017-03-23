@@ -73,7 +73,7 @@ void Choice::init_sprites(std::vector <sf::Texture> &textures,
     { init_posits(0.5f*m_windims, rotats, textures_size) };
 
 
-    for(int count{0}; count < textures_size; ++count)
+    for (int count{0}; count < textures_size; ++count)
     {
         sprites.push_back(sprite);
 
@@ -85,11 +85,13 @@ void Choice::init_sprites(std::vector <sf::Texture> &textures,
 
 void Choice::show_sprites(sf::RenderWindow &window)
 {
-    for(int count{0}; count < static_cast<int>(m_player_sprites.size()); ++count)
+    for (int count{0}; count < static_cast<int>(m_player_sprites.size()); ++count)
     {
         if (!m_player_chosen[count])
         { window.draw(m_player_sprites[count]); }
     }
+
+
 }
 
 void Choice::chara_click(sf::RenderWindow& window)
