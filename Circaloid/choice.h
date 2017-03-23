@@ -38,10 +38,9 @@ public:
                       std::vector <sf::Sprite> &sprites,
                       const sf::Vector2f &windims);
 
-    void show_sprites(std::vector <sf::Sprite> &sprites,
-                      sf::RenderWindow &window);
+    void show_sprites(sf::RenderWindow &window);
 
-    void chara_click();
+    void chara_click(sf::RenderWindow &window);
 
     bool choose_loop(sf::RenderWindow &window, const sf::Color &background,
                      const float frame, const sf::Vector2f &windims);

@@ -82,24 +82,42 @@ void Choice::init_sprites(std::vector <sf::Texture> &textures,
     assert(textures.size() == sprites.size());
 }
 
-void Choice::show_sprites(std::vector <sf::Sprite> &sprites,
-                          sf::RenderWindow &window)
+void Choice::show_sprites(sf::RenderWindow &window)
 {
-    assert(sprites.size() > 0);
-
-    for(int count{0}; count < static_cast<int>(sprites.size()); ++count)
+    for(int count{0}; count < static_cast<int>(m_player_sprites.size()); ++count)
     {
-        window.draw(sprites[count]);
+        if (!m_player_chosen[count])
+        { window.draw(m_player_sprites[count]); }
     }
 }
 
-void Choice::chara_click()
+void Choice::chara_click(sf::RenderWindow& window)
 {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
-        for (sf::Sprite sprite : m_player_sprites)
+        for (int count{0}; count < static_cast<int>(m_player_sprites.size()); ++count)
         {
-            if (sprite.)
+            if (!m_player_chosen[count])
+            {
+                const sf::Vector2f delta
+                { static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)) -
+                  m_player_sprites[count].getPosition() };
+
+
+                const float dist
+                { vectralize(delta) };
+
+
+
+
+                const float radius
+                { sprite_radius(m_player_sprites[count]) };
+
+                std::cout << dist << ':' << radius << '\n';
+
+                if (dist <= radius)
+                { m_player_chosen[count] = true; }
+            }
         }
     }
 }
@@ -127,15 +145,17 @@ bool Choice::choose_loop(sf::RenderWindow &window, const sf::Color &background,
         sf::Clock clock;
         sf::Time time;
 
-        if(polling(window, event, loop))
+        if (polling(window, event, loop))
         {
             return true;
         }
 
+        chara_click(window);
+
         window.clear(background);
         window.draw(spritami);
 
-        show_sprites(m_player_sprites, window);
+        show_sprites(window);
 
         window.draw(m_amount_sprite);
 
