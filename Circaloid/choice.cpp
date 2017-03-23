@@ -8,7 +8,8 @@ Choice::Choice()
       m_amount_sprite(),
       m_player_names(),
       m_player_textures(),
-      m_player_sprites()
+      m_player_sprites(),
+      m_player_chosen()
 {
     m_amount_names.push_back("Zero_64.png");
     m_amount_names.push_back("One_64.png");
@@ -25,6 +26,10 @@ Choice::Choice()
 
     assert(m_player_names.size() == 4);
 
+    for (int count{0}; count < static_cast<int>(m_player_names.size()); ++count)
+    {
+        m_player_chosen.push_back(false);
+    }
 }
 
 Choice::~Choice()
@@ -85,6 +90,17 @@ void Choice::show_sprites(std::vector <sf::Sprite> &sprites,
     for(int count{0}; count < static_cast<int>(sprites.size()); ++count)
     {
         window.draw(sprites[count]);
+    }
+}
+
+void Choice::chara_click()
+{
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    {
+        for (sf::Sprite sprite : m_player_sprites)
+        {
+            if (sprite.)
+        }
     }
 }
 
@@ -152,5 +168,5 @@ int Choice::run(sf::RenderWindow &window, const sf::Vector2f &windims,
         nope = choose_loop(window, background, frame, windims);
     }
 
-    return 3; //m_amount;
+    return 4; //m_amount;
 }

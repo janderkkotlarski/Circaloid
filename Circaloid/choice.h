@@ -24,6 +24,8 @@ class Choice
     std::vector <sf::Texture> m_player_textures;
     std::vector <sf::Sprite> m_player_sprites;
 
+    std::vector <bool> m_player_chosen;
+
 public:
 
     explicit Choice();
@@ -39,13 +41,14 @@ public:
     void show_sprites(std::vector <sf::Sprite> &sprites,
                       sf::RenderWindow &window);
 
+    void chara_click();
+
     bool choose_loop(sf::RenderWindow &window, const sf::Color &background,
                      const float frame, const sf::Vector2f &windims);
 
     int run(sf::RenderWindow &window, const sf::Vector2f &windims,
              const sf::Color &background, const float frame,
              bool &nope);
-
 };
 
 #endif // CHOICE_H

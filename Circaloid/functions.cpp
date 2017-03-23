@@ -71,7 +71,6 @@ void set_image(const std::string &name, const sf::Vector2f &windims,
     sprite.setPosition(0.0f*windims);
 }
 
-
 sf::Vector2f mirrorize(const float boundary, const sf::Vector2f &posit, const sf::Vector2f &speed)
 {
     if (vectralize(posit) == 0.0f)
