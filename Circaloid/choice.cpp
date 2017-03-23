@@ -1,7 +1,8 @@
 #include "choice.h"
 
-Choice::Choice()
-    : m_chosen(false),
+Choice::Choice(const sf::Vector2f &windims)
+    : m_windims(windims),
+      m_chosen(false),
       m_amount(0),
       m_amount_names(),
       m_amount_texures(),
@@ -9,7 +10,8 @@ Choice::Choice()
       m_player_names(),
       m_player_textures(),
       m_player_sprites(),
-      m_player_chosen()
+      m_player_chosen(),
+      m_names_chosen()
 {
     m_amount_names.push_back("Zero_64.png");
     m_amount_names.push_back("One_64.png");
@@ -56,8 +58,7 @@ void Choice::init_textures(std::vector<std::string> &names, std::vector<sf::Text
 }
 
 void Choice::init_sprites(std::vector <sf::Texture> &textures,
-                  std::vector <sf::Sprite> &sprites,
-                  const sf::Vector2f &windims)
+                  std::vector <sf::Sprite> &sprites)
 {
     assert(textures.size() > 0);
 
@@ -69,7 +70,7 @@ void Choice::init_sprites(std::vector <sf::Texture> &textures,
     { init_rotats(textures_size) };
 
     const std::vector <sf::Vector2f> posits
-    { init_posits(0.5f*windims, rotats, textures_size) };
+    { init_posits(0.5f*m_windims, rotats, textures_size) };
 
 
     for(int count{0}; count < textures_size; ++count)
@@ -95,51 +96,59 @@ void Choice::chara_click(sf::RenderWindow& window)
 {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
+        const sf::Vector2f mouse_posit
+        {
+            static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)) -
+            0.5f*m_windims
+        };
+
         for (int count{0}; count < static_cast<int>(m_player_sprites.size()); ++count)
         {
             if (!m_player_chosen[count])
             {
-                const sf::Vector2f delta
-                { static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)) -
-                  m_player_sprites[count].getPosition() };
+                const sf::Vector2f sprite_posit
+                { m_player_sprites[count].getPosition() };
 
+                const sf::Vector2f delta
+                { mouse_posit - sprite_posit };
 
                 const float dist
-                { vectralize(delta) };
+                { std::sqrt(vectralize(delta)) };
 
-
-
-
-                const float radius
+                 const float radius
                 { sprite_radius(m_player_sprites[count]) };
 
-                std::cout << dist << ':' << radius << '\n';
-
                 if (dist <= radius)
-                { m_player_chosen[count] = true; }
+                {
+                    m_player_chosen[count] = true;
+                    ++m_amount;
+                }
             }
         }
     }
 }
 
 bool Choice::choose_loop(sf::RenderWindow &window, const sf::Color &background,
-                         const float frame, const sf::Vector2f &windims)
+                         const float frame)
 {
-    bool loop{true};
+    bool loop
+    { true };
 
-    const std::string filetatami{"Tatami.png"};
+    const std::string filetatami
+    { "Tatami.png" };
     sf::Texture textami;
     sf::Sprite spritami;
 
-    set_image(filetatami, windims, textami, spritami);
+    set_image(filetatami, m_windims, textami, spritami);
 
-    const std::string filename{"Frame.png"};
+    const std::string filename
+    { "Frame.png" };
     sf::Texture texture;
     sf::Sprite sprite;
 
-    set_image(filename, windims, texture, sprite);
+    set_image(filename, m_windims, texture, sprite);
 
-    while(loop)
+    while (loop)
     {
         sf::Event event;
         sf::Clock clock;
@@ -171,21 +180,20 @@ bool Choice::choose_loop(sf::RenderWindow &window, const sf::Color &background,
     return false;
 }
 
-int Choice::run(sf::RenderWindow &window, const sf::Vector2f &windims,
-                 const sf::Color &background, const float frame,
-                 bool &nope)
+int Choice::run(sf::RenderWindow &window, const sf::Color &background,
+                const float frame, bool &nope)
 {
     init_textures(m_amount_names, m_amount_texures);
 
-    set_sprite(0.0f*windims, 0.0f, m_amount_texures[0], m_amount_sprite);
+    set_sprite(0.0f*m_windims, 0.0f, m_amount_texures[0], m_amount_sprite);
 
     init_textures(m_player_names, m_player_textures);
 
-    init_sprites(m_player_textures, m_player_sprites, windims);
+    init_sprites(m_player_textures, m_player_sprites);
 
     if (!nope)
     {
-        nope = choose_loop(window, background, frame, windims);
+        nope = choose_loop(window, background, frame);
     }
 
     return 4; //m_amount;

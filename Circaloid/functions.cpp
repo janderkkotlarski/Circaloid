@@ -128,3 +128,6 @@ std::vector <sf::Vector2f> init_posits(const sf::Vector2f &windims,
     assert(posits.size() == static_cast<unsigned>(amount));
     return posits;
 }
+
+void cout_vect2f(const sf::Vector2f &vectol)
+{ std::cout << '[' << vectol.x << ':' << vectol.y << "]\n"; }

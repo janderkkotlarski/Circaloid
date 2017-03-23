@@ -29,10 +29,10 @@ void Menu::start()
 
     while (m_window.isOpen())
     {
-        Choice choice;
+        Choice choice(windims);
 
         const int m_amount
-        { choice.run(m_window, windims, m_background, m_frame, nope) };
+        { choice.run(m_window, m_background, m_frame, nope) };
 
         Game game;
 

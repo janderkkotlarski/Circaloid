@@ -39,4 +39,7 @@ std::vector <sf::Vector2f> init_posits(const sf::Vector2f &windims,
                                        const std::vector <float> &rotats,
                                        const float amount);
 
+void cout_vect2f(const sf::Vector2f &vectol);
+
+
 #endif // FUNCTIONS_H
