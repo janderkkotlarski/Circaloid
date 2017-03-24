@@ -29,9 +29,7 @@ Choice::Choice(const sf::Vector2f &windims)
     assert(m_player_names.size() == 4);
 
     for (int count{0}; count < static_cast<int>(m_player_names.size()); ++count)
-    {
-        m_player_chosen.push_back(false);
-    }
+    { m_player_chosen.push_back(false); }
 }
 
 Choice::~Choice()
@@ -91,7 +89,14 @@ void Choice::show_sprites(sf::RenderWindow &window)
         { window.draw(m_player_sprites[count]); }
     }
 
-
+    /*
+    for_each(std::begin(m_player_sprites),
+             std::end(m_player_sprites),
+             [&window](sf::Sprite &sprite)
+             {
+                window.draw(sprite);
+             });
+    */
 }
 
 void Choice::chara_click(sf::RenderWindow& window)
