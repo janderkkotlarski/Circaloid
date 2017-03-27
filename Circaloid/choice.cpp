@@ -72,7 +72,6 @@ void Choice::init_sprites(std::vector <sf::Texture> &textures,
     for (int count{0}; count < textures_size; ++count)
     {
         sprites.push_back(sprite);
-
         set_sprite(posits[count], 0.0f, textures[count], sprites[count]);
     }
 
@@ -159,12 +158,7 @@ void Choice::amount_click(sf::RenderWindow &window, bool &loop)
 
         if (dist <= radius &&
             m_amount > 0)
-        {
-            // --m_amount;
-            // set_sprite(0.0f*m_windims, 0.0f, m_amount_texures[m_amount], m_amount_sprite);
-
-            loop = false;
-        }
+        { loop = false; }
     }
 }
 
@@ -229,13 +223,10 @@ int Choice::run(sf::RenderWindow &window, const sf::Color &background,
     set_sprite(0.0f*m_windims, 0.0f, m_amount_texures[m_amount], m_amount_sprite);
 
     init_textures(m_player_names, m_player_textures);
-
     init_sprites(m_player_textures, m_player_sprites);
 
     if (!nope)
-    {
-        nope = choose_loop(window, background, frame, touhou_names);
-    }
+    { nope = choose_loop(window, background, frame, touhou_names); }
 
     return m_amount;
 }

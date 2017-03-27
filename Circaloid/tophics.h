@@ -8,10 +8,6 @@
 
 class Tophics
 {
-    // const float m_frame;
-
-    // const float m_subframe;
-
     const float m_boundary;
 
     const std::string m_sprite_name;

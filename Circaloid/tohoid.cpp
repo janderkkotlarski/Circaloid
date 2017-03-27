@@ -199,12 +199,26 @@ void Tohoid::move_bullets(std::vector <Tohoid> &touhous)
     std::vector <sf::Vector2f> posits{touhous2posits(touhous)};
     std::vector <bool> alives{touhous2alives(touhous)};
 
+    /*
     for (int count{0}; count < static_cast<int>(m_bullets.size()); ++count)
     {
         m_bullets[count].bullet_speed(m_light, alives, posits, get_posit());
         m_bullets[count].move();
     }
+    */
 
+    const float light
+    { m_light };
+
+    std::for_each(std::begin(m_bullets),
+                  std::end(m_bullets),
+                  [light, alives, posits](Bullet &bull)
+                  {
+                      bull.bullet_speed(light, alives, posits, bull.get_posit());
+                      bull.move();
+                  });
+
+    /*
     for (int count(0); count < static_cast<int>(m_seeker.size()); ++count)
     {
         const int target{m_seeker[count].get_target()};
@@ -212,6 +226,17 @@ void Tohoid::move_bullets(std::vector <Tohoid> &touhous)
         m_seeker[count].set_speed(posits[target]);
         m_seeker[count].move();
     }
+    */
+
+    std::for_each(std::begin(m_seeker),
+                  std::end(m_seeker),
+                  [posits](Seeker &seek)
+                  {
+                      const int target{seek.get_target()};
+
+                      seek.set_speed(posits[target]);
+                      seek.move();
+                  });
 }
 
 
