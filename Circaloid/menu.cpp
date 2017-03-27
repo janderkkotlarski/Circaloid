@@ -33,11 +33,12 @@ void Menu::start()
 
         Choice choice(windims);
 
-        const int m_amount
+        const int amount
         { choice.run(m_window, m_background, m_frame, nope, touhou_names) };
 
         Game game;
 
-        game.run(m_window, windims, m_background, m_frame, m_amount, nope);
+        if (amount > 0)
+        { game.run(m_window, windims, m_background, m_frame, amount, nope, touhou_names); }
     }
 }

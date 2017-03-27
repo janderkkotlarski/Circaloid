@@ -193,7 +193,7 @@ bool Game::game_loop(sf::RenderWindow &window, const sf::Color &background,
 
 void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims,
                const sf::Color &background, const float frame,
-               const int amount, bool &nope)
+               const int amount, bool &nope, const std::vector <std::string> &touhou_names)
 {
     assert(amount > 0);
     m_amount = amount;
@@ -204,14 +204,14 @@ void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims,
     const std::vector <sf::Vector2f> posits
     { init_posits(windims, rotats, m_amount) };
 
-    const std::vector <std::string> names
-    { init_names() };
+    // const std::vector <std::string> names
+    // { init_names() };
 
     const std::vector <std::vector <sf::Keyboard::Key>> keys
     { init_keybindings() };
 
     std::vector <Tohoid> touhous
-    { init_tohoids(windims, posits, rotats, names, keys, frame) };
+    { init_tohoids(windims, posits, rotats, touhou_names, keys, frame) };
 
     if (!nope)
     { nope = game_loop(window, background, windims, touhous, frame); }

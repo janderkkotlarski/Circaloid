@@ -195,9 +195,9 @@ bool Choice::choose_loop(sf::RenderWindow &window, const sf::Color &background,
         sf::Time time;
 
         if (polling(window, event, loop))
-        {
-            return true;
-        }
+        { return true; }
+        else if (!loop)
+        { m_amount = 0; }
 
         chara_click(window, touhou_names);
         amount_click(window, loop);
@@ -237,5 +237,5 @@ int Choice::run(sf::RenderWindow &window, const sf::Color &background,
         nope = choose_loop(window, background, frame, touhou_names);
     }
 
-    return m_amount; //m_amount;
+    return m_amount;
 }
