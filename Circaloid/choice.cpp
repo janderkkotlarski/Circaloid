@@ -70,7 +70,6 @@ void Choice::init_sprites(std::vector <sf::Texture> &textures,
     const std::vector <sf::Vector2f> posits
     { init_posits(0.5f*m_windims, rotats, textures_size) };
 
-
     for (int count{0}; count < textures_size; ++count)
     {
         sprites.push_back(sprite);
@@ -129,6 +128,7 @@ void Choice::chara_click(sf::RenderWindow& window)
                 {
                     m_player_chosen[count] = true;
                     ++m_amount;
+                    set_sprite(0.0f*m_windims, 0.0f, m_amount_texures[m_amount], m_amount_sprite);
                 }
             }
         }
@@ -192,7 +192,7 @@ int Choice::run(sf::RenderWindow &window, const sf::Color &background,
 {
     init_textures(m_amount_names, m_amount_texures);
 
-    set_sprite(0.0f*m_windims, 0.0f, m_amount_texures[0], m_amount_sprite);
+    set_sprite(0.0f*m_windims, 0.0f, m_amount_texures[m_amount], m_amount_sprite);
 
     init_textures(m_player_names, m_player_textures);
 
