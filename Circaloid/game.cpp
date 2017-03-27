@@ -149,39 +149,36 @@ bool Game::game_loop(sf::RenderWindow &window, const sf::Color &background,
         sf::Clock clock;
         sf::Time time;
 
-        while (window.pollEvent(event))
+        if (polling(window, event, loop))
         {
-            if (event.type == sf::Event::Closed ||
-                sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) ||
-                sf::Keyboard::isKeyPressed(sf::Keyboard::Delete))
-            {
-                loop = false;
-
-                if (event.type == sf::Event::Closed ||
-                    sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                {
-                    window.close();
-                    return true;
-                }
-            }
+            return true;
         }
 
         window.clear(background);
         window.draw(spritami);
 
+        /*
         for (int count{0}; count < m_amount; ++count)
         { touhous[count].display(window); }
+        */
 
-        // std::for_each(std::begin(touhous),
-        //               std::end(touhous),
-        //               [touhous](sf::RenderWindow widow)
-        //               { touhous->display(widow); });
+        std::for_each(std::begin(touhous),
+                      std::end(touhous),
+                      [&window](Tohoid &touhou)
+                      { touhou.display(window); });
 
         window.draw(sprite);
         window.display();
 
+        /*
         for (int count{0}; count < m_amount; ++count)
         { touhous[count].move(touhous); }
+        */
+
+        std::for_each(std::begin(touhous),
+                      std::end(touhous),
+                      [&window, &touhous](Tohoid &touhou)
+                      { touhou.move(touhous); });
 
         touhous_die(touhous);
 

@@ -17,6 +17,8 @@ class Menu
     const float m_fps;
     const float m_frame;
 
+    std::vector <std::string> m_touhou_names;
+
 public:
 
     explicit Menu();

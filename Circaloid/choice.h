@@ -28,7 +28,6 @@ class Choice
     std::vector <sf::Sprite> m_player_sprites;
 
     std::vector <bool> m_player_chosen;
-    std::vector <std::string> m_names_chosen;
 
 public:
 
@@ -43,13 +42,15 @@ public:
 
     void show_sprites(sf::RenderWindow &window);
 
-    void chara_click(sf::RenderWindow &window);
+    void chara_click(sf::RenderWindow &window, std::vector <std::string> &touhou_names);
+
+    void amount_click(sf::RenderWindow &window, bool &loop);
 
     bool choose_loop(sf::RenderWindow &window, const sf::Color &background,
-                     const float frame);
+                     const float frame, std::vector<std::string> &touhou_names);
 
     int run(sf::RenderWindow &window, const sf::Color &background,
-            const float frame, bool &nope);
+            const float frame, bool &nope, std::vector<std::string> &touhou_names);
 };
 
 #endif // CHOICE_H

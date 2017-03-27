@@ -10,8 +10,7 @@ Choice::Choice(const sf::Vector2f &windims)
       m_player_names(),
       m_player_textures(),
       m_player_sprites(),
-      m_player_chosen(),
-      m_names_chosen()
+      m_player_chosen()
 {
     m_amount_names.push_back("Zero_64.png");
     m_amount_names.push_back("One_64.png");
@@ -98,7 +97,7 @@ void Choice::show_sprites(sf::RenderWindow &window)
     */
 }
 
-void Choice::chara_click(sf::RenderWindow& window)
+void Choice::chara_click(sf::RenderWindow& window, std::vector <std::string> &touhou_names)
 {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
@@ -129,14 +128,48 @@ void Choice::chara_click(sf::RenderWindow& window)
                     m_player_chosen[count] = true;
                     ++m_amount;
                     set_sprite(0.0f*m_windims, 0.0f, m_amount_texures[m_amount], m_amount_sprite);
+                    touhou_names.push_back(m_player_names[count]);
                 }
             }
         }
     }
 }
 
+void Choice::amount_click(sf::RenderWindow &window, bool &loop)
+{
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    {
+        const sf::Vector2f mouse_posit
+        {
+            static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)) -
+            0.5f*m_windims
+        };
+
+        const sf::Vector2f sprite_posit
+        { m_amount_sprite.getPosition() };
+
+        const sf::Vector2f delta
+        { mouse_posit - sprite_posit };
+
+        const float dist
+        { std::sqrt(vectralize(delta)) };
+
+        const float radius
+        { sprite_radius(m_amount_sprite) };
+
+        if (dist <= radius &&
+            m_amount > 0)
+        {
+            // --m_amount;
+            // set_sprite(0.0f*m_windims, 0.0f, m_amount_texures[m_amount], m_amount_sprite);
+
+            loop = false;
+        }
+    }
+}
+
 bool Choice::choose_loop(sf::RenderWindow &window, const sf::Color &background,
-                         const float frame)
+                         const float frame, std::vector <std::string> &touhou_names)
 {
     bool loop
     { true };
@@ -166,7 +199,8 @@ bool Choice::choose_loop(sf::RenderWindow &window, const sf::Color &background,
             return true;
         }
 
-        chara_click(window);
+        chara_click(window, touhou_names);
+        amount_click(window, loop);
 
         window.clear(background);
         window.draw(spritami);
@@ -188,7 +222,7 @@ bool Choice::choose_loop(sf::RenderWindow &window, const sf::Color &background,
 }
 
 int Choice::run(sf::RenderWindow &window, const sf::Color &background,
-                const float frame, bool &nope)
+                const float frame, bool &nope, std::vector <std::string> &touhou_names)
 {
     init_textures(m_amount_names, m_amount_texures);
 
@@ -200,8 +234,8 @@ int Choice::run(sf::RenderWindow &window, const sf::Color &background,
 
     if (!nope)
     {
-        nope = choose_loop(window, background, frame);
+        nope = choose_loop(window, background, frame, touhou_names);
     }
 
-    return 4; //m_amount;
+    return m_amount; //m_amount;
 }
