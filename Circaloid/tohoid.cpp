@@ -276,20 +276,27 @@ void Tohoid::check_seeker_border()
     }
 }
 
-void Tohoid::bullets_hurt(std::vector <Tohoid> &touhous)
+void Tohoid::bullets_hurt(std::vector <Tohoid> &touhous, std::vector <Bullet> &bullets)
 {
     if ((m_bullets.size() > 0) && (touhous.size() > 0))
     {
-        const float qi_hurt{-0.05f};
+        const float qi_hurt
+        { -0.05f };
         assert(qi_hurt < 0.0f);
 
-        const float scale{0.85f};
+        const float scale
+        { 0.85f };
 
+        const float boundary
+        { m_boundary };
+
+        /*
         for (int iter{0}; iter < static_cast<int>(touhous.size()); ++iter)
         {
-            bullets_hit(touhous[iter], m_bullets,
-                        qi_hurt, scale, m_boundary);
+            bullets_hit(touhous[iter], bullets,
+                        qi_hurt, scale, boundary);
         }
+        */
 
         /*
         for (int iter{0}; iter < static_cast<int>(touhous.size()); ++iter)
@@ -320,15 +327,15 @@ void Tohoid::bullets_hurt(std::vector <Tohoid> &touhous)
         }
         */
 
-        /*
+
         std::for_each(std::begin(touhous),
                       std::end(touhous),
-                      [m_bullets, qi_hurt, scale, &m_boundary](Tohoid &touhou)
+                      [&bullets, qi_hurt, scale, boundary](Tohoid &touhou)
                       {
-                          bullets_hit(touhou, m_bullets,
-                                      qi_hurt, scale, m_boundary);
+                          bullets_hit(touhou, bullets,
+                                      qi_hurt, scale, boundary);
                       });
-        */
+
     }
 }
 
@@ -410,7 +417,7 @@ void Tohoid::move(std::vector <Tohoid> &touhous)
         danmaku_shoot();
         seeker_shoot(touhous);
 
-        bullets_hurt(touhous);
+        bullets_hurt(touhous, m_bullets);
         seeker_hurt(touhous);
 
         quinergy_restore();

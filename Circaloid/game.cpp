@@ -11,35 +11,6 @@ Game::Game()
 Game::~Game()
 {}
 
-std::vector <std::string> Game::init_names()
-{
-    const std::string patchy{"Patchouli_64.png"};
-    assert(patchy != "");
-    const std::string meily{"Meiling_64.png"};
-    assert(meily != "");
-    const std::string sakuy{"Sakuya_64.png"};
-    assert(sakuy != "");
-    const std::string keiny{"Keine_64.png"};
-    assert(keiny != "");
-
-    std::vector <std::string> names;
-    if (m_amount >= 1)
-    { names.push_back(patchy); }
-    if (m_amount >= 2)
-    { names.push_back(meily); }
-    if (m_amount >= 3)
-    { names.push_back(sakuy); }
-    if (m_amount >= 4)
-    { names.push_back(keiny); }
-
-    assert(names.size() == static_cast<unsigned>(m_amount));
-
-    for (std::string name : names)
-    { assert(name != ""); }
-
-    return names;
-}
-
 std::vector <std::vector <sf::Keyboard::Key>> Game::init_keybindings()
 {
      const std::vector <char> charas_1{'w', 's', 'd', 'a', 'x', 'z', 'q'};
