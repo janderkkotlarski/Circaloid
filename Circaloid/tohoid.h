@@ -66,8 +66,11 @@ class Tohoid
     void check_bullet_border();
     void check_seeker_border();
 
-    void bullets_hurt(std::vector <Tohoid> &touhous, std::vector<Bullet> &bullets);
-    void seeker_hurt(std::vector <Tohoid> &touhous);
+    void bullets_hurt(std::vector <Tohoid> &touhous,
+                      std::vector<Bullet> &bullets);
+
+    void seeker_hurt(std::vector <Tohoid> &touhous,
+                     std::vector <Seeker> &seeker);
 
     void move_tophics();
 
@@ -125,5 +128,11 @@ void bullets_hit(Tohoid &touhou,
                  const float qi_hurt,
                  const float scale,
                  const float boundary);
+
+void seeker_hit(Tohoid &touhou,
+                std::vector <Seeker> &seeker,
+                const float qi_hurt,
+                const float scale,
+                const float boundary);
 
 #endif // TOHOID_H

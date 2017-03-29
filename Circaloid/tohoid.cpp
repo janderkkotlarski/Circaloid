@@ -276,7 +276,8 @@ void Tohoid::check_seeker_border()
     }
 }
 
-void Tohoid::bullets_hurt(std::vector <Tohoid> &touhous, std::vector <Bullet> &bullets)
+void Tohoid::bullets_hurt(std::vector <Tohoid> &touhous,
+                          std::vector <Bullet> &bullets)
 {
     if ((m_bullets.size() > 0) && (touhous.size() > 0))
     {
@@ -339,7 +340,8 @@ void Tohoid::bullets_hurt(std::vector <Tohoid> &touhous, std::vector <Bullet> &b
     }
 }
 
-void Tohoid::seeker_hurt(std::vector <Tohoid> &touhous)
+void Tohoid::seeker_hurt(std::vector <Tohoid> &touhous,
+                         std::vector <Seeker> &seeker)
 {
     if ((m_seeker.size() > 0) && (touhous.size() > 0))
     {
@@ -349,6 +351,10 @@ void Tohoid::seeker_hurt(std::vector <Tohoid> &touhous)
         const float scale{0.85f};
         assert(scale > 0.0f);
 
+        const float boundary
+        { m_boundary };
+
+        /*
         for (int iter{0}; iter < static_cast<int>(touhous.size()); ++iter)
         {
             if (touhous[iter].get_vivid())
@@ -375,6 +381,15 @@ void Tohoid::seeker_hurt(std::vector <Tohoid> &touhous)
                 }
             }
         }
+        */
+
+        std::for_each(std::begin(touhous),
+                      std::end(touhous),
+                      [&seeker, qi_hurt, scale, boundary](Tohoid &touhou)
+                      {
+                          seeker_hit(touhou, seeker,
+                                     qi_hurt, scale, boundary);
+                      });
     }
 }
 
@@ -418,7 +433,7 @@ void Tohoid::move(std::vector <Tohoid> &touhous)
         seeker_shoot(touhous);
 
         bullets_hurt(touhous, m_bullets);
-        seeker_hurt(touhous);
+        seeker_hurt(touhous, m_seeker);
 
         quinergy_restore();
 
@@ -567,6 +582,37 @@ void bullets_hit(Tohoid &touhou,
             {
                 bullets[count] = bullets.back();
                 bullets.pop_back();
+                touhou.qi_damage(qi_hurt);
+                --count;
+            }
+        }
+    }
+}
+
+void seeker_hit(Tohoid &touhou,
+                std::vector <Seeker> &seeker,
+                const float qi_hurt,
+                const float scale,
+                const float boundary)
+{
+    if (touhou.get_vivid())
+    {
+        for (int count{0}; count < static_cast<int>(seeker.size()); ++count)
+        {
+            const float dist_2{vectralize(seeker[count].get_posit() - touhou.get_posit())};
+            const float mist_2{vectralize(seeker[count].get_posit() - touhou.get_mosit())};
+
+            const float radi_2{squr(seeker[count].get_radius() + scale*touhou.get_radius())};
+            const float madi_2{squr(seeker[count].get_radius() + scale*touhou.get_madius())};
+
+            const float bound_2{squr(boundary + scale*touhou.get_madius())};
+            const float mosit_2{vectralize(touhou.get_mosit())};
+
+            if ((dist_2 <= radi_2) ||
+                ((mist_2 <= madi_2) && (mosit_2 <= bound_2)))
+            {
+                seeker[count] = seeker.back();
+                seeker.pop_back();
                 touhou.qi_damage(qi_hurt);
                 --count;
             }

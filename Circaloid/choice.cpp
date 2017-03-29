@@ -126,19 +126,23 @@ void Choice::show_sprites(sf::RenderWindow &window,
 
 void Choice::chara_click(sf::RenderWindow &window,
                          std::vector <std::string> &touhou_names,
-                         std::vector <std::string> &player_names,
                          std::vector <bool> &player_chosen,
                          std::vector<sf::Texture> &amount_textures,
                          sf::Sprite &amount_sprite,
-                         const sf::Vector2f &windims,
                          int &amount)
 {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
+        const sf::Vector2f windims
+        { m_windims };
+
+        const std::vector <std::string> player_names
+        { m_player_names };
+
         const sf::Vector2f mouse_posit
         {
             static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)) -
-            0.5f*m_windims
+            0.5f*windims
         };
 
         int count
@@ -146,8 +150,8 @@ void Choice::chara_click(sf::RenderWindow &window,
 
         std::for_each(std::begin(m_player_sprites),
                       std::end(m_player_sprites),
-                      [&window, &touhou_names, &player_names, &player_chosen,
-                       &amount_textures, &amount_sprite, &windims,
+                      [&window, &touhou_names, player_names, &player_chosen,
+                       &amount_textures, &amount_sprite, windims,
                        &amount, mouse_posit, &count]
                       (sf::Sprite player_sprite)
                       {
@@ -270,11 +274,9 @@ bool Choice::choose_loop(sf::RenderWindow &window, const sf::Color &background,
 
         chara_click(window,
                     touhou_names,
-                    m_player_names,
                     m_player_chosen,
                     m_amount_textures,
                     m_amount_sprite,
-                    m_windims,
                     m_amount);
 
         amount_click(window, loop);

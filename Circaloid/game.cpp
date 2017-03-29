@@ -49,11 +49,21 @@ void Game::touhous_die(std::vector <Tohoid> &touhous)
 {
     assert(touhous.size() == static_cast<unsigned>(m_amount));
 
+    /*
     for (int count{0}; count < m_amount; ++count)
     {
         if ((touhous[count].get_quinergy() <= 0.0f) && touhous[count].get_vivid())
         { touhous[count].dies(); }
     }
+    */
+
+    std::for_each(std::begin(touhous),
+                  std::end(touhous),
+                  [](Tohoid &touhou)
+                  {
+                      if ((touhou.get_quinergy() <= 0.0f) && touhou.get_vivid())
+                      { touhou.dies(); }
+                  });
 }
 
 std::vector <Tohoid> Game::init_tohoids(const sf::Vector2f &windims,
@@ -65,33 +75,20 @@ std::vector <Tohoid> Game::init_tohoids(const sf::Vector2f &windims,
 {
     std::vector <Tohoid> touhous;
 
-    if (m_amount >= 1)
+    for (int count{0}; count < m_amount; ++count)
     {
-        Tohoid patchouli{windims, posits[0], rotats[0], names[0], frame, keys[0]};
-        touhous.push_back(patchouli);
-    }
-    if (m_amount >= 2)
-    {
-        Tohoid meiling{windims, posits[1], rotats[1], names[1], frame, keys[1]};
-        touhous.push_back(meiling);
-    }
-    if (m_amount >= 3)
-    {
-        Tohoid sakuya{windims, posits[2], rotats[2], names[2], frame, keys[2]};
-        touhous.push_back(sakuya);
-    }
-    if (m_amount >= 4)
-    {
-        Tohoid keine{windims, posits[3], rotats[3], names[3], frame, keys[3]};
-        touhous.push_back(keine);
+        Tohoid touhou{windims, posits[count], rotats[count], names[count], frame, keys[count]};
+        touhous.push_back(touhou);
     }
 
     assert(touhous.size() == static_cast<unsigned>(m_amount));
 
-    for (int count{0}; count < m_amount; ++count)
-    {
-        touhous[count].reimage();
-    }
+    std::for_each(std::begin(touhous),
+                  std::end(touhous),
+                  [](Tohoid &touhou)
+                  {
+                      touhou.reimage();
+                  });
 
     return touhous;
 }
@@ -174,9 +171,6 @@ void Game::run(sf::RenderWindow &window, const sf::Vector2f &windims,
 
     const std::vector <sf::Vector2f> posits
     { init_posits(windims, rotats, m_amount) };
-
-    // const std::vector <std::string> names
-    // { init_names() };
 
     const std::vector <std::vector <sf::Keyboard::Key>> keys
     { init_keybindings() };

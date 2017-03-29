@@ -42,12 +42,10 @@ public:
 
     void show_sprites(sf::RenderWindow &window, std::vector<bool> &player_chosen);
 
-    void chara_click(sf::RenderWindow& window,
-                     std::vector <std::string> &touhou_names,
-                     std::vector <std::string> &player_names,
+    void chara_click(sf::RenderWindow& window, std::vector<std::__cxx11::string> &touhou_names,
                      std::vector <bool> &player_chosen,
                      std::vector <sf::Texture> &amount_textures,
-                     sf::Sprite &amount_sprite, const sf::Vector2f &windims,
+                     sf::Sprite &amount_sprite,
                      int &amount);
 
     void amount_click(sf::RenderWindow &window, bool &loop);
