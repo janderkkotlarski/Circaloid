@@ -430,32 +430,60 @@ void Tohoid::display(sf::RenderWindow &window)
 
 int Tohoid::touhou_self(std::vector<Tohoid> &touhous)
 {
-    int self{-1};
+    int self
+    { -1 };
     assert(self == -1);
 
+    int count
+    { 0 };
+
+    const sf::Vector2f posit
+    { get_posit() };
+
+    /*
     for (int count{0}; count < static_cast<int>(touhous.size()); ++count)
     {
         if (vectralize(touhous[count].get_posit() - get_posit()) < 10.0f)
         { self = count; }
     }
+    */
+
+    std::for_each(std::begin(touhous),
+                  std::end(touhous),
+                  [&self, &count, posit](Tohoid &touhou)
+                  {
+                      if (vectralize(touhou.get_posit() - posit) < 10.0f)
+                      { self = count; }
+
+                      ++count;
+                  });
 
     return self;
 }
 
 int Tohoid::touhou_target(std::vector <Tohoid> &touhous)
 {
-    int target{-1};
+    int target
+    { -1 };
     assert(target == -1);
 
-    const int self{touhou_self(touhous)};
+    int count
+    { 0 };
+
+    const int self
+    { touhou_self(touhous) };
+
+    const sf::Vector2f self_posit
+    { touhous[self].get_posit() };
 
     float max_2{1.0e10f};
 
+    /*
     for (int count{0}; count < static_cast<int>(touhous.size()); ++count)
     {
         if ((count != self) && touhous[count].get_vivid())
         {
-            const float dist_2{vectralize(touhous[count].get_posit() - touhous[self].get_posit())};
+            const float dist_2{vectralize(touhous[count].get_posit() - self_posit)};
 
             if (dist_2 < max_2)
             {
@@ -464,6 +492,26 @@ int Tohoid::touhou_target(std::vector <Tohoid> &touhous)
             }
         }
     }
+    */
+
+    std::for_each(std::begin(touhous),
+                  std::end(touhous),
+                  [&target, &count, self, self_posit, &max_2](Tohoid touhou)
+                  {
+                      if ((count != self) && touhou.get_vivid())
+                      {
+                          const float dist_2
+                          { vectralize(touhou.get_posit() - self_posit) };
+
+                          if (dist_2 < max_2)
+                          {
+                              target = count;
+                              max_2 = dist_2;
+                          }
+                      }
+
+                      ++count;
+                  });
 
     return target;
 }
