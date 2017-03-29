@@ -55,32 +55,66 @@ void Bullet::bullet_speed(const float light, const std::vector <bool> &alives, c
 }
 
 void Bullet::danmaku_transform(const std::vector <bool> alives,
-                               const std::vector <sf::Vector2f> &targets, const sf::Vector2f &otaku)
+                               const std::vector <sf::Vector2f> &targets,
+                               const sf::Vector2f &otaku)
 {
-    int marked{-1};
+    const sf::Vector2f bull_posit
+    { get_posit() };
+
+    int marked
+    { -1 };
     assert(marked == -1);
 
-    float min_2{1.0e10f};
+    float min_2
+    { 1.0e10f };
     assert(min_2 >= 1.0e10f);
 
-    const float max_2{10.0f};
-    assert(max_2 <= 10.0f);
+    const float max_2
+    { 10.0f };
+    assert(max_2 <= 10.0f);    
 
+    int count
+    { 0 };
+
+    std::for_each(begin(targets),
+                  end(targets),
+                  [bull_posit, &alives, &otaku, &marked, &min_2, max_2, &count](const sf::Vector2f &target)
+                  {
+                      const float devi_2{vectralize(target - otaku)};
+
+                      if ((devi_2 > max_2) && alives[count])
+                      {
+                          const float dist_2{vectralize(target - bull_posit)};
+
+                          if (dist_2 < min_2)
+                          {
+                              min_2 = dist_2;
+                              marked = count;
+                          }
+                      }
+
+                      ++count;
+                  });
+
+    /*
     for (int count{0}; count < static_cast<int>(targets.size()); ++count)
     {
         const float devi_2{vectralize(targets[count] - otaku)};
+
+        // cout_vect2f(targets[count]);
 
         if ((devi_2 > max_2) && alives[count])
         {
             const float dist_2{vectralize(targets[count] - get_posit())};
 
-            if(dist_2 < min_2)
+            if (dist_2 < min_2)
             {
                 min_2 = dist_2;
                 marked = count;
             }
         }
     }
+    */
 
     if (marked != -1)
     { set_direction(normalize_direction(targets[marked] - get_posit())); }

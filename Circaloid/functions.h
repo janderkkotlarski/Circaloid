@@ -41,5 +41,4 @@ std::vector <sf::Vector2f> init_posits(const sf::Vector2f &windims,
 
 void cout_vect2f(const sf::Vector2f &vectol);
 
-
 #endif // FUNCTIONS_H

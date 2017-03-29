@@ -3,6 +3,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <algorithm>
 
 #include "SFML/Graphics.hpp"
 
@@ -60,7 +61,8 @@ public:
     { window.draw(m_circle); }
 
     void bullet_speed(const float light, const std::vector<bool> &alives,
-                      const std::vector <sf::Vector2f> &targets, const sf::Vector2f &otaku);
+                      const std::vector <sf::Vector2f> &targets,
+                      const sf::Vector2f &otaku);
 };
 
 #endif // BULLET_H
