@@ -66,9 +66,6 @@ class Tohoid
     void check_bullet_border();
     void check_seeker_border();
 
-    void bullets_hit(Tohoid &touhou,
-                             const float qi_hurt,
-                             const float scale);
     void bullets_hurt(std::vector <Tohoid> &touhous);
     void seeker_hurt(std::vector <Tohoid> &touhous);
 
@@ -123,5 +120,10 @@ std::vector <sf::Vector2f> touhous2posits(std::vector <Tohoid> &touhous);
 
 std::vector <bool> touhous2alives(std::vector <Tohoid> &touhous);
 
+void bullets_hit(Tohoid &touhou,
+                 std::vector<Bullet> &bullets,
+                 const float qi_hurt,
+                 const float scale,
+                 const float boundary);
 
 #endif // TOHOID_H

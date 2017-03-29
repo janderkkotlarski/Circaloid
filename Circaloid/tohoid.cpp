@@ -276,35 +276,6 @@ void Tohoid::check_seeker_border()
     }
 }
 
-void Tohoid::bullets_hit(Tohoid &touhou,
-                         const float qi_hurt,
-                         const float scale)
-{
-    if (touhou.get_vivid())
-    {
-        for (int count{0}; count < static_cast<int>(m_bullets.size()); ++count)
-        {
-            const float dist_2{vectralize(m_bullets[count].get_posit() - touhou.get_posit())};
-            const float mist_2{vectralize(m_bullets[count].get_posit() - touhou.get_mosit())};
-
-            const float radi_2{squr(m_bullets[count].get_radius() + scale*touhou.get_radius())};
-            const float madi_2{squr(m_bullets[count].get_radius() + scale*touhou.get_madius())};
-
-            const float bound_2{squr(m_boundary + scale*touhou.get_madius())};
-            const float mosit_2{vectralize(touhou.get_mosit())};
-
-            if ((dist_2 <= radi_2) ||
-                ((mist_2 <= madi_2) && (mosit_2 <= bound_2)))
-            {
-                m_bullets[count] = m_bullets.back();
-                m_bullets.pop_back();
-                touhou.qi_damage(qi_hurt);
-                --count;
-            }
-        }
-    }
-}
-
 void Tohoid::bullets_hurt(std::vector <Tohoid> &touhous)
 {
     if ((m_bullets.size() > 0) && (touhous.size() > 0))
@@ -314,6 +285,13 @@ void Tohoid::bullets_hurt(std::vector <Tohoid> &touhous)
 
         const float scale{0.85f};
 
+        for (int iter{0}; iter < static_cast<int>(touhous.size()); ++iter)
+        {
+            bullets_hit(touhous[iter], m_bullets,
+                        qi_hurt, scale, m_boundary);
+        }
+
+        /*
         for (int iter{0}; iter < static_cast<int>(touhous.size()); ++iter)
         {
             if (touhous[iter].get_vivid())
@@ -340,8 +318,17 @@ void Tohoid::bullets_hurt(std::vector <Tohoid> &touhous)
                 }
             }
         }
+        */
 
-        // std::for_each(std::begin())
+        /*
+        std::for_each(std::begin(touhous),
+                      std::end(touhous),
+                      [m_bullets, qi_hurt, scale, &m_boundary](Tohoid &touhou)
+                      {
+                          bullets_hit(touhou, m_bullets,
+                                      qi_hurt, scale, m_boundary);
+                      });
+        */
     }
 }
 
@@ -499,4 +486,35 @@ std::vector <bool> touhous2alives(std::vector <Tohoid> &touhous)
     { alives.push_back(toho.get_vivid()); }
 
     return alives;
+}
+
+void bullets_hit(Tohoid &touhou,
+                 std::vector <Bullet> &bullets,
+                 const float qi_hurt,
+                 const float scale,
+                 const float boundary)
+{
+    if (touhou.get_vivid())
+    {
+        for (int count{0}; count < static_cast<int>(bullets.size()); ++count)
+        {
+            const float dist_2{vectralize(bullets[count].get_posit() - touhou.get_posit())};
+            const float mist_2{vectralize(bullets[count].get_posit() - touhou.get_mosit())};
+
+            const float radi_2{squr(bullets[count].get_radius() + scale*touhou.get_radius())};
+            const float madi_2{squr(bullets[count].get_radius() + scale*touhou.get_madius())};
+
+            const float bound_2{squr(boundary + scale*touhou.get_madius())};
+            const float mosit_2{vectralize(touhou.get_mosit())};
+
+            if ((dist_2 <= radi_2) ||
+                ((mist_2 <= madi_2) && (mosit_2 <= bound_2)))
+            {
+                bullets[count] = bullets.back();
+                bullets.pop_back();
+                touhou.qi_damage(qi_hurt);
+                --count;
+            }
+        }
+    }
 }
