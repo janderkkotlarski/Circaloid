@@ -76,8 +76,8 @@ void Bullet::danmaku_transform(const std::vector <bool> alives,
     int count
     { 0 };
 
-    std::for_each(begin(targets),
-                  end(targets),
+    std::for_each(std::begin(targets),
+                  std::end(targets),
                   [bull_posit, &alives, &otaku, &marked, &min_2, max_2, &count](const sf::Vector2f &target)
                   {
                       const float devi_2{vectralize(target - otaku)};

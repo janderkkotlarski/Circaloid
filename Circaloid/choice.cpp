@@ -38,8 +38,12 @@ void Choice::init_textures(std::vector<std::string> &names, std::vector<sf::Text
 {
     assert(names.size() > 0);
 
+    int count
+    { 0 };
+
     sf::Texture texture;
 
+    /*
     for(int count{0}; count < static_cast<int>(names.size()); ++count)
     {
         assert(names[count] != "");
@@ -49,7 +53,23 @@ void Choice::init_textures(std::vector<std::string> &names, std::vector<sf::Text
         if (!textures[count].loadFromFile(names[count]))
         { std::cerr << names[count] << "not found!\n"; }
     }
+    */
 
+    std::for_each(std::begin(names),
+                  std::end(names),
+                  [&textures, texture, &count](const std::string &name)
+                  {
+                      assert(name != "");
+
+                      textures.push_back(texture);
+
+                      if (!textures[count].loadFromFile(name))
+                      { std::cerr << name << "not found!\n"; }
+
+                      ++count;
+                  });
+
+    // std::cout << textures.size() << "\n";
 
     assert(names.size() == textures.size());
 }

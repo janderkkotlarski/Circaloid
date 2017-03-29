@@ -340,6 +340,8 @@ void Tohoid::bullets_hurt(std::vector <Tohoid> &touhous)
                 }
             }
         }
+
+        // std::for_each(std::begin())
     }
 }
 
