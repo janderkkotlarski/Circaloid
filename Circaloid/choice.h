@@ -20,7 +20,7 @@ class Choice
     int m_amount;
 
     std::vector <std::string> m_amount_names;
-    std::vector <sf::Texture> m_amount_texures;
+    std::vector <sf::Texture> m_amount_textures;
     sf::Sprite m_amount_sprite;
 
     std::vector <std::string> m_player_names;
@@ -40,9 +40,15 @@ public:
     void init_sprites(std::vector <sf::Texture> &textures,
                       std::vector <sf::Sprite> &sprites);
 
-    void show_sprites(sf::RenderWindow &window);
+    void show_sprites(sf::RenderWindow &window, std::vector<bool> &player_chosen);
 
-    void chara_click(sf::RenderWindow &window, std::vector <std::string> &touhou_names);
+    void chara_click(sf::RenderWindow& window,
+                     std::vector <std::string> &touhou_names,
+                     std::vector <std::string> &player_names,
+                     std::vector <bool> &player_chosen,
+                     std::vector <sf::Texture> &amount_textures,
+                     sf::Sprite &amount_sprite, const sf::Vector2f &windims,
+                     int &amount);
 
     void amount_click(sf::RenderWindow &window, bool &loop);
 
