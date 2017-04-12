@@ -10,6 +10,7 @@
 #include "SFML/Graphics.hpp"
 
 #include "functions.h"
+#include "todio.h"
 
 class Choice
 {

@@ -4,6 +4,7 @@
 #include <cassert>
 #include <string>
 #include <vector>
+#include <iostream>
 
 #include "SFML/Audio.hpp"
 
@@ -11,11 +12,15 @@ class Todio
 {
     std::vector <std::string> m_names;
     std::vector <sf::SoundBuffer> m_buffers;
-    std::vector <sf::Sound> m_sounds;
+    sf::Sound m_sounds;
 
 public:
 
     Todio();
+
+    void ring();
+
+    void stop();
 };
 
 #endif // TODIO_H

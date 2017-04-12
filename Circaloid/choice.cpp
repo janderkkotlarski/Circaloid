@@ -310,8 +310,14 @@ int Choice::run(sf::RenderWindow &window, const sf::Color &background,
     init_textures(m_player_names, m_player_textures);
     init_sprites(m_player_textures, m_player_sprites);
 
+    Todio toadio;
+
+    toadio.ring();
+
     if (!nope)
     { nope = choose_loop(window, background, frame, touhou_names); }
+
+    toadio.stop();
 
     return m_amount;
 }
