@@ -83,12 +83,17 @@ std::vector <Tohoid> Game::init_tohoids(const sf::Vector2f &windims,
 
     assert(touhous.size() == static_cast<unsigned>(m_amount));
 
+    /*
     std::for_each(std::begin(touhous),
                   std::end(touhous),
                   [](Tohoid &touhou)
                   {
                       touhou.reimage();
                   });
+    */
+
+    for (Tohoid &touhou : touhous)
+    { touhou.reimage(); }
 
     return touhous;
 }
@@ -130,10 +135,15 @@ bool Game::game_loop(sf::RenderWindow &window, const sf::Color &background,
         { touhous[count].display(window); }
         */
 
+        /*
         std::for_each(std::begin(touhous),
                       std::end(touhous),
                       [&window](Tohoid &touhou)
                       { touhou.display(window); });
+        */
+
+        for (Tohoid &touhou : touhous)
+        { touhou.display(window); }
 
         window.draw(sprite);
         window.display();
@@ -143,10 +153,15 @@ bool Game::game_loop(sf::RenderWindow &window, const sf::Color &background,
         { touhous[count].move(touhous); }
         */
 
+        /*
         std::for_each(std::begin(touhous),
                       std::end(touhous),
-                      [&window, &touhous](Tohoid &touhou)
+                      [&touhous](Tohoid &touhou)
                       { touhou.move(touhous); });
+        */
+
+        for (Tohoid &touhou : touhous)
+        { touhou.move(touhous); }
 
         touhous_die(touhous);
 

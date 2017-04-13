@@ -16,7 +16,7 @@ class Todio
 
 public:
 
-    Todio();
+    Todio(std::vector <std::string> &names);
 
     void ring();
 

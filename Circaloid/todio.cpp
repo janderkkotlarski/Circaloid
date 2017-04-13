@@ -1,7 +1,7 @@
 #include "todio.h"
 
-Todio::Todio()
-    : m_names({"Diur.wav"}),
+Todio::Todio(std::vector<std::string> &names)
+    : m_names(names),
       m_buffers(),
       m_sounds()
 {
@@ -28,7 +28,9 @@ Todio::Todio()
 
 void Todio::ring()
 {
-    m_sounds.setBuffer(m_buffers[0]);
+    m_sounds.setBuffer(m_buffers[1]);
+
+    m_sounds.setLoop(true);
 
     m_sounds.play();
 }

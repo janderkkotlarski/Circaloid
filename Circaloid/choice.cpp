@@ -310,7 +310,10 @@ int Choice::run(sf::RenderWindow &window, const sf::Color &background,
     init_textures(m_player_names, m_player_textures);
     init_sprites(m_player_textures, m_player_sprites);
 
-    Todio toadio;
+    std::vector <std::string> names
+    ( { "Diur.wav", "Wuwr.wav" } );
+
+    Todio toadio(names);
 
     toadio.ring();
 
