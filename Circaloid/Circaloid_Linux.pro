@@ -34,10 +34,15 @@ HEADERS += \
     choice.h \
     todio.h
 
+RESOURCES += \
+    Circaloid.qrc
+
 SUBDIRS += \
     Circaloid_Windows_DJOG.pro \
     Circaloid_Windows.pro
 
 OTHER_FILES += \
     Circaloid_Linux.pro.user
+
+
 

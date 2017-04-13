@@ -12,7 +12,7 @@ Choice::Choice(const sf::Vector2f &windims)
       m_player_sprites(),
       m_player_chosen()
 {
-    m_amount_names.push_back("Zero_64.png");
+    m_amount_names.push_back("Resources/Zero_64.png");
     m_amount_names.push_back("One_64.png");
     m_amount_names.push_back("Two_64.png");
     m_amount_names.push_back("Three_64.png");
