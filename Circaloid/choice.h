@@ -7,6 +7,7 @@
 #include <vector>
 #include <algorithm>
 
+#include "QDir"
 #include "QFile"
 
 #include "SFML/Graphics.hpp"

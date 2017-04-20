@@ -4,7 +4,7 @@ Choice::Choice(const sf::Vector2f &windims)
     : m_windims(windims),
       m_chosen(false),
       m_amount(0),
-      m_folder(":/Circaloid/Resources/"),
+      m_folder("/Circaloid/Resources/"),
       m_amount_names(),
       m_amount_textures(),
       m_amount_sprite(),
@@ -37,10 +37,46 @@ Choice::~Choice()
 
 void Choice::init_folder()
 {
-    for (const std::string name: m_amount_names) {
-      QFile file( (":/Resources/" + name).c_str());
-      file.copy(name.c_str());
-      assert(QFile::exists(name.c_str()));
+    QDir home_dir
+    { QDir::current() };
+
+    QString home_path
+    { home_dir.absolutePath() };
+
+    QDir base_dir
+    { QDir::current() };
+
+    base_dir.cdUp();
+
+    QString base_path
+    { base_dir.absolutePath() };
+
+    QString q_folder
+    { QString::fromStdString(m_folder) };
+
+    std::cout << home_path.toStdString() << "\n";
+    std::cout << base_path.toStdString() << "\n";
+
+    // QDir::cdUp();
+
+    QString slash
+    { QString::fromStdString("/") };
+
+    for (const std::string name: m_amount_names)
+    {
+      QString q_name
+      { QString::fromStdString(name) };
+
+      QFile file(base_path + q_folder + q_name);
+
+      // extract.cd(home);
+
+      file.copy(home_path + slash + q_name);
+
+      if (!QFile::exists(home_path + slash + q_name))
+      { std::cout << m_folder + name << " was not found.\n"; }
+
+      assert(QFile::exists(home_path + q_name));
     }
 }
 
@@ -313,6 +349,8 @@ bool Choice::choose_loop(sf::RenderWindow &window, const sf::Color &background,
 int Choice::run(sf::RenderWindow &window, const sf::Color &background,
                 const float frame, bool &nope, std::vector <std::string> &touhou_names)
 {
+    init_folder();
+
     init_textures(m_amount_names, m_amount_textures);
 
     set_sprite(0.0f*m_windims, 0.0f, m_amount_textures[m_amount], m_amount_sprite);
