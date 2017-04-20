@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>Resources/Four_64.png</file>
+        <file>Resources/Frame.png</file>
+        <file>Resources/Keine_64.png</file>
+        <file>Resources/Meiling_64.png</file>
+        <file>Resources/One_64.png</file>
+        <file>Resources/Patchouli_64.png</file>
+        <file>Resources/Sakuya_64.png</file>
+        <file>Resources/Tatami.png</file>
+        <file>Resources/Three_64.png</file>
+        <file>Resources/Two_64.png</file>
+        <file>Resources/Zero_64.png</file>
+        <file>Resources/Direction_64.png</file>
+    </qresource>
+    <qresource prefix="/sounds">
+        <file>Resources/Diur.wav</file>
+        <file>Resources/Wuwr.wav</file>
+    </qresource>
+</RCC>

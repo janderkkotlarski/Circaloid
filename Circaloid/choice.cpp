@@ -4,6 +4,7 @@ Choice::Choice(const sf::Vector2f &windims)
     : m_windims(windims),
       m_chosen(false),
       m_amount(0),
+      m_folder(":/Circaloid/Resources/"),
       m_amount_names(),
       m_amount_textures(),
       m_amount_sprite(),
@@ -12,7 +13,7 @@ Choice::Choice(const sf::Vector2f &windims)
       m_player_sprites(),
       m_player_chosen()
 {
-    m_amount_names.push_back("Resources/Zero_64.png");
+    m_amount_names.push_back("Zero_64.png");
     m_amount_names.push_back("One_64.png");
     m_amount_names.push_back("Two_64.png");
     m_amount_names.push_back("Three_64.png");
@@ -33,6 +34,15 @@ Choice::Choice(const sf::Vector2f &windims)
 
 Choice::~Choice()
 {}
+
+void Choice::init_folder()
+{
+    for (const std::string name: m_amount_names) {
+      QFile file( (":/Resources/" + name).c_str());
+      file.copy(name.c_str());
+      assert(QFile::exists(name.c_str()));
+    }
+}
 
 void Choice::init_textures(std::vector<std::string> &names, std::vector<sf::Texture> &textures)
 {

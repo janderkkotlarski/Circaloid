@@ -7,8 +7,6 @@
 #include <vector>
 #include <algorithm>
 
-#include "QFile"
-
 #include "SFML/Graphics.hpp"
 
 #include "functions.h"
@@ -21,8 +19,6 @@ class Choice
     bool m_chosen;
 
     int m_amount;
-
-    const std::string m_folder;
 
     std::vector <std::string> m_amount_names;
     std::vector <sf::Texture> m_amount_textures;
@@ -38,8 +34,6 @@ public:
 
     explicit Choice(const sf::Vector2f &windims);
     ~Choice();
-
-    void init_folder();
 
     void init_textures(std::vector <std::string> &names,
                        std::vector <sf::Texture> &textures);
