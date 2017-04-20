@@ -40,7 +40,7 @@ void Choice::init_folder()
     QDir home_dir
     { QDir::current() };
 
-    QString home_path
+    const QString home_path
     { home_dir.absolutePath() };
 
     QDir base_dir
@@ -54,11 +54,6 @@ void Choice::init_folder()
     QString q_folder
     { QString::fromStdString(m_folder) };
 
-    std::cout << home_path.toStdString() << "\n";
-    std::cout << base_path.toStdString() << "\n";
-
-    // QDir::cdUp();
-
     QString slash
     { QString::fromStdString("/") };
 
@@ -69,16 +64,16 @@ void Choice::init_folder()
 
       QFile file(base_path + q_folder + q_name);
 
-      // extract.cd(home);
-
       file.copy(home_path + slash + q_name);
 
       if (!QFile::exists(home_path + slash + q_name))
       { std::cout << m_folder + name << " was not found.\n"; }
 
-      assert(QFile::exists(home_path + q_name));
+      assert(QFile::exists(home_path + slash + q_name));
     }
 }
+
+
 
 void Choice::init_textures(std::vector<std::string> &names, std::vector<sf::Texture> &textures)
 {
