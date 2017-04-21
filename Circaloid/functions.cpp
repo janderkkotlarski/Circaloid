@@ -131,3 +131,49 @@ std::vector <sf::Vector2f> init_posits(const sf::Vector2f &windims,
 
 void cout_vect2f(const sf::Vector2f &vectol)
 { std::cout << '[' << vectol.x << ':' << vectol.y << "]\n"; }
+
+void extract_file(const std::string& folder,
+                  const std::string& name)
+{
+    QDir home_dir
+    { QDir::current() };
+
+    const QString home_path
+    { home_dir.absolutePath() };
+
+    QDir base_dir
+    { QDir::current() };
+
+    base_dir.cdUp();
+
+    QString base_path
+    { base_dir.absolutePath() };
+
+    QString q_folder
+    { QString::fromStdString(folder) };
+
+    QString slash
+    { QString::fromStdString("/") };
+
+    QString q_name
+    { QString::fromStdString(name) };
+
+    QFile file(base_path + q_folder + q_name);
+
+    file.copy(home_path + slash + q_name);
+
+    if (!QFile::exists(home_path + slash + q_name))
+    { std::cout << folder + name << " was not found.\n"; }
+
+    assert(QFile::exists(home_path + slash + q_name));
+}
+
+void extract_file_vector(const std::string& folder,
+                         const std::vector <std::string>& names)
+{
+    for (const std::string name: names)
+    {
+        extract_file(folder, name);
+    }
+}
+

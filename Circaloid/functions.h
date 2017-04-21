@@ -4,7 +4,11 @@
 #include <cassert>
 #include <cmath>
 #include <iostream>
+#include <string>
 #include <vector>
+
+#include "QDir"
+#include "QFile"
 
 #include "SFML/Graphics.hpp"
 
@@ -40,5 +44,11 @@ std::vector <sf::Vector2f> init_posits(const sf::Vector2f &windims,
                                        const float amount);
 
 void cout_vect2f(const sf::Vector2f &vectol);
+
+void extract_file(const std::string& folder,
+                  const std::string& name);
+
+void extract_file_vector(const std::string& folder,
+                         const std::vector <std::string>& names);
 
 #endif // FUNCTIONS_H

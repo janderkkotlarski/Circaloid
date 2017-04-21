@@ -13,6 +13,12 @@ Choice::Choice(const sf::Vector2f &windims)
       m_player_sprites(),
       m_player_chosen()
 {
+    assert(windims.x > 0.0f);
+    assert(windims.y > 0.0f);
+    assert(!m_chosen);
+    assert(m_amount == 0);
+    assert(m_folder != "");
+
     m_amount_names.push_back("Zero_64.png");
     m_amount_names.push_back("One_64.png");
     m_amount_names.push_back("Two_64.png");
@@ -21,6 +27,9 @@ Choice::Choice(const sf::Vector2f &windims)
 
     assert(m_amount_names.size() == 5);
 
+    for (const std::string name : m_amount_names)
+    { assert(name != ""); }
+
     m_player_names.push_back("Patchouli_64.png");
     m_player_names.push_back("Meiling_64.png");
     m_player_names.push_back("Sakuya_64.png");
@@ -28,52 +37,15 @@ Choice::Choice(const sf::Vector2f &windims)
 
     assert(m_player_names.size() == 4);
 
+    for (const std::string name : m_player_names)
+    { assert(name != ""); }
+
     for (int count{0}; count < static_cast<int>(m_player_names.size()); ++count)
     { m_player_chosen.push_back(false); }
 }
 
 Choice::~Choice()
 {}
-
-void Choice::init_folder()
-{
-    QDir home_dir
-    { QDir::current() };
-
-    const QString home_path
-    { home_dir.absolutePath() };
-
-    QDir base_dir
-    { QDir::current() };
-
-    base_dir.cdUp();
-
-    QString base_path
-    { base_dir.absolutePath() };
-
-    QString q_folder
-    { QString::fromStdString(m_folder) };
-
-    QString slash
-    { QString::fromStdString("/") };
-
-    for (const std::string name: m_amount_names)
-    {
-      QString q_name
-      { QString::fromStdString(name) };
-
-      QFile file(base_path + q_folder + q_name);
-
-      file.copy(home_path + slash + q_name);
-
-      if (!QFile::exists(home_path + slash + q_name))
-      { std::cout << m_folder + name << " was not found.\n"; }
-
-      assert(QFile::exists(home_path + slash + q_name));
-    }
-}
-
-
 
 void Choice::init_textures(std::vector<std::string> &names, std::vector<sf::Texture> &textures)
 {
@@ -290,17 +262,23 @@ bool Choice::choose_loop(sf::RenderWindow &window, const sf::Color &background,
 
     const std::string filetatami
     { "Tatami.png" };
+
+    extract_file(m_folder, filetatami);
+
     sf::Texture textami;
     sf::Sprite spritami;
 
     set_image(filetatami, m_windims, textami, spritami);
 
-    const std::string filename
+    const std::string file_name
     { "Frame.png" };
+
+    extract_file(m_folder, file_name);
+
     sf::Texture texture;
     sf::Sprite sprite;
 
-    set_image(filename, m_windims, texture, sprite);
+    set_image(file_name, m_windims, texture, sprite);
 
     while (loop)
     {
@@ -344,19 +322,25 @@ bool Choice::choose_loop(sf::RenderWindow &window, const sf::Color &background,
 int Choice::run(sf::RenderWindow &window, const sf::Color &background,
                 const float frame, bool &nope, std::vector <std::string> &touhou_names)
 {
-    init_folder();
+    // init_folder();
+
+    extract_file_vector(m_folder, m_amount_names);
 
     init_textures(m_amount_names, m_amount_textures);
 
     set_sprite(0.0f*m_windims, 0.0f, m_amount_textures[m_amount], m_amount_sprite);
 
+    extract_file_vector(m_folder, m_player_names);
+
     init_textures(m_player_names, m_player_textures);
     init_sprites(m_player_textures, m_player_sprites);
 
-    std::vector <std::string> names
+    std::vector <std::string> sound_names
     ( { "Diur.wav", "Wuwr.wav" } );
 
-    Todio toadio(names);
+    extract_file_vector(m_folder, sound_names);
+
+    Todio toadio(sound_names);
 
     toadio.ring();
 

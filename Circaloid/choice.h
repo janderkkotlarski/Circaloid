@@ -7,9 +7,6 @@
 #include <vector>
 #include <algorithm>
 
-#include "QDir"
-#include "QFile"
-
 #include "SFML/Graphics.hpp"
 
 #include "functions.h"
@@ -39,8 +36,6 @@ public:
 
     explicit Choice(const sf::Vector2f &windims);
     ~Choice();
-
-    void init_folder();
 
     void init_textures(std::vector <std::string> &names,
                        std::vector <sf::Texture> &textures);
