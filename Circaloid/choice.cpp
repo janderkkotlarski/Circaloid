@@ -38,10 +38,11 @@ Choice::Choice(const sf::Vector2f &windims)
     assert(m_player_names.size() == 4);
 
     for (const std::string name : m_player_names)
-    { assert(name != ""); }
+    {
+        assert(name != "");
 
-    for (int count{0}; count < static_cast<int>(m_player_names.size()); ++count)
-    { m_player_chosen.push_back(false); }
+        m_player_chosen.push_back(false);
+    }
 }
 
 Choice::~Choice()
@@ -56,33 +57,17 @@ void Choice::init_textures(std::vector<std::string> &names, std::vector<sf::Text
 
     sf::Texture texture;
 
-    /*
-    for(int count{0}; count < static_cast<int>(names.size()); ++count)
+    for (const std::string name : names)
     {
-        assert(names[count] != "");
+        assert(name != "");
 
         textures.push_back(texture);
 
-        if (!textures[count].loadFromFile(names[count]))
-        { std::cerr << names[count] << "not found!\n"; }
+        if (!textures[count].loadFromFile(name))
+        { std::cerr << name << "not found!\n"; }
+
+        ++count;
     }
-    */
-
-    std::for_each(std::begin(names),
-                  std::end(names),
-                  [&textures, texture, &count](const std::string &name)
-                  {
-                      assert(name != "");
-
-                      textures.push_back(texture);
-
-                      if (!textures[count].loadFromFile(name))
-                      { std::cerr << name << "not found!\n"; }
-
-                      ++count;
-                  });
-
-    // std::cout << textures.size() << "\n";
 
     assert(names.size() == textures.size());
 }
@@ -94,7 +79,8 @@ void Choice::init_sprites(std::vector <sf::Texture> &textures,
 
     sf::Sprite sprite;
 
-    const int textures_size = static_cast<int>(textures.size());
+    const int textures_size
+    { static_cast<int>(textures.size()) };
 
     const std::vector <float> rotats
     { init_rotats(textures_size) };
@@ -102,10 +88,15 @@ void Choice::init_sprites(std::vector <sf::Texture> &textures,
     const std::vector <sf::Vector2f> posits
     { init_posits(0.5f*m_windims, rotats, textures_size) };
 
-    for (int count{0}; count < textures_size; ++count)
+    int count
+    { 0 };
+
+    for (const sf::Vector2f& posit : posits)
     {
         sprites.push_back(sprite);
-        set_sprite(posits[count], 0.0f, textures[count], sprites[count]);
+        set_sprite(posit, 0.0f, textures[count], sprites[count]);
+
+        ++count;
     }
 
     assert(textures.size() == sprites.size());
@@ -124,6 +115,8 @@ void Choice::show_sprites(sf::RenderWindow &window,
         { window.draw(m_player_sprites[count]); }
     }
     */
+
+    // for
 
     for_each(std::begin(m_player_sprites),
              std::end(m_player_sprites),
