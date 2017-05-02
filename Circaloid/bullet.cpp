@@ -24,7 +24,8 @@ Bullet::~Bullet()
 
 void Bullet::set_circle(const float radius, const sf::Vector2f &posit)
 {
-    const sf::Color color{191, 63, 63};
+    const sf::Color color
+    { 191, 63, 63 };
 
     m_circle.setRadius(radius);
     m_circle.setOrigin(radius, radius);
@@ -37,7 +38,9 @@ void Bullet::bullet_speed(const float light, const std::vector <bool> &alives, c
 {
     if (m_type == bullet_type::danmaku)
     {
-        const float delta_veloc{-0.02f*light};
+        const float delta_veloc
+        { -0.02f*light };
+
         m_veloc += delta_veloc;
     }
 
@@ -76,36 +79,16 @@ void Bullet::danmaku_transform(const std::vector <bool> alives,
     int count
     { 0 };
 
-    std::for_each(std::begin(targets),
-                  std::end(targets),
-                  [bull_posit, &alives, &otaku, &marked, &min_2, max_2, &count](const sf::Vector2f &target)
-                  {
-                      const float devi_2{vectralize(target - otaku)};
-
-                      if ((devi_2 > max_2) && alives[count])
-                      {
-                          const float dist_2{vectralize(target - bull_posit)};
-
-                          if (dist_2 < min_2)
-                          {
-                              min_2 = dist_2;
-                              marked = count;
-                          }
-                      }
-
-                      ++count;
-                  });
-
-    /*
-    for (int count{0}; count < static_cast<int>(targets.size()); ++count)
+    for (const sf::Vector2f& target : targets)
     {
-        const float devi_2{vectralize(targets[count] - otaku)};
+        const float devi_2
+        { vectralize(target - otaku) };
 
-        // cout_vect2f(targets[count]);
-
-        if ((devi_2 > max_2) && alives[count])
+        if ((devi_2 > max_2) &&
+            alives[count])
         {
-            const float dist_2{vectralize(targets[count] - get_posit())};
+            const float dist_2
+            { vectralize(target - bull_posit) };
 
             if (dist_2 < min_2)
             {
@@ -113,8 +96,9 @@ void Bullet::danmaku_transform(const std::vector <bool> alives,
                 marked = count;
             }
         }
+
+        ++count;
     }
-    */
 
     if (marked != -1)
     { set_direction(normalize_direction(targets[marked] - get_posit())); }

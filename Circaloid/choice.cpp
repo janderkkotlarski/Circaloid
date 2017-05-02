@@ -108,26 +108,13 @@ void Choice::show_sprites(sf::RenderWindow &window,
     int count
     { 0 };
 
-    /*
-    for (int count{0}; count < static_cast<int>(m_player_sprites.size()); ++count)
+    for(sf::Sprite& sprite : m_player_sprites)
     {
-        if (!m_player_chosen[count])
-        { window.draw(m_player_sprites[count]); }
+        if (!player_chosen[count])
+        { window.draw(sprite); }
+
+        ++count;
     }
-    */
-
-    // for
-
-    for_each(std::begin(m_player_sprites),
-             std::end(m_player_sprites),
-             [&window, &player_chosen, &count](sf::Sprite &sprite)
-             {
-                if (!player_chosen[count])
-                { window.draw(sprite); }
-
-                ++count;
-             });
-
 }
 
 void Choice::chara_click(sf::RenderWindow &window,
@@ -154,47 +141,12 @@ void Choice::chara_click(sf::RenderWindow &window,
         int count
         { 0 };
 
-        std::for_each(std::begin(m_player_sprites),
-                      std::end(m_player_sprites),
-                      [&window, &touhou_names, player_names, &player_chosen,
-                       &amount_textures, &amount_sprite, windims,
-                       &amount, mouse_posit, &count]
-                      (sf::Sprite player_sprite)
-                      {
-                          if (!player_chosen[count])
-                          {
-                              const sf::Vector2f sprite_posit
-                              { player_sprite.getPosition() };
-
-                              const sf::Vector2f delta
-                              { mouse_posit - sprite_posit };
-
-                              const float dist
-                              { std::sqrt(vectralize(delta)) };
-
-                              const float radius
-                              { sprite_radius(player_sprite) };
-
-                              if (dist <= radius)
-                              {
-                                  player_chosen[count] = true;
-                                  ++amount;
-                                  set_sprite(0.0f*windims, 0.0f, amount_textures[amount], amount_sprite);
-                                  touhou_names.push_back(player_names[count]);
-                              }
-                          }
-
-                          ++count;
-                      });
-
-
-        /*
-        for (int count{0}; count < static_cast<int>(m_player_sprites.size()); ++count)
+        for (sf::Sprite& player_sprite : m_player_sprites)
         {
-            if (!m_player_chosen[count])
+            if (!player_chosen[count])
             {
                 const sf::Vector2f sprite_posit
-                { m_player_sprites[count].getPosition() };
+                { player_sprite.getPosition() };
 
                 const sf::Vector2f delta
                 { mouse_posit - sprite_posit };
@@ -203,19 +155,19 @@ void Choice::chara_click(sf::RenderWindow &window,
                 { std::sqrt(vectralize(delta)) };
 
                 const float radius
-                { sprite_radius(m_player_sprites[count]) };
+                { sprite_radius(player_sprite) };
 
                 if (dist <= radius)
                 {
-                    m_player_chosen[count] = true;
-                    ++m_amount;
-                    set_sprite(0.0f*m_windims, 0.0f, m_amount_textures[m_amount], m_amount_sprite);
-                    touhou_names.push_back(m_player_names[count]);
+                    player_chosen[count] = true;
+                    ++amount;
+                    set_sprite(0.0f*windims, 0.0f, amount_textures[amount], amount_sprite);
+                    touhou_names.push_back(player_names[count]);
                 }
             }
-        }
-        */
 
+            ++count;
+        }
     }
 }
 
@@ -315,8 +267,6 @@ bool Choice::choose_loop(sf::RenderWindow &window, const sf::Color &background,
 int Choice::run(sf::RenderWindow &window, const sf::Color &background,
                 const float frame, bool &nope, std::vector <std::string> &touhou_names)
 {
-    // init_folder();
-
     extract_file_vector(m_folder, m_amount_names);
 
     init_textures(m_amount_names, m_amount_textures);
