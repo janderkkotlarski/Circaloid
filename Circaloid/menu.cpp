@@ -20,7 +20,8 @@ Menu::~Menu()
 
 void Menu::start()
 {
-    bool nope{false};
+    bool nope
+    { false };
 
     const sf::Vector2f windims{m_side, m_side};
 

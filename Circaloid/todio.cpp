@@ -14,9 +14,7 @@ Todio::Todio(std::vector<std::string> &names)
             sf::SoundBuffer buff;
 
             if (!buff.loadFromFile(name))
-            {
-                std::cerr << "Failed to load " << name << "\n";
-            }
+            { std::cerr << "Failed to load " << name << "\n"; }
 
             m_buffers.push_back(buff);
         }

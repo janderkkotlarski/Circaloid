@@ -49,21 +49,11 @@ void Game::touhous_die(std::vector <Tohoid> &touhous)
 {
     assert(touhous.size() == static_cast<unsigned>(m_amount));
 
-    /*
-    for (int count{0}; count < m_amount; ++count)
+    for (Tohoid &touhou : touhous)
     {
-        if ((touhous[count].get_quinergy() <= 0.0f) && touhous[count].get_vivid())
-        { touhous[count].dies(); }
+        if ((touhou.get_quinergy() <= 0.0f) && touhou.get_vivid())
+        { touhou.dies(); }
     }
-    */
-
-    std::for_each(std::begin(touhous),
-                  std::end(touhous),
-                  [](Tohoid &touhou)
-                  {
-                      if ((touhou.get_quinergy() <= 0.0f) && touhou.get_vivid())
-                      { touhou.dies(); }
-                  });
 }
 
 std::vector <Tohoid> Game::init_tohoids(const sf::Vector2f &windims,
@@ -77,20 +67,13 @@ std::vector <Tohoid> Game::init_tohoids(const sf::Vector2f &windims,
 
     for (int count{0}; count < m_amount; ++count)
     {
-        Tohoid touhou{windims, posits[count], rotats[count], names[count], frame, keys[count]};
+        Tohoid touhou
+        { windims, posits[count], rotats[count], names[count], frame, keys[count] };
+
         touhous.push_back(touhou);
     }
 
     assert(touhous.size() == static_cast<unsigned>(m_amount));
-
-    /*
-    std::for_each(std::begin(touhous),
-                  std::end(touhous),
-                  [](Tohoid &touhou)
-                  {
-                      touhou.reimage();
-                  });
-    */
 
     for (Tohoid &touhou : touhous)
     { touhou.reimage(); }
@@ -102,15 +85,18 @@ bool Game::game_loop(sf::RenderWindow &window, const sf::Color &background,
                      const sf::Vector2f &windims, std::vector <Tohoid> &touhous,
                      const float frame)
 {
-    bool loop{true};
+    bool loop
+    { true };
 
-    const std::string filetatami{"Tatami.png"};
+    const std::string filetatami
+    { "Tatami.png" };
     sf::Texture textami;
     sf::Sprite spritami;
 
     set_image(filetatami, windims, textami, spritami);
 
-    const std::string filename{"Frame.png"};
+    const std::string filename
+    { "Frame.png" };
     sf::Texture texture;
     sf::Sprite sprite;
 
@@ -123,42 +109,16 @@ bool Game::game_loop(sf::RenderWindow &window, const sf::Color &background,
         sf::Time time;
 
         if (polling(window, event, loop))
-        {
-            return true;
-        }
+        { return true; }
 
         window.clear(background);
         window.draw(spritami);
-
-        /*
-        for (int count{0}; count < m_amount; ++count)
-        { touhous[count].display(window); }
-        */
-
-        /*
-        std::for_each(std::begin(touhous),
-                      std::end(touhous),
-                      [&window](Tohoid &touhou)
-                      { touhou.display(window); });
-        */
 
         for (Tohoid &touhou : touhous)
         { touhou.display(window); }
 
         window.draw(sprite);
         window.display();
-
-        /*
-        for (int count{0}; count < m_amount; ++count)
-        { touhous[count].move(touhous); }
-        */
-
-        /*
-        std::for_each(std::begin(touhous),
-                      std::end(touhous),
-                      [&touhous](Tohoid &touhou)
-                      { touhou.move(touhous); });
-        */
 
         for (Tohoid &touhou : touhous)
         { touhou.move(touhous); }

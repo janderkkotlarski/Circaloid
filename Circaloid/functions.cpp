@@ -172,8 +172,6 @@ void extract_file_vector(const std::string& folder,
                          const std::vector <std::string>& names)
 {
     for (const std::string name: names)
-    {
-        extract_file(folder, name);
-    }
+    { extract_file(folder, name); }
 }
 
