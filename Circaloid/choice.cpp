@@ -1,6 +1,6 @@
 #include "choice.h"
 
-Choice::Choice(const sf::Vector2f &windims)
+Choice::Choice(const sf::Vector2f& windims)
     : m_windims(windims),
       m_chosen(false),
       m_amount(0),
@@ -27,7 +27,7 @@ Choice::Choice(const sf::Vector2f &windims)
 
     assert(m_amount_names.size() == 5);
 
-    for (const std::string name : m_amount_names)
+    for (const std::string& name : m_amount_names)
     { assert(name != ""); }
 
     m_player_names.push_back("Patchouli_64.png");
@@ -37,7 +37,7 @@ Choice::Choice(const sf::Vector2f &windims)
 
     assert(m_player_names.size() == 4);
 
-    for (const std::string name : m_player_names)
+    for (const std::string& name : m_player_names)
     {
         assert(name != "");
 
@@ -48,16 +48,18 @@ Choice::Choice(const sf::Vector2f &windims)
 Choice::~Choice()
 {}
 
-void Choice::init_textures(std::vector<std::string> &names, std::vector<sf::Texture> &textures)
+void Choice::init_textures(std::vector<std::string>& names,
+                           std::vector<sf::Texture>& textures)
 {
     assert(names.size() > 0);
 
     int count
     { 0 };
+    assert(count == 0);
 
     sf::Texture texture;
 
-    for (const std::string name : names)
+    for (const std::string& name : names)
     {
         assert(name != "");
 
@@ -72,8 +74,8 @@ void Choice::init_textures(std::vector<std::string> &names, std::vector<sf::Text
     assert(names.size() == textures.size());
 }
 
-void Choice::init_sprites(std::vector <sf::Texture> &textures,
-                  std::vector <sf::Sprite> &sprites)
+void Choice::init_sprites(std::vector <sf::Texture>& textures,
+                  std::vector <sf::Sprite>& sprites)
 {
     assert(textures.size() > 0);
 
@@ -90,6 +92,7 @@ void Choice::init_sprites(std::vector <sf::Texture> &textures,
 
     int count
     { 0 };
+    assert(count == 0);
 
     for (const sf::Vector2f& posit : posits)
     {
@@ -102,11 +105,12 @@ void Choice::init_sprites(std::vector <sf::Texture> &textures,
     assert(textures.size() == sprites.size());
 }
 
-void Choice::show_sprites(sf::RenderWindow &window,
-                          std::vector <bool> &player_chosen)
+void Choice::show_sprites(sf::RenderWindow& window,
+                          std::vector <bool>& player_chosen)
 {
     int count
     { 0 };
+    assert(count == 0);
 
     for(sf::Sprite& sprite : m_player_sprites)
     {
@@ -117,12 +121,12 @@ void Choice::show_sprites(sf::RenderWindow &window,
     }
 }
 
-void Choice::chara_click(sf::RenderWindow &window,
-                         std::vector <std::string> &touhou_names,
-                         std::vector <bool> &player_chosen,
-                         std::vector<sf::Texture> &amount_textures,
-                         sf::Sprite &amount_sprite,
-                         int &amount)
+void Choice::chara_click(sf::RenderWindow& window,
+                         std::vector <std::string>& touhou_names,
+                         std::vector <bool>& player_chosen,
+                         std::vector<sf::Texture>& amount_textures,
+                         sf::Sprite& amount_sprite,
+                         int& amount)
 {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
@@ -140,6 +144,7 @@ void Choice::chara_click(sf::RenderWindow &window,
 
         int count
         { 0 };
+        assert(count == 0);
 
         for (sf::Sprite& player_sprite : m_player_sprites)
         {
@@ -171,7 +176,7 @@ void Choice::chara_click(sf::RenderWindow &window,
     }
 }
 
-void Choice::amount_click(sf::RenderWindow &window, bool &loop)
+void Choice::amount_click(sf::RenderWindow& window, bool& loop)
 {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
@@ -204,9 +209,11 @@ bool Choice::choose_loop(sf::RenderWindow &window, const sf::Color &background,
 {
     bool loop
     { true };
+    assert(loop);
 
     const std::string filetatami
     { "Tatami.png" };
+    assert(filetatami != "");
 
     extract_file(m_folder, filetatami);
 
@@ -217,6 +224,7 @@ bool Choice::choose_loop(sf::RenderWindow &window, const sf::Color &background,
 
     const std::string file_name
     { "Frame.png" };
+    assert(file_name != "");
 
     extract_file(m_folder, file_name);
 
@@ -264,8 +272,8 @@ bool Choice::choose_loop(sf::RenderWindow &window, const sf::Color &background,
     return false;
 }
 
-int Choice::run(sf::RenderWindow &window, const sf::Color &background,
-                const float frame, bool &nope, std::vector <std::string> &touhou_names)
+int Choice::run(sf::RenderWindow& window, const sf::Color& background,
+                const float frame, bool& nope, std::vector <std::string>& touhou_names)
 {
     extract_file_vector(m_folder, m_amount_names);
 
@@ -280,6 +288,11 @@ int Choice::run(sf::RenderWindow &window, const sf::Color &background,
 
     std::vector <std::string> sound_names
     ( { "Diur.wav", "Wuwr.wav" } );
+
+    for (const std::string& sound_name : sound_names)
+    {
+        assert(sound_name != "");
+    }
 
     extract_file_vector(m_folder, sound_names);
 
