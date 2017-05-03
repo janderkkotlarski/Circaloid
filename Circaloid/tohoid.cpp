@@ -1,8 +1,8 @@
 #include "tohoid.h"
 
-Tohoid::Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit,
-               const float rotation, const std::string &image_name,
-               const float frame, const std::vector <sf::Keyboard::Key> &keys)
+Tohoid::Tohoid(const sf::Vector2f& windims, const sf::Vector2f& posit,
+               const float rotation, const std::string& image_name,
+               const float frame, const std::vector <sf::Keyboard::Key>& keys)
     : m_boundary(0.25f*(windims.x + windims.y)),
       m_speed(0.0f*windims),
       m_light(1.0f*m_boundary),
@@ -19,7 +19,7 @@ Tohoid::Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit,
       m_bullet_shot(false),
       m_danmaku_shot(false),
       m_alive(true)
-{
+{    
     assert(windims.x > 0.0f);
     assert(windims.y > 0.0f);
     assert(posit.x >= -windims.x);
@@ -27,9 +27,24 @@ Tohoid::Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit,
     assert(posit.x <= windims.x);
     assert(posit.y <= windims.y);
 
+    assert(m_speed.x == 0.0f);
+    assert(m_speed.y == 0.0f);
+    assert(m_light > 0.0f);
+    assert(m_relative > 0.0f);
+
+    assert(m_accel > 0.0f);
+    assert(m_pheta > 0.0f);
+
+    assert(m_quinergy > 0.0f);
+    assert(m_questore > 0.0f);
+
     assert(frame > 0.0f);
 
     assert(m_keys.size() > 0);
+
+    assert(!m_bullet_shot);
+    assert(!m_danmaku_shot);
+    assert(m_alive);
 }
 
 Tohoid::~Tohoid()
@@ -43,7 +58,8 @@ void Tohoid::reimage()
 
 void Tohoid::relativate()
 {
-    const float minim{0.25f};
+    const float minim
+    { 0.25f };
     assert(minim > 0.0f);
 
     if (vectralize(m_speed) < squr(m_light))
@@ -55,7 +71,8 @@ void Tohoid::relativate()
 
 void Tohoid::accelerate()
 {
-    const sf::Vector2f accer{m_relative*m_accel*rotation2direction(get_rotate())};
+    const sf::Vector2f accer
+    { m_relative*m_accel*rotation2direction(get_rotate()) };
 
     if (sf::Keyboard::isKeyPressed(m_keys[0]))
     {
@@ -78,7 +95,8 @@ void Tohoid::ceiling()
 
 void Tohoid::rotate()
 {
-    float rotation{m_relative*m_pheta};
+    const float rotation
+    { m_relative*m_pheta };
 
     if (sf::Keyboard::isKeyPressed(m_keys[2]))
     {
@@ -107,9 +125,12 @@ void Tohoid::bullet_shoot()
     {
         if (!m_bullet_shot)
         {
-            const float scale{1.01f};
+            const float scale
+            { 1.01f };
+            assert(scale > 0.0f);
 
-            const float qi_bullet{-0.02f};
+            const float qi_bullet
+            { -0.02f };
             assert(qi_bullet < 0.0f);
 
             m_quinergy += qi_bullet;
@@ -133,24 +154,32 @@ void Tohoid::danmaku_shoot()
     {
         if (!m_danmaku_shot)
         {
-            const float scale{1.01f};
+            const float scale
+            { 1.01f };
+            assert(scale > 0.0f);
 
-            const float qi_danmaku{-0.13f};
+            const float qi_danmaku
+            { -0.13f };
             assert(qi_danmaku < 0.0f);
 
             m_quinergy += qi_danmaku;
 
-            const int number{8};
+            const int number
+            { 8 };
             assert(number > 1);
 
-            const float delta_rotate{180.0f/static_cast<float>(number)};
+            const float delta_rotate
+            { 180.0f/static_cast<float>(number) };
 
-            float rotate{(0.5f - static_cast<float>(number/2))*delta_rotate};
+            float rotate
+            { (0.5f - static_cast<float>(number/2))*delta_rotate };
 
             for (int count{0}; count < number; ++count)
             {
-                const float rotation{rotate + get_rotate()};
-                const sf::Vector2f direction{rotation2direction(rotation)};
+                const float rotation
+                { rotate + get_rotate() };
+                const sf::Vector2f direction
+                { rotation2direction(rotation) };
 
                 m_bullets.push_back(Bullet(m_boundary, get_posit(), m_light,
                                            direction, m_frame, bullet_type::danmaku));
@@ -169,7 +198,7 @@ void Tohoid::danmaku_shoot()
     { m_danmaku_shot = false; }
 }
 
-void Tohoid::seeker_shoot(std::vector <Tohoid> &touhous)
+void Tohoid::seeker_shoot(std::vector <Tohoid>& touhous)
 {
     if (sf::Keyboard::isKeyPressed(m_keys[6]))
     {
@@ -178,6 +207,7 @@ void Tohoid::seeker_shoot(std::vector <Tohoid> &touhous)
         {
             const float scale
             { 1.01f };
+            assert(scale > 0.0f);
 
             const float qi_loss
             { -0.5f };
@@ -199,10 +229,12 @@ void Tohoid::seeker_shoot(std::vector <Tohoid> &touhous)
     { m_seeker_shot = false; }
 }
 
-void Tohoid::move_bullets(std::vector <Tohoid> &touhous)
+void Tohoid::move_bullets(std::vector <Tohoid>& touhous)
 {
-    std::vector <sf::Vector2f> posits{touhous2posits(touhous)};
-    std::vector <bool> alives{touhous2alives(touhous)};
+    std::vector <sf::Vector2f> posits
+    { touhous2posits(touhous) };
+    std::vector <bool> alives
+    { touhous2alives(touhous) };
 
     const sf::Vector2f otaku
     { get_posit() };
@@ -255,8 +287,8 @@ void Tohoid::check_seeker_border()
     }
 }
 
-void Tohoid::bullets_hurt(std::vector <Tohoid> &touhous,
-                          std::vector <Bullet> &bullets)
+void Tohoid::bullets_hurt(std::vector <Tohoid>& touhous,
+                          std::vector <Bullet>& bullets)
 {
     if ((m_bullets.size() > 0) && (touhous.size() > 0))
     {
@@ -266,14 +298,15 @@ void Tohoid::bullets_hurt(std::vector <Tohoid> &touhous,
 
         const float scale
         { 0.85f };
+        assert(scale > 0.0f);
 
         for (Tohoid& touhou : touhous)
         { bullets_hit(touhou, bullets, qi_hurt, scale, m_boundary); }
     }
 }
 
-void Tohoid::seeker_hurt(std::vector <Tohoid> &touhous,
-                         std::vector <Seeker> &seeker)
+void Tohoid::seeker_hurt(std::vector <Tohoid>& touhous,
+                         std::vector <Seeker>& seeker)
 {
     if ((m_seeker.size() > 0) &&
         (touhous.size() > 0))
@@ -299,7 +332,7 @@ void Tohoid::move_tophics()
     m_tophics.move_smite(del_pos);
 }
 
-void Tohoid::display_bullets(sf::RenderWindow &window)
+void Tohoid::display_bullets(sf::RenderWindow& window)
 {
     for (Bullet bull : m_bullets)
     { bull.display(window); }
@@ -308,7 +341,7 @@ void Tohoid::display_bullets(sf::RenderWindow &window)
     { seek.display(window); }
 }
 
-void Tohoid::move(std::vector <Tohoid> &touhous)
+void Tohoid::move(std::vector <Tohoid>& touhous)
 {
     if (m_alive)
     {                
@@ -338,7 +371,7 @@ void Tohoid::move(std::vector <Tohoid> &touhous)
     }
 }
 
-void Tohoid::display(sf::RenderWindow &window)
+void Tohoid::display(sf::RenderWindow& window)
 {
     if (m_alive)
     {
@@ -347,7 +380,7 @@ void Tohoid::display(sf::RenderWindow &window)
     }
 }
 
-int Tohoid::touhou_self(std::vector<Tohoid> &touhous)
+int Tohoid::touhou_self(std::vector<Tohoid>& touhous)
 {
     int self
     { -1 };
@@ -355,32 +388,23 @@ int Tohoid::touhou_self(std::vector<Tohoid> &touhous)
 
     int count
     { 0 };
+    assert(count == 0);
 
     const sf::Vector2f posit
     { get_posit() };
 
-    /*
-    for (int count{0}; count < static_cast<int>(touhous.size()); ++count)
+    for (Tohoid& touhou : touhous)
     {
-        if (vectralize(touhous[count].get_posit() - get_posit()) < 10.0f)
+        if (vectralize(touhou.get_posit() - get_posit()) < 10.0f)
         { self = count; }
+
+        ++count;
     }
-    */
-
-    std::for_each(std::begin(touhous),
-                  std::end(touhous),
-                  [&self, &count, posit](Tohoid &touhou)
-                  {
-                      if (vectralize(touhou.get_posit() - posit) < 10.0f)
-                      { self = count; }
-
-                      ++count;
-                  });
 
     return self;
 }
 
-int Tohoid::touhou_target(std::vector <Tohoid> &touhous)
+int Tohoid::touhou_target(std::vector <Tohoid>& touhous)
 {
     int target
     { -1 };
@@ -388,6 +412,7 @@ int Tohoid::touhou_target(std::vector <Tohoid> &touhous)
 
     int count
     { 0 };
+    assert(count == 0);
 
     const int self
     { touhou_self(touhous) };
@@ -395,14 +420,16 @@ int Tohoid::touhou_target(std::vector <Tohoid> &touhous)
     const sf::Vector2f self_posit
     { touhous[self].get_posit() };
 
-    float max_2{1.0e10f};
+    float max_2
+    { 1.0e10f };
+    assert(max_2 > 1.0e9f);
 
-    /*
-    for (int count{0}; count < static_cast<int>(touhous.size()); ++count)
+    for (Tohoid& touhou : touhous)
     {
-        if ((count != self) && touhous[count].get_vivid())
+        if ((count != self) && touhou.get_vivid())
         {
-            const float dist_2{vectralize(touhous[count].get_posit() - self_posit)};
+            const float dist_2
+            { vectralize(touhou.get_posit() - self_posit) };
 
             if (dist_2 < max_2)
             {
@@ -410,32 +437,14 @@ int Tohoid::touhou_target(std::vector <Tohoid> &touhous)
                 max_2 = dist_2;
             }
         }
+
+        ++count;
     }
-    */
-
-    std::for_each(std::begin(touhous),
-                  std::end(touhous),
-                  [&target, &count, self, self_posit, &max_2](Tohoid touhou)
-                  {
-                      if ((count != self) && touhou.get_vivid())
-                      {
-                          const float dist_2
-                          { vectralize(touhou.get_posit() - self_posit) };
-
-                          if (dist_2 < max_2)
-                          {
-                              target = count;
-                              max_2 = dist_2;
-                          }
-                      }
-
-                      ++count;
-                  });
 
     return target;
 }
 
-std::vector <sf::Vector2f> touhous2posits(std::vector <Tohoid> &touhous)
+std::vector <sf::Vector2f> touhous2posits(std::vector <Tohoid>& touhous)
 {
     std::vector <sf::Vector2f> posits;
 
@@ -445,7 +454,7 @@ std::vector <sf::Vector2f> touhous2posits(std::vector <Tohoid> &touhous)
     return posits;
 }
 
-std::vector <bool> touhous2alives(std::vector <Tohoid> &touhous)
+std::vector <bool> touhous2alives(std::vector <Tohoid>& touhous)
 {
     std::vector <bool> alives;
 
@@ -455,8 +464,8 @@ std::vector <bool> touhous2alives(std::vector <Tohoid> &touhous)
     return alives;
 }
 
-void bullets_hit(Tohoid &touhou,
-                 std::vector <Bullet> &bullets,
+void bullets_hit(Tohoid& touhou,
+                 std::vector <Bullet>& bullets,
                  const float qi_hurt,
                  const float scale,
                  const float boundary)
@@ -465,14 +474,20 @@ void bullets_hit(Tohoid &touhou,
     {
         for (int count{0}; count < static_cast<int>(bullets.size()); ++count)
         {
-            const float dist_2{vectralize(bullets[count].get_posit() - touhou.get_posit())};
-            const float mist_2{vectralize(bullets[count].get_posit() - touhou.get_mosit())};
+            const float dist_2
+            { vectralize(bullets[count].get_posit() - touhou.get_posit()) };
+            const float mist_2
+            { vectralize(bullets[count].get_posit() - touhou.get_mosit()) };
 
-            const float radi_2{squr(bullets[count].get_radius() + scale*touhou.get_radius())};
-            const float madi_2{squr(bullets[count].get_radius() + scale*touhou.get_madius())};
+            const float radi_2
+            { squr(bullets[count].get_radius() + scale*touhou.get_radius()) };
+            const float madi_2
+            { squr(bullets[count].get_radius() + scale*touhou.get_madius()) };
 
-            const float bound_2{squr(boundary + scale*touhou.get_madius())};
-            const float mosit_2{vectralize(touhou.get_mosit())};
+            const float bound_2
+            { squr(boundary + scale*touhou.get_madius()) };
+            const float mosit_2
+            { vectralize(touhou.get_mosit()) };
 
             if ((dist_2 <= radi_2) ||
                 ((mist_2 <= madi_2) && (mosit_2 <= bound_2)))
@@ -486,8 +501,8 @@ void bullets_hit(Tohoid &touhou,
     }
 }
 
-void seeker_hit(Tohoid &touhou,
-                std::vector <Seeker> &seeker,
+void seeker_hit(Tohoid& touhou,
+                std::vector <Seeker>& seeker,
                 const float qi_hurt,
                 const float scale,
                 const float boundary)
@@ -496,14 +511,20 @@ void seeker_hit(Tohoid &touhou,
     {
         for (int count{0}; count < static_cast<int>(seeker.size()); ++count)
         {
-            const float dist_2{vectralize(seeker[count].get_posit() - touhou.get_posit())};
-            const float mist_2{vectralize(seeker[count].get_posit() - touhou.get_mosit())};
+            const float dist_2
+            { vectralize(seeker[count].get_posit() - touhou.get_posit()) };
+            const float mist_2
+            { vectralize(seeker[count].get_posit() - touhou.get_mosit()) };
 
-            const float radi_2{squr(seeker[count].get_radius() + scale*touhou.get_radius())};
-            const float madi_2{squr(seeker[count].get_radius() + scale*touhou.get_madius())};
+            const float radi_2
+            { squr(seeker[count].get_radius() + scale*touhou.get_radius()) };
+            const float madi_2
+            { squr(seeker[count].get_radius() + scale*touhou.get_madius()) };
 
-            const float bound_2{squr(boundary + scale*touhou.get_madius())};
-            const float mosit_2{vectralize(touhou.get_mosit())};
+            const float bound_2
+            { squr(boundary + scale*touhou.get_madius()) };
+            const float mosit_2
+            { vectralize(touhou.get_mosit()) };
 
             if ((dist_2 <= radi_2) ||
                 ((mist_2 <= madi_2) && (mosit_2 <= bound_2)))
