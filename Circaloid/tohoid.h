@@ -9,7 +9,6 @@
 
 #include "SFML/Graphics.hpp"
 
-
 #include "functions.h"
 #include "tophics.h"
 #include "bullet.h"
@@ -60,17 +59,17 @@ class Tohoid
 
     void bullet_shoot();
     void danmaku_shoot();
-    void seeker_shoot(std::vector <Tohoid> &touhous);
+    void seeker_shoot(std::vector <Tohoid>& touhous);
 
-    void move_bullets(std::vector<Tohoid> &touhous);
+    void move_bullets(std::vector<Tohoid>& touhous);
     void check_bullet_border();
     void check_seeker_border();
 
-    void bullets_hurt(std::vector <Tohoid> &touhous,
-                      std::vector<Bullet> &bullets);
+    void bullets_hurt(std::vector <Tohoid>& touhous,
+                      std::vector<Bullet>& bullets);
 
-    void seeker_hurt(std::vector <Tohoid> &touhous,
-                     std::vector <Seeker> &seeker);
+    void seeker_hurt(std::vector <Tohoid>& touhous,
+                     std::vector <Seeker>& seeker);
 
     void move_tophics();
 
@@ -78,9 +77,9 @@ class Tohoid
 
 public:
 
-    explicit Tohoid(const sf::Vector2f &windims, const sf::Vector2f &posit,
-                    const float rotation, const std::string &image_name, const float frame,
-                    const std::vector <sf::Keyboard::Key> &keys);
+    explicit Tohoid(const sf::Vector2f& windims, const sf::Vector2f& posit,
+                    const float rotation, const std::string& image_name, const float frame,
+                    const std::vector <sf::Keyboard::Key>& keys);
 
     ~Tohoid();
 
@@ -110,27 +109,27 @@ public:
     void qi_damage(const float qi_hurt) noexcept
     { m_quinergy += qi_hurt; }
 
-    void move(std::vector <Tohoid> &touhous);
+    void move(std::vector <Tohoid>& touhous);
 
-    void display(sf::RenderWindow &window);
+    void display(sf::RenderWindow& window);
 
-    int touhou_self(std::vector <Tohoid> &touhous);
-    int touhou_target(std::vector <Tohoid> &touhous);
+    int touhou_self(std::vector <Tohoid>& touhous);
+    int touhou_target(std::vector <Tohoid>& touhous);
 
 };
 
-std::vector <sf::Vector2f> touhous2posits(std::vector <Tohoid> &touhous);
+std::vector <sf::Vector2f> touhous2posits(std::vector <Tohoid>& touhous);
 
-std::vector <bool> touhous2alives(std::vector <Tohoid> &touhous);
+std::vector <bool> touhous2alives(std::vector <Tohoid>& touhous);
 
-void bullets_hit(Tohoid &touhou,
-                 std::vector<Bullet> &bullets,
+void bullets_hit(Tohoid& touhou,
+                 std::vector<Bullet>& bullets,
                  const float qi_hurt,
                  const float scale,
                  const float boundary);
 
-void seeker_hit(Tohoid &touhou,
-                std::vector <Seeker> &seeker,
+void seeker_hit(Tohoid& touhou,
+                std::vector <Seeker>& seeker,
                 const float qi_hurt,
                 const float scale,
                 const float boundary);

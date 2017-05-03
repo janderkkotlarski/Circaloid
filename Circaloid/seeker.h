@@ -20,12 +20,12 @@ class Seeker
 
     sf::CircleShape m_circle;
 
-    void set_circle(const float radius, const sf::Vector2f &posit);
+    void set_circle(const float radius, const sf::Vector2f& posit);
 
 public:
 
-    explicit Seeker(const float boundary, const sf::Vector2f &posit,
-           const sf::Vector2f &speed, const float frame,
+    explicit Seeker(const float boundary, const sf::Vector2f& posit,
+           const sf::Vector2f& speed, const float frame,
            const int self, const int target);
 
     ~Seeker();
@@ -40,15 +40,15 @@ public:
     int get_target() const noexcept
     { return m_target; }
 
-    void jump(const sf::Vector2f &leap) noexcept
+    void jump(const sf::Vector2f& leap) noexcept
     { m_circle.move(leap); }
 
-    void set_speed(const sf::Vector2f &target_posit);
+    void set_speed(const sf::Vector2f& target_posit);
 
     void move() noexcept
     { m_circle.move(m_frame*m_speed); }
 
-    void display(sf::RenderWindow &window)
+    void display(sf::RenderWindow& window)
     { window.draw(m_circle); }
 };
 

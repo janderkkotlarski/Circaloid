@@ -22,7 +22,7 @@ class Tophics
 
 public:
 
-    explicit Tophics(const std::string &name, const sf::Vector2f &posit,
+    explicit Tophics(const std::string& name, const sf::Vector2f& posit,
                      const float boundary, const float rotation);
 
     ~Tophics();
@@ -45,13 +45,13 @@ public:
 
     void rotate(const float rotation);
 
-    void move_sprite(const sf::Vector2f &delta_posit);
-    void check_border(const sf::Vector2f &speed);
-    void move_smite(const sf::Vector2f &speed);
+    void move_sprite(const sf::Vector2f& delta_posit);
+    void check_border(const sf::Vector2f& speed);
+    void move_smite(const sf::Vector2f& speed);
 
     void set_scale(const float scale);
 
-    void display(sf::RenderWindow &window);
+    void display(sf::RenderWindow& window);
 };
 
 #endif // TOPHICS_H

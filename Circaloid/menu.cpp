@@ -10,6 +10,7 @@ Menu::Menu()
 {
     assert(m_name != "");
     assert(m_side > 0.0f);
+    assert(m_background == sf::Color(0, 0, 0));
     assert(m_fps > 0.0f);
 
     m_window.setVerticalSyncEnabled(true);
@@ -22,8 +23,10 @@ void Menu::start()
 {
     bool nope
     { false };
+    assert(!nope);
 
-    const sf::Vector2f windims{m_side, m_side};
+    const sf::Vector2f windims
+    { m_side, m_side };
 
     sf::View view(0.0f*windims, windims);
     m_window.setView(view);
