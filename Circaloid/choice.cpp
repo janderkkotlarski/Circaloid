@@ -293,7 +293,7 @@ int Choice::run(sf::RenderWindow& window,
     init_sprites(m_player_textures, m_player_sprites);
 
     std::vector <std::string> sound_names
-    ( { "Diur.wav", "Move_Rotate.wav" } );
+    ( { "Diur.wav", "Bassoy.wav" } );
 
     for (const std::string& sound_name : sound_names)
     {
