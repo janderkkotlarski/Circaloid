@@ -25,7 +25,7 @@ Todio::Todio(std::vector<std::string>& names)
 void Todio::ring()
 {
     m_sounds.setBuffer(m_buffers[1]);
-    // m_sounds.setLoop(true);
+    m_sounds.setLoop(true);
 
     m_sounds.play();
 }
