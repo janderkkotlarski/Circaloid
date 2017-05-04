@@ -75,7 +75,7 @@ void Choice::init_textures(std::vector<std::string>& names,
 }
 
 void Choice::init_sprites(std::vector <sf::Texture>& textures,
-                  std::vector <sf::Sprite>& sprites)
+                          std::vector <sf::Sprite>& sprites)
 {
     assert(textures.size() > 0);
 
@@ -176,7 +176,8 @@ void Choice::chara_click(sf::RenderWindow& window,
     }
 }
 
-void Choice::amount_click(sf::RenderWindow& window, bool& loop)
+void Choice::amount_click(sf::RenderWindow& window,
+                          bool& loop)
 {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
@@ -204,8 +205,10 @@ void Choice::amount_click(sf::RenderWindow& window, bool& loop)
     }
 }
 
-bool Choice::choose_loop(sf::RenderWindow &window, const sf::Color &background,
-                         const float frame, std::vector <std::string> &touhou_names)
+bool Choice::choose_loop(sf::RenderWindow &window,
+                         const sf::Color &background,
+                         const float frame,
+                         std::vector <std::string> &touhou_names)
 {
     bool loop
     { true };
@@ -272,8 +275,11 @@ bool Choice::choose_loop(sf::RenderWindow &window, const sf::Color &background,
     return false;
 }
 
-int Choice::run(sf::RenderWindow& window, const sf::Color& background,
-                const float frame, bool& nope, std::vector <std::string>& touhou_names)
+int Choice::run(sf::RenderWindow& window,
+                const sf::Color& background,
+                const float frame,
+                bool& nope,
+                std::vector <std::string>& touhou_names)
 {
     extract_file_vector(m_folder, m_amount_names);
 

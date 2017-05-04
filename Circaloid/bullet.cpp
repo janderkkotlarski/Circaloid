@@ -1,9 +1,17 @@
 #include "bullet.h"
 
-Bullet::Bullet(const float boundary, const sf::Vector2f& posit, const float veloc,
-               const sf::Vector2f& direction, const float frame, const bullet_type& type)
-    : m_boundary(boundary), m_veloc(veloc), m_direction(direction), m_frame(frame),
-      m_circle(), m_type(type)
+Bullet::Bullet(const float boundary,
+               const sf::Vector2f& posit,
+               const float veloc,
+               const sf::Vector2f& direction,
+               const float frame,
+               const bullet_type& type)
+    : m_boundary(boundary),
+      m_veloc(veloc),
+      m_direction(direction),
+      m_frame(frame),
+      m_circle(),
+      m_type(type)
 {
     assert(boundary > 0.0f);
     assert(vectralize(posit) <= squr(boundary));
@@ -22,7 +30,8 @@ Bullet::Bullet(const float boundary, const sf::Vector2f& posit, const float velo
 Bullet::~Bullet()
 {}
 
-void Bullet::set_circle(const float radius, const sf::Vector2f& posit)
+void Bullet::set_circle(const float radius,
+                        const sf::Vector2f& posit)
 {
     const sf::Color color
     { 191, 63, 63 };
@@ -34,7 +43,8 @@ void Bullet::set_circle(const float radius, const sf::Vector2f& posit)
     m_circle.setFillColor(color);
 }
 
-void Bullet::bullet_speed(const float light, const std::vector <bool>& alives,
+void Bullet::bullet_speed(const float light,
+                          const std::vector <bool>& alives,
                           const std::vector <sf::Vector2f>& targets,
                           const sf::Vector2f& otaku)
 {

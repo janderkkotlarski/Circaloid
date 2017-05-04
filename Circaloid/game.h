@@ -40,8 +40,13 @@ public:
     explicit Game();
     ~Game();
 
-    void run(sf::RenderWindow& window, const sf::Vector2f& windims, const sf::Color& background,
-             const float frame, const int amount, bool& nope, const std::vector<std::string>& touhou_names);
+    void run(sf::RenderWindow& window,
+             const sf::Vector2f& windims,
+             const sf::Color& background,
+             const float frame,
+             const int amount,
+             bool& nope,
+             const std::vector<std::string>& touhou_names);
 };
 
 std::vector <sf::Keyboard::Key> chars2keys(const std::vector <char>& charas);

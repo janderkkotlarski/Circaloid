@@ -22,8 +22,10 @@ class Tophics
 
 public:
 
-    explicit Tophics(const std::string& name, const sf::Vector2f& posit,
-                     const float boundary, const float rotation);
+    explicit Tophics(const std::string& name,
+                     const sf::Vector2f& posit,
+                     const float boundary,
+                     const float rotation);
 
     ~Tophics();
 

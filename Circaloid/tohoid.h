@@ -77,8 +77,11 @@ class Tohoid
 
 public:
 
-    explicit Tohoid(const sf::Vector2f& windims, const sf::Vector2f& posit,
-                    const float rotation, const std::string& image_name, const float frame,
+    explicit Tohoid(const sf::Vector2f& windims,
+                    const sf::Vector2f& posit,
+                    const float rotation,
+                    const std::string& image_name,
+                    const float frame,
                     const std::vector <sf::Keyboard::Key>& keys);
 
     ~Tohoid();

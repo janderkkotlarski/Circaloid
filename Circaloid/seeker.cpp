@@ -1,10 +1,17 @@
 #include "seeker.h"
 
-Seeker::Seeker(const float boundary, const sf::Vector2f& posit,
-               const sf::Vector2f& speed, const float frame,
-               const int self, const int target)
-    : m_speed(speed), m_accel(1.0f*boundary), m_frame(frame),
-      m_self(self), m_target(target), m_circle()
+Seeker::Seeker(const float boundary,
+               const sf::Vector2f& posit,
+               const sf::Vector2f& speed,
+               const float frame,
+               const int self,
+               const int target)
+    : m_speed(speed),
+      m_accel(1.0f*boundary),
+      m_frame(frame),
+      m_self(self),
+      m_target(target),
+      m_circle()
 {
     assert(boundary > 0.0f);
     assert(vectralize(posit) <= squr(boundary));
@@ -24,7 +31,8 @@ Seeker::Seeker(const float boundary, const sf::Vector2f& posit,
 Seeker::~Seeker()
 {}
 
-void Seeker::set_circle(const float radius, const sf::Vector2f& posit)
+void Seeker::set_circle(const float radius,
+                        const sf::Vector2f& posit)
 {
     const sf::Color color
     { 191, 127, 63 };

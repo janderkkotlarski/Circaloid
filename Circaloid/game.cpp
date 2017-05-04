@@ -92,8 +92,10 @@ std::vector <Tohoid> Game::init_tohoids(const sf::Vector2f& windims,
     return touhous;
 }
 
-bool Game::game_loop(sf::RenderWindow& window, const sf::Color& background,
-                     const sf::Vector2f& windims, std::vector <Tohoid>& touhous,
+bool Game::game_loop(sf::RenderWindow& window,
+                     const sf::Color& background,
+                     const sf::Vector2f& windims,
+                     std::vector <Tohoid>& touhous,
                      const float frame)
 {
     bool loop
@@ -146,9 +148,13 @@ bool Game::game_loop(sf::RenderWindow& window, const sf::Color& background,
     return false;
 }
 
-void Game::run(sf::RenderWindow& window, const sf::Vector2f& windims,
-               const sf::Color& background, const float frame,
-               const int amount, bool& nope, const std::vector <std::string>& touhou_names)
+void Game::run(sf::RenderWindow& window,
+               const sf::Vector2f& windims,
+               const sf::Color& background,
+               const float frame,
+               const int amount,
+               bool& nope,
+               const std::vector <std::string>& touhou_names)
 {
     assert(frame > 0.0f);
     assert(amount > 0);

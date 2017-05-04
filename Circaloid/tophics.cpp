@@ -1,10 +1,16 @@
 #include "tophics.h"
 
-Tophics::Tophics(const std::string& sprite_name, const sf::Vector2f& posit,
-                 const float boundary, const float rotation)
+Tophics::Tophics(const std::string& sprite_name,
+                 const sf::Vector2f& posit,
+                 const float boundary,
+                 const float rotation)
     : m_boundary(boundary),
-      m_texture(), m_sprite(), m_smite(),
-      m_dexture(), m_direct(), m_disect()
+      m_texture(),
+      m_sprite(),
+      m_smite(),
+      m_dexture(),
+      m_direct(),
+      m_disect()
 {
     assert(sprite_name != "");
 

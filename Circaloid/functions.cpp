@@ -50,7 +50,8 @@ sf::Vector2f normalize_direction(const sf::Vector2f& direction)
     return direction/std::sqrt(vectralize(direction));
 }
 
-void set_texture(const std::string& filename, sf::Texture& texture)
+void set_texture(const std::string& filename,
+                 sf::Texture& texture)
 {
     assert(filename != "");
 
@@ -60,8 +61,10 @@ void set_texture(const std::string& filename, sf::Texture& texture)
     texture.setSmooth(true);
 }
 
-void set_sprite(const sf::Vector2f& posit, const float rotation,
-                sf::Texture& texture, sf::Sprite &sprite)
+void set_sprite(const sf::Vector2f& posit,
+                const float rotation,
+                sf::Texture& texture,
+                sf::Sprite &sprite)
 {    
     sprite.setTexture(texture);
     sprite.setOrigin(0.5f*sprite.getLocalBounds().width, 0.5f*sprite.getLocalBounds().height);
@@ -69,8 +72,10 @@ void set_sprite(const sf::Vector2f& posit, const float rotation,
     sprite.setRotation(rotation);
 }
 
-void set_image(const std::string& name, const sf::Vector2f& windims,
-               sf::Texture& texture, sf::Sprite& sprite)
+void set_image(const std::string& name,
+               const sf::Vector2f& windims,
+               sf::Texture& texture,
+               sf::Sprite& sprite)
 {
     assert(name != "");
 
@@ -83,7 +88,8 @@ void set_image(const std::string& name, const sf::Vector2f& windims,
     sprite.setPosition(0.0f*windims);
 }
 
-sf::Vector2f mirrorize(const float boundary, const sf::Vector2f& posit,
+sf::Vector2f mirrorize(const float boundary,
+                       const sf::Vector2f& posit,
                        const sf::Vector2f& speed)
 {
     if (vectralize(posit) == 0.0f)
@@ -95,7 +101,8 @@ sf::Vector2f mirrorize(const float boundary, const sf::Vector2f& posit,
 float sprite_radius(sf::Sprite& sprite)
 { return 0.25f*(sprite.getGlobalBounds().width + sprite.getGlobalBounds().height); }
 
-bool polling(sf::RenderWindow& window, sf::Event& event,
+bool polling(sf::RenderWindow& window,
+             sf::Event& event,
              bool& loop)
 {
     while (window.pollEvent(event))

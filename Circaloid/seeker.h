@@ -20,13 +20,17 @@ class Seeker
 
     sf::CircleShape m_circle;
 
-    void set_circle(const float radius, const sf::Vector2f& posit);
+    void set_circle(const float radius,
+                    const sf::Vector2f& posit);
 
 public:
 
-    explicit Seeker(const float boundary, const sf::Vector2f& posit,
-           const sf::Vector2f& speed, const float frame,
-           const int self, const int target);
+    explicit Seeker(const float boundary,
+                    const sf::Vector2f& posit,
+                    const sf::Vector2f& speed,
+                    const float frame,
+                    const int self,
+                    const int target);
 
     ~Seeker();
 

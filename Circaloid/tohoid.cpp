@@ -1,8 +1,11 @@
 #include "tohoid.h"
 
-Tohoid::Tohoid(const sf::Vector2f& windims, const sf::Vector2f& posit,
-               const float rotation, const std::string& image_name,
-               const float frame, const std::vector <sf::Keyboard::Key>& keys)
+Tohoid::Tohoid(const sf::Vector2f& windims,
+               const sf::Vector2f& posit,
+               const float rotation,
+               const std::string& image_name,
+               const float frame,
+               const std::vector <sf::Keyboard::Key>& keys)
     : m_boundary(0.25f*(windims.x + windims.y)),
       m_speed(0.0f*windims),
       m_light(1.0f*m_boundary),
