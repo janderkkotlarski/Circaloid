@@ -295,6 +295,9 @@ int Choice::run(sf::RenderWindow& window,
     std::vector <std::string> sound_names
     ( { "Diur.wav", "Bassoy.wav" } );
 
+    std::vector <bool> sound_loops
+    ( { false , true } );
+
     for (const std::string& sound_name : sound_names)
     {
         assert(sound_name != "");
@@ -302,14 +305,14 @@ int Choice::run(sf::RenderWindow& window,
 
     extract_file_vector(m_folder, sound_names);
 
-    Todio toadio(sound_names);
+    Todio toadio(sound_names, sound_loops);
 
-    toadio.ring();
+    toadio.ring(1);
 
     if (!nope)
     { nope = choose_loop(window, background, frame, touhou_names); }
 
-    toadio.stop();
+    toadio.stop(1);
 
     return m_amount;
 }
