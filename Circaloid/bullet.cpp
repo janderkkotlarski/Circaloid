@@ -1,7 +1,7 @@
 #include "bullet.h"
 
-Bullet::Bullet(const float boundary, const sf::Vector2f &posit, const float veloc,
-               const sf::Vector2f &direction, const float frame, const bullet_type &type)
+Bullet::Bullet(const float boundary, const sf::Vector2f& posit, const float veloc,
+               const sf::Vector2f& direction, const float frame, const bullet_type& type)
     : m_boundary(boundary), m_veloc(veloc), m_direction(direction), m_frame(frame),
       m_circle(), m_type(type)
 {
@@ -22,10 +22,11 @@ Bullet::Bullet(const float boundary, const sf::Vector2f &posit, const float velo
 Bullet::~Bullet()
 {}
 
-void Bullet::set_circle(const float radius, const sf::Vector2f &posit)
+void Bullet::set_circle(const float radius, const sf::Vector2f& posit)
 {
     const sf::Color color
     { 191, 63, 63 };
+    assert(color != sf::Color(0, 0, 0));
 
     m_circle.setRadius(radius);
     m_circle.setOrigin(radius, radius);
@@ -33,15 +34,17 @@ void Bullet::set_circle(const float radius, const sf::Vector2f &posit)
     m_circle.setFillColor(color);
 }
 
-void Bullet::bullet_speed(const float light, const std::vector <bool> &alives, const std::vector <sf::Vector2f> &targets,
-                          const sf::Vector2f &otaku)
+void Bullet::bullet_speed(const float light, const std::vector <bool>& alives,
+                          const std::vector <sf::Vector2f>& targets,
+                          const sf::Vector2f& otaku)
 {
     if (m_type == bullet_type::danmaku)
     {
         const float delta_veloc
-        { -0.02f*light };
+        { -0.02f };
+        assert(delta_veloc < 0.0f);
 
-        m_veloc += delta_veloc;
+        m_veloc += delta_veloc*light;
     }
 
     if (m_veloc < 0.0f)
@@ -58,26 +61,24 @@ void Bullet::bullet_speed(const float light, const std::vector <bool> &alives, c
 }
 
 void Bullet::danmaku_transform(const std::vector <bool> alives,
-                               const std::vector <sf::Vector2f> &targets,
-                               const sf::Vector2f &otaku)
-{
-    const sf::Vector2f bull_posit
-    { get_posit() };
-
+                               const std::vector <sf::Vector2f>& targets,
+                               const sf::Vector2f& otaku)
+{    
     int marked
     { -1 };
     assert(marked == -1);
 
     float min_2
     { 1.0e10f };
-    assert(min_2 >= 1.0e10f);
+    assert(min_2 > 1.0e9f);
 
     const float max_2
     { 10.0f };
-    assert(max_2 <= 10.0f);    
+    assert(max_2 < 20.0f);
 
     int count
     { 0 };
+    assert(count == 0);
 
     for (const sf::Vector2f& target : targets)
     {
@@ -88,7 +89,7 @@ void Bullet::danmaku_transform(const std::vector <bool> alives,
             alives[count])
         {
             const float dist_2
-            { vectralize(target - bull_posit) };
+            { vectralize(target - get_posit()) };
 
             if (dist_2 < min_2)
             {
