@@ -165,7 +165,7 @@ void extract_file(const std::string& folder,
     const QString home_path
     { home_dir.absolutePath() };
 
-    dir_path_couter(home_path);
+    // dir_path_couter(home_path);
 
     QDir base_dir
     { QDir::current() };
@@ -175,7 +175,7 @@ void extract_file(const std::string& folder,
     QString base_path
     { base_dir.absolutePath() };
 
-    dir_path_couter(base_path);
+    // dir_path_couter(base_path);
 
     const QString q_folder
     { QString::fromStdString(folder) };
@@ -189,7 +189,7 @@ void extract_file(const std::string& folder,
     const QString base_name
     { base_path + q_folder + q_name };
 
-    dir_path_couter(base_name);
+    // dir_path_couter(base_name);
 
     assert(QFile::exists(base_name));
     check_path(base_name);
@@ -199,7 +199,7 @@ void extract_file(const std::string& folder,
     const QString home_name
     { home_path + slash + q_name };
 
-    dir_path_couter(home_name);
+    // dir_path_couter(home_name);
 
     file.copy(home_name);
 

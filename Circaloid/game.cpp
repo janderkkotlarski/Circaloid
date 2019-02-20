@@ -62,7 +62,7 @@ void Game::touhous_die(std::vector <Tohoid>& touhous)
 
     for (Tohoid &touhou : touhous)
     {
-        if ((touhou.get_quinergy() <= 0.0f) && touhou.get_vivid())
+        if ((touhou.get_quinergy() <= 0.0f) && touhou.is_alive())
         { touhou.dies(); }
     }
 }

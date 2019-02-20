@@ -101,7 +101,7 @@ public:
 
     float get_quinergy() const noexcept
     { return m_quinergy; }
-    bool get_vivid() const noexcept
+    bool is_alive() const noexcept
     { return m_alive; }
 
     void reimage();

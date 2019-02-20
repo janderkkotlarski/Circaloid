@@ -203,7 +203,7 @@ void Tohoid::danmaku_shoot()
 
 void Tohoid::seeker_shoot(std::vector <Tohoid>& touhous)
 {
-    if (sf::Keyboard::isKeyPressed(m_keys[6]))
+    if (sf::Keyboard::isKeyPressed(m_keys[6]) && false)
     {
         if (!m_seeker_shot &&
             (m_seeker.size() < 1))
@@ -429,7 +429,7 @@ int Tohoid::touhou_target(std::vector <Tohoid>& touhous)
 
     for (Tohoid& touhou : touhous)
     {
-        if ((count != self) && touhou.get_vivid())
+        if ((count != self) && touhou.is_alive())
         {
             const float dist_2
             { vectralize(touhou.get_posit() - self_posit) };
@@ -462,7 +462,7 @@ std::vector <bool> touhous2alives(std::vector <Tohoid>& touhous)
     std::vector <bool> alives;
 
     for (Tohoid toho : touhous)
-    { alives.push_back(toho.get_vivid()); }
+    { alives.push_back(toho.is_alive()); }
 
     return alives;
 }
@@ -473,7 +473,7 @@ void bullets_hit(Tohoid& touhou,
                  const float scale,
                  const float boundary)
 {
-    if (touhou.get_vivid())
+    if (touhou.is_alive())
     {
         for (int count{0}; count < static_cast<int>(bullets.size()); ++count)
         {
@@ -510,7 +510,7 @@ void seeker_hit(Tohoid& touhou,
                 const float scale,
                 const float boundary)
 {
-    if (touhou.get_vivid())
+    if (touhou.is_alive())
     {
         for (int count{0}; count < static_cast<int>(seeker.size()); ++count)
         {
