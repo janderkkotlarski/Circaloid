@@ -12,10 +12,10 @@ SOURCES += main.cpp \
 
 QMAKE_CXXFLAGS += -std=c++11 -Wall -Wextra
 
-INCLUDEPATH += C:\SFML-2.4.1\include
+INCLUDEPATH += C:\Qt\sfml\include
 
-LIBS += -LC:/SFML-2.4.1/lib
-LIBS += -LC:\SFML-2.4.1\\bin
+LIBS += -LC:/Qt/sfml/lib
+LIBS += -LC:\Qt\sfml\bin
 LIBS += -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 HEADERS += \

@@ -14,15 +14,15 @@ Game::~Game()
 std::vector <std::vector <sf::Keyboard::Key>> Game::init_keybindings()
 {
     const std::vector <char> charas_1
-    { 'w', 's', 'd', 'a', 'x', 'z', 'q' };
+    { 'w', 's', 'd', 'a', 'q', 'e', 'x' };
     assert(charas_1.size() > 0);
 
     const std::vector <char> charas_2
-    { 't', 'g', 'h', 'f', 'b', 'v', 'r' };
+    { 't', 'g', 'h', 'f', 'r', 'y', 'b' };
     assert(charas_1.size() == charas_2.size());
 
     const std::vector <char> charas_3
-    { 'i', 'k', 'l', 'j', 'm', 'n', 'u' };
+    { 'i', 'k', 'l', 'j', 'u', 'o', ',' };
     assert(charas_1.size() == charas_3.size());
 
     const std::vector <sf::Keyboard::Key> keyras_4
@@ -31,9 +31,9 @@ std::vector <std::vector <sf::Keyboard::Key>> Game::init_keybindings()
         sf::Keyboard::Numpad5,
         sf::Keyboard::Numpad6,
         sf::Keyboard::Numpad4,
-        sf::Keyboard::Numpad2,
-        sf::Keyboard::Numpad1,
-        sf::Keyboard::Numpad7
+        sf::Keyboard::Numpad7,
+        sf::Keyboard::Numpad9,
+        sf::Keyboard::Numpad2
     };
 
     assert(charas_1.size() == keyras_4.size());

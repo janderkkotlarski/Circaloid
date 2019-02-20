@@ -296,7 +296,7 @@ int Choice::run(sf::RenderWindow& window,
     ( { "Diur.wav", "Bassoy.wav" } );
 
     std::vector <bool> sound_loops
-    ( { false , true } );
+    ( { false , false } );
 
     for (const std::string& sound_name : sound_names)
     {
