@@ -12,6 +12,8 @@
         <file>Resources/Two_64.png</file>
         <file>Resources/Zero_64.png</file>
         <file>Resources/Direction_64.png</file>
+        <file>Resources/Dimensional_Chaos.png</file>
+        <file>Resources/Dimensional_Grid.png</file>
     </qresource>
     <qresource prefix="/sounds">
         <file>Resources/Diur.wav</file>

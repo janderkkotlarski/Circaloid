@@ -1,0 +1,11 @@
+debug/main.o
+debug/bullet.o
+debug/tohoid.o
+debug/menu.o
+debug/functions.o
+debug/seeker.o
+debug/game.o
+debug/tophics.o
+debug/choice.o
+debug/todio.o
+debug/qrc_resources.o

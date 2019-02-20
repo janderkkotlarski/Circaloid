@@ -103,14 +103,14 @@ bool Game::game_loop(sf::RenderWindow& window,
     assert(loop);
 
     const std::string filetatami
-    { "Tatami.png" };
+    { "Dimensional_Grid.png" };
     sf::Texture textami;
     sf::Sprite spritami;
 
     set_image(filetatami, windims, textami, spritami);
 
     const std::string filename
-    { "Frame.png" };
+    { "Dimensional_Chaos.png" };
     sf::Texture texture;
     sf::Sprite sprite;
 

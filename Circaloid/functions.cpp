@@ -159,11 +159,13 @@ void cout_vect2f(const sf::Vector2f& vectol)
 void extract_file(const std::string& folder,
                   const std::string& name)
 {
-    QDir home_dir
+    const QDir home_dir
     { QDir::current() };
 
     const QString home_path
     { home_dir.absolutePath() };
+
+    dir_path_couter(home_path);
 
     QDir base_dir
     { QDir::current() };
@@ -173,23 +175,36 @@ void extract_file(const std::string& folder,
     QString base_path
     { base_dir.absolutePath() };
 
-    QString q_folder
+    dir_path_couter(base_path);
+
+    const QString q_folder
     { QString::fromStdString(folder) };
 
-    QString slash
+    const QString slash
     { QString::fromStdString("/") };
 
-    QString q_name
+    const QString q_name
     { QString::fromStdString(name) };
 
-    QFile file(base_path + q_folder + q_name);
+    const QString base_name
+    { base_path + q_folder + q_name };
 
-    file.copy(home_path + slash + q_name);
+    dir_path_couter(base_name);
 
-    if (!QFile::exists(home_path + slash + q_name))
-    { std::cout << folder + name << " was not found.\n"; }
+    assert(QFile::exists(base_name));
+    check_path(base_name);
 
-    assert(QFile::exists(home_path + slash + q_name));
+    QFile file(base_name);
+
+    const QString home_name
+    { home_path + slash + q_name };
+
+    dir_path_couter(home_name);
+
+    file.copy(home_name);
+
+    assert(QFile::exists(home_name));
+    check_path(home_name);
 }
 
 void extract_file_vector(const std::string& folder,
@@ -199,3 +214,11 @@ void extract_file_vector(const std::string& folder,
     { extract_file(folder, name); }
 }
 
+void dir_path_couter(const QString& dir_path)
+{ std::cout << dir_path.toStdString() << '\n'; }
+
+void check_path(const QString& dir_path)
+{
+   if (!QFile::exists(dir_path))
+   { std::cout << dir_path.toStdString() << " was not found.\n"; }
+}

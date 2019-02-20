@@ -214,27 +214,27 @@ bool Choice::choose_loop(sf::RenderWindow &window,
     { true };
     assert(loop);
 
-    const std::string filetatami
-    { "Tatami.png" };
-    assert(filetatami != "");
+    const std::string background_file
+    { "Dimensional_Grid.png" };
+    assert(background_file != "");
 
-    extract_file(m_folder, filetatami);
+    extract_file(m_folder, background_file);
 
-    sf::Texture textami;
-    sf::Sprite spritami;
+    sf::Texture texture_background;
+    sf::Sprite sprite_background;
 
-    set_image(filetatami, m_windims, textami, spritami);
+    set_image(background_file, m_windims, texture_background, sprite_background);
 
-    const std::string file_name
-    { "Frame.png" };
-    assert(file_name != "");
+    const std::string border_file
+    { "Dimensional_Chaos.png" };
+    assert(border_file != "");
 
-    extract_file(m_folder, file_name);
+    extract_file(m_folder, border_file);
 
-    sf::Texture texture;
-    sf::Sprite sprite;
+    sf::Texture text_border;
+    sf::Sprite sprite_border;
 
-    set_image(file_name, m_windims, texture, sprite);
+    set_image(border_file, m_windims, text_border, sprite_border);
 
     while (loop)
     {
@@ -257,13 +257,13 @@ bool Choice::choose_loop(sf::RenderWindow &window,
         amount_click(window, loop);
 
         window.clear(background);
-        window.draw(spritami);
+        window.draw(sprite_background);
 
         show_sprites(window, m_player_chosen);
 
         window.draw(m_amount_sprite);
 
-        window.draw(sprite);
+        window.draw(sprite_border);
         window.display();
 
         time = clock.getElapsedTime();

@@ -1,0 +1,11 @@
+release/main.o
+release/bullet.o
+release/tohoid.o
+release/menu.o
+release/functions.o
+release/seeker.o
+release/game.o
+release/tophics.o
+release/choice.o
+release/todio.o
+release/qrc_resources.o

@@ -1,5 +1,5 @@
 # Circaloid
-Circles on a sphere's surface.
+Touhou 2D danmaku multiplayer fan game
 
 ![Screenshot](Screenshot.png)
 

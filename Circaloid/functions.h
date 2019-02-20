@@ -60,4 +60,8 @@ void extract_file(const std::string& folder,
 void extract_file_vector(const std::string& folder,
                          const std::vector <std::string>& names);
 
+void dir_path_couter(const QString& dir_path);
+
+void check_path(const QString& dir_path);
+
 #endif // FUNCTIONS_H
