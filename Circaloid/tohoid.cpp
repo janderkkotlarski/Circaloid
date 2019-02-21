@@ -15,6 +15,7 @@ Tohoid::Tohoid(const sf::Vector2f& windims,
       m_quinergy(1.0f),
       m_questore(0.05f),
       m_tophics(image_name, posit, m_boundary, rotation),
+      m_single_shot("Single_Shot.wav", false),
       m_frame(frame),
       m_keys(keys),
       m_bullets(),
@@ -47,7 +48,7 @@ Tohoid::Tohoid(const sf::Vector2f& windims,
 
     assert(!m_bullet_shot);
     assert(!m_danmaku_shot);
-    assert(m_alive);
+    assert(m_alive);    
 }
 
 Tohoid::~Tohoid()
@@ -145,6 +146,8 @@ void Tohoid::bullet_shoot()
 
             m_bullets.back().jump(leap);
             m_bullet_shot = true;
+
+            m_single_shot.ring();
         }
     }
     else
@@ -238,9 +241,6 @@ void Tohoid::move_bullets(std::vector <Tohoid>& touhous)
     { touhous2posits(touhous) };
     std::vector <bool> alives
     { touhous2alives(touhous) };
-
-    const sf::Vector2f otaku
-    { get_posit() };
 
     for (Bullet& bull : m_bullets)
     {

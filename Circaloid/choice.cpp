@@ -305,14 +305,14 @@ int Choice::run(sf::RenderWindow& window,
 
     extract_file_vector(m_folder, sound_names);
 
-    Todio toadio(sound_names, sound_loops);
+    // Todio toadio(sound_names, sound_loops);
 
-    toadio.ring(1);
+    // toadio.ring(1);
 
     if (!nope)
     { nope = choose_loop(window, background, frame, touhou_names); }
 
-    toadio.stop(1);
+    // toadio.stop(1);
 
     return m_amount;
 }

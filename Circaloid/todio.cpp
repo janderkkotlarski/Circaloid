@@ -1,45 +1,29 @@
 #include "todio.h"
 
-Todio::Todio(const std::vector<std::string> &names,
-             const std::vector<bool>& loops)
-    : m_names(names),
+Todio::Todio(const std::string &name,
+             const bool loops)
+    : m_name(name),
       m_loops(loops),
-      m_buffers(),
-      m_sounds()
+      m_buffer(),
+      m_sound()
 {
-    int count
-    { 0 };
-    assert(count == 0);
+    assert(m_name != "");
 
-    for (const std::string& name : m_names)
+    if (m_name != "")
     {
-        assert(name != "");
+        if (!m_buffer.loadFromFile(m_name))
+        { std::cerr << "Failed to load " << m_name << "\n"; }
 
-        if (name != "")
-        {
-            sf::SoundBuffer buff;
+        m_sound.setBuffer(m_buffer);
 
-            if (!buff.loadFromFile(name))
-            { std::cerr << "Failed to load " << name << "\n"; }
+        if (m_loops)
+        { m_sound.setLoop(true); }
 
-            m_buffers.push_back(buff);
-
-            sf::Sound sound;
-
-            m_sounds.push_back(sound);
-            m_sounds[count].setBuffer(m_buffers[count]);
-
-            if (m_loops[count])
-            { m_sounds[count].setLoop(true); }
-
-        }
-
-        ++count;
     }
 }
 
-void Todio::ring(const int here)
-{ m_sounds[here].play(); }
+void Todio::ring()
+{ m_sound.play(); }
 
-void Todio::stop(const int here)
-{ m_sounds[here].stop(); }
+void Todio::stop()
+{ m_sound.stop(); }

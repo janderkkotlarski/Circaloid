@@ -13,6 +13,7 @@
 #include "tophics.h"
 #include "bullet.h"
 #include "seeker.h"
+#include "todio.h"
 
 class Tohoid
 {
@@ -30,6 +31,8 @@ class Tohoid
     const float m_questore;
 
     Tophics m_tophics;
+
+    Todio m_single_shot;
 
     const float m_frame;
 

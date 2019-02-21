@@ -10,19 +10,19 @@
 
 class Todio
 {
-    std::vector <std::string> m_names;
-    std::vector <bool> m_loops;
-    std::vector <sf::SoundBuffer> m_buffers;
-    std::vector <sf::Sound> m_sounds;
+    std::string m_name;
+    bool m_loops;
+    sf::SoundBuffer m_buffer;
+    sf::Sound m_sound;
 
 public:
 
-    Todio(const std::vector <std::string>& names,
-          const std::vector<bool> &loops);
+    Todio(const std::string& name,
+          const bool loops);
 
-    void ring(const int here);
+    void ring();
 
-    void stop(const int here);
+    void stop();
 };
 
 #endif // TODIO_H

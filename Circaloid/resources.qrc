@@ -18,5 +18,6 @@
     <qresource prefix="/sounds">
         <file>Resources/Diur.wav</file>
         <file>Resources/Wuwr.wav</file>
+        <file>Resources/Single_Shot.wav</file>
     </qresource>
 </RCC>
