@@ -8,6 +8,8 @@
 
 #include "SFML/Audio.hpp"
 
+#include "functions.h"
+
 class Todio
 {
     std::string m_name;
@@ -17,7 +19,8 @@ class Todio
 
 public:
 
-    Todio(const std::string& name,
+    Todio(const std::string& folder,
+          const std::string& name,
           const bool loops);
 
     void ring();

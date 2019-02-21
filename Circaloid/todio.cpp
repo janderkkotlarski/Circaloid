@@ -1,6 +1,7 @@
 #include "todio.h"
 
-Todio::Todio(const std::string &name,
+Todio::Todio(const std::string& folder,
+             const std::string &name,
              const bool loops)
     : m_name(name),
       m_loops(loops),
@@ -11,6 +12,8 @@ Todio::Todio(const std::string &name,
 
     if (m_name != "")
     {
+        extract_file(folder, name);
+
         if (!m_buffer.loadFromFile(m_name))
         { std::cerr << "Failed to load " << m_name << "\n"; }
 

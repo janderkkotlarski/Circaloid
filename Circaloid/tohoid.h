@@ -30,6 +30,8 @@ class Tohoid
     float m_quinergy;
     const float m_questore;
 
+    const std::string m_folder;
+
     Tophics m_tophics;
 
     Todio m_single_shot;

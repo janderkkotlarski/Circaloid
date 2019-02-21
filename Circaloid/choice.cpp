@@ -303,16 +303,16 @@ int Choice::run(sf::RenderWindow& window,
         assert(sound_name != "");
     }
 
-    extract_file_vector(m_folder, sound_names);
+    // extract_file_vector(m_folder, sound_names);
 
-    // Todio toadio(sound_names, sound_loops);
+    Todio toadio(m_folder, "Bassoy.wav", false);
 
-    // toadio.ring(1);
+    toadio.ring();
 
     if (!nope)
     { nope = choose_loop(window, background, frame, touhou_names); }
 
-    // toadio.stop(1);
+    toadio.stop();
 
     return m_amount;
 }
