@@ -1,18 +1,25 @@
 #include "todio.h"
 
 Todio::Todio(const std::string& folder,
-             const std::string &name,
+             const std::string& name,
              const bool loops)
-    : m_name(name),
+    : m_folder(folder),
+      m_name(name),
       m_loops(loops),
       m_buffer(),
       m_sound()
 {
+    rebuff();
+}
+
+void Todio::rebuff()
+{
+    assert(m_folder != "");
     assert(m_name != "");
 
-    if (m_name != "")
+    if (m_folder != "" && m_name != "")
     {
-        extract_file(folder, name);
+        extract_file(m_folder, m_name);
 
         if (!m_buffer.loadFromFile(m_name))
         { std::cerr << "Failed to load " << m_name << "\n"; }

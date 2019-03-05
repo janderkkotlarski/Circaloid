@@ -34,7 +34,7 @@ class Tohoid
 
     Tophics m_tophics;
 
-    Todio m_single_shot;
+    Todio m_one_shot;
 
     const float m_frame;
 
@@ -123,6 +123,8 @@ public:
 
     int touhou_self(std::vector <Tohoid>& touhous);
     int touhou_target(std::vector <Tohoid>& touhous);
+
+    void sound_bullet();
 
 };
 

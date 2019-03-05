@@ -189,7 +189,7 @@ void extract_file(const std::string& folder,
     const QString base_name
     { base_path + q_folder + q_name };
 
-    dir_path_couter(base_name);
+    // dir_path_couter(base_name);
 
     assert(QFile::exists(base_name));
     check_path(base_name);
@@ -199,7 +199,7 @@ void extract_file(const std::string& folder,
     const QString home_name
     { home_path + slash + q_name };
 
-    dir_path_couter(home_name);
+    // dir_path_couter(home_name);
 
     file.copy(home_name);
 

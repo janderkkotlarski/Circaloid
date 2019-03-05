@@ -307,6 +307,8 @@ int Choice::run(sf::RenderWindow& window,
 
     Todio toadio(m_folder, "Bassoy.wav", false);
 
+    toadio.rebuff();
+
     toadio.ring();
 
     if (!nope)

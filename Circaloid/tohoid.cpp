@@ -16,7 +16,7 @@ Tohoid::Tohoid(const sf::Vector2f& windims,
       m_questore(0.05f),
       m_folder("/Circaloid/Resources/"),
       m_tophics(image_name, posit, m_boundary, rotation),
-      m_single_shot(m_folder, "Diur.wav", false),
+      m_one_shot(m_folder, "Single_Shot.wav", false),
       m_frame(frame),
       m_keys(keys),
       m_bullets(),
@@ -129,7 +129,7 @@ void Tohoid::bullet_shoot()
     if (sf::Keyboard::isKeyPressed(m_keys[4]))
     {
         if (!m_bullet_shot)
-        {
+        {            
             const float scale
             { 1.01f };
             assert(scale > 0.0f);
@@ -148,7 +148,8 @@ void Tohoid::bullet_shoot()
             m_bullets.back().jump(leap);
             m_bullet_shot = true;
 
-            m_single_shot.ring();
+            m_one_shot.rebuff();
+            m_one_shot.ring();
         }
     }
     else
@@ -447,6 +448,9 @@ int Tohoid::touhou_target(std::vector <Tohoid>& touhous)
 
     return target;
 }
+
+void Tohoid::sound_bullet()
+{ m_one_shot.ring();}
 
 std::vector <sf::Vector2f> touhous2posits(std::vector <Tohoid>& touhous)
 {

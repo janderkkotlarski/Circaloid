@@ -12,6 +12,7 @@
 
 class Todio
 {
+    std::string m_folder;
     std::string m_name;
     bool m_loops;
     sf::SoundBuffer m_buffer;
@@ -22,6 +23,8 @@ public:
     Todio(const std::string& folder,
           const std::string& name,
           const bool loops);
+
+    void rebuff();
 
     void ring();
 
