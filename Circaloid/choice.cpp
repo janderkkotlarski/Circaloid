@@ -303,18 +303,27 @@ int Choice::run(sf::RenderWindow& window,
         assert(sound_name != "");
     }
 
-    // extract_file_vector(m_folder, sound_names);
+    const std::string menu_file
+    { "Menu_Loop.ogg" };
 
-    Todio toadio(m_folder, "Bassoy.wav", false);
+    extract_file(m_folder, menu_file);
 
-    toadio.rebuff();
+    sf::Music menu_music;
 
-    toadio.ring();
+    if (!menu_music.openFromFile(menu_file))
+    {
+        nope = true;
+        return -1;
+    }
 
-    if (!nope)
+    menu_music.setLoop(true);
+
+    menu_music.play();
+
+       if (!nope)
     { nope = choose_loop(window, background, frame, touhou_names); }
 
-    toadio.stop();
+    menu_music.stop();
 
     return m_amount;
 }

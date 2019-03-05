@@ -19,5 +19,8 @@
         <file>Resources/Diur.wav</file>
         <file>Resources/Wuwr.wav</file>
         <file>Resources/Single_Shot.wav</file>
+        <file>Resources/Danmaku_Shot.wav</file>
+        <file>Resources/Menu_Loop.ogg</file>
     </qresource>
+    <qresource prefix="/"/>
 </RCC>

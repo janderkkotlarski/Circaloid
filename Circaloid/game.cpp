@@ -116,6 +116,9 @@ bool Game::game_loop(sf::RenderWindow& window,
 
     set_image(filename, windims, texture, sprite);
 
+    for (Tohoid& touhou : touhous)
+    { touhou.rebuff(); }
+
     while (loop)
     {
         sf::Event event;

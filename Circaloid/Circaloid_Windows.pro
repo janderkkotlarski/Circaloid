@@ -25,8 +25,6 @@ SOURCES += main.cpp \
     choice.cpp \
     todio.cpp
 
-
-
 HEADERS += \
     bullet.h \
     tohoid.h \

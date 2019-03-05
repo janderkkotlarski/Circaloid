@@ -16,7 +16,8 @@ Tohoid::Tohoid(const sf::Vector2f& windims,
       m_questore(0.05f),
       m_folder("/Circaloid/Resources/"),
       m_tophics(image_name, posit, m_boundary, rotation),
-      m_one_shot(m_folder, "Single_Shot.wav", false),
+      m_bullet_sound(m_folder, "Single_Shot.wav", false),
+      m_danmaku_sound(m_folder, "Danmaku_Shot.wav", false),
       m_frame(frame),
       m_keys(keys),
       m_bullets(),
@@ -148,8 +149,8 @@ void Tohoid::bullet_shoot()
             m_bullets.back().jump(leap);
             m_bullet_shot = true;
 
-            m_one_shot.rebuff();
-            m_one_shot.ring();
+            // m_one_shot.rebuff();
+            m_bullet_sound.ring();
         }
     }
     else
@@ -200,6 +201,8 @@ void Tohoid::danmaku_shoot()
             }
 
             m_danmaku_shot = true;
+
+            m_danmaku_sound.ring();
         }
     }
     else
@@ -449,8 +452,11 @@ int Tohoid::touhou_target(std::vector <Tohoid>& touhous)
     return target;
 }
 
-void Tohoid::sound_bullet()
-{ m_one_shot.ring();}
+void Tohoid::rebuff()
+{
+    m_bullet_sound.rebuff();
+    m_danmaku_sound.rebuff();
+}
 
 std::vector <sf::Vector2f> touhous2posits(std::vector <Tohoid>& touhous)
 {

@@ -9,7 +9,7 @@ Todio::Todio(const std::string& folder,
       m_buffer(),
       m_sound()
 {
-    rebuff();
+    // rebuff();
 }
 
 void Todio::rebuff()
