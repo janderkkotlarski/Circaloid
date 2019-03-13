@@ -2,10 +2,12 @@
 
 Game::Game()
     : m_div(100),
-      m_amount(4)
+      m_amount(4),
+      m_foldername()
 {
     assert(m_div > 0);
     assert(m_amount > 0);
+    assert(m_foldername == "");
 }
 
 Game::~Game()
@@ -70,6 +72,7 @@ void Game::touhous_die(std::vector <Tohoid>& touhous)
 std::vector <Tohoid> Game::init_tohoids(const sf::Vector2f& windims,
                                         const std::vector <sf::Vector2f>& posits,
                                         const std::vector <float>& rotats,
+                                        const std::string& foldername,
                                         const std::vector <std::string>& names,
                                         const std::vector <std::vector <sf::Keyboard::Key>>& keys,
                                         const float frame)
@@ -79,7 +82,7 @@ std::vector <Tohoid> Game::init_tohoids(const sf::Vector2f& windims,
     for (int count{0}; count < m_amount; ++count)
     {
         Tohoid touhou
-        { windims, posits[count], rotats[count], names[count], frame, keys[count] };
+        { windims, posits[count], rotats[count], foldername, names[count], frame, keys[count] };
 
         touhous.push_back(touhou);
     }
@@ -157,8 +160,12 @@ void Game::run(sf::RenderWindow& window,
                const float frame,
                const int amount,
                bool& nope,
+               const std::string& foldername,
                const std::vector <std::string>& touhou_names)
 {
+    assert(foldername != "");
+    m_foldername = foldername;
+
     assert(frame > 0.0f);
     assert(amount > 0);
     m_amount = amount;
@@ -173,7 +180,7 @@ void Game::run(sf::RenderWindow& window,
     { init_keybindings() };
 
     std::vector <Tohoid> touhous
-    { init_tohoids(windims, posits, rotats, touhou_names, keys, frame) };
+    { init_tohoids(windims, posits, rotats, foldername, touhou_names, keys, frame) };
 
     if (!nope)
     { nope = game_loop(window, background, windims, touhous, frame); }

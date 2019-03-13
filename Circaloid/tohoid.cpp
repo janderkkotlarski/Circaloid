@@ -3,6 +3,7 @@
 Tohoid::Tohoid(const sf::Vector2f& windims,
                const sf::Vector2f& posit,
                const float rotation,
+               const std::string& foldername,
                const std::string& image_name,
                const float frame,
                const std::vector <sf::Keyboard::Key>& keys)
@@ -14,10 +15,10 @@ Tohoid::Tohoid(const sf::Vector2f& windims,
       m_pheta(1.0f*M_PI),
       m_quinergy(1.0f),
       m_questore(0.05f),
-      m_folder("/Circaloid/Resources/"),
-      m_tophics(image_name, posit, m_boundary, rotation),
-      m_bullet_sound(m_folder, "Single_Shot.wav", false),
-      m_danmaku_sound(m_folder, "Danmaku_Shot.wav", false),
+      m_foldername(foldername),
+      m_tophics(m_foldername, image_name, posit, m_boundary, rotation),
+      m_bullet_sound(m_foldername, "Single_Shot.wav", false),
+      m_danmaku_sound(m_foldername, "Danmaku_Shot.wav", false),
       m_frame(frame),
       m_keys(keys),
       m_bullets(),
@@ -50,7 +51,7 @@ Tohoid::Tohoid(const sf::Vector2f& windims,
 
     assert(!m_bullet_shot);
     assert(!m_danmaku_shot);
-    assert(m_alive);    
+    assert(m_alive);
 }
 
 Tohoid::~Tohoid()

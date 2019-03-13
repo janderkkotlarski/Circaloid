@@ -26,10 +26,20 @@ class Bullet
 
     sf::CircleShape m_circle;
 
+    std::string m_foldername;
+
+    std::string m_filename;
+
+    sf::Texture m_texture;
+
+    sf::Sprite m_sprite;
+
     bullet_type m_type;
 
     void set_circle(const float radius,
                     const sf::Vector2f& posit);
+
+    void set_sprite();
 
     void danmaku_transform(const std::vector<bool> alives,
                            const std::vector<sf::Vector2f>& targets,

@@ -20,7 +20,7 @@ class Choice
 
     int m_amount;
 
-    const std::string m_folder;
+    std::string m_foldername;
 
     std::vector <std::string> m_amount_names;
     std::vector <sf::Texture> m_amount_textures;
@@ -65,6 +65,7 @@ public:
             const sf::Color& background,
             const float frame,
             bool& nope,
+            const std::string& foldername,
             std::vector<std::string>& touhou_names);
 };
 

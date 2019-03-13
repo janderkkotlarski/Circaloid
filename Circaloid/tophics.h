@@ -8,6 +8,8 @@
 
 class Tophics
 {
+    const std::string m_foldername;
+
     const float m_boundary;
 
     sf::Texture m_texture;
@@ -22,7 +24,8 @@ class Tophics
 
 public:
 
-    explicit Tophics(const std::string& name,
+    explicit Tophics(const std::string& foldername,
+                     const std::string& filename,
                      const sf::Vector2f& posit,
                      const float boundary,
                      const float rotation);

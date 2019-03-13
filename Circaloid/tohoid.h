@@ -30,7 +30,7 @@ class Tohoid
     float m_quinergy;
     const float m_questore;
 
-    const std::string m_folder;
+    const std::string m_foldername;
 
     Tophics m_tophics;
 
@@ -87,6 +87,7 @@ public:
     explicit Tohoid(const sf::Vector2f& windims,
                     const sf::Vector2f& posit,
                     const float rotation,
+                    const std::string& foldername,
                     const std::string& image_name,
                     const float frame,
                     const std::vector <sf::Keyboard::Key>& keys);

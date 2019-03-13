@@ -4,7 +4,7 @@ Choice::Choice(const sf::Vector2f& windims)
     : m_windims(windims),
       m_chosen(false),
       m_amount(0),
-      m_folder("/Circaloid/Resources/"),
+      m_foldername(""),
       m_amount_names(),
       m_amount_textures(),
       m_amount_sprite(),
@@ -17,7 +17,7 @@ Choice::Choice(const sf::Vector2f& windims)
     assert(windims.y > 0.0f);
     assert(!m_chosen);
     assert(m_amount == 0);
-    assert(m_folder != "");
+    assert(m_foldername == "");
 
     m_amount_names.push_back("Zero_64.png");
     m_amount_names.push_back("One_64.png");
@@ -208,7 +208,7 @@ void Choice::amount_click(sf::RenderWindow& window,
 bool Choice::choose_loop(sf::RenderWindow &window,
                          const sf::Color &background,
                          const float frame,
-                         std::vector <std::string> &touhou_names)
+                         std::vector <std::string>& touhou_names)
 {
     bool loop
     { true };
@@ -218,7 +218,7 @@ bool Choice::choose_loop(sf::RenderWindow &window,
     { "Dimensional_Grid.png" };
     assert(background_file != "");
 
-    extract_file(m_folder, background_file);
+    extract_file(m_foldername, background_file);
 
     sf::Texture texture_background;
     sf::Sprite sprite_background;
@@ -229,7 +229,7 @@ bool Choice::choose_loop(sf::RenderWindow &window,
     { "Dimensional_Chaos.png" };
     assert(border_file != "");
 
-    extract_file(m_folder, border_file);
+    extract_file(m_foldername, border_file);
 
     sf::Texture text_border;
     sf::Sprite sprite_border;
@@ -279,15 +279,19 @@ int Choice::run(sf::RenderWindow& window,
                 const sf::Color& background,
                 const float frame,
                 bool& nope,
+                const std::string& foldername,
                 std::vector <std::string>& touhou_names)
 {
-    extract_file_vector(m_folder, m_amount_names);
+    assert(foldername != "");
+    m_foldername = foldername;
+
+    extract_file_vector(m_foldername, m_amount_names);
 
     init_textures(m_amount_names, m_amount_textures);
 
     set_sprite(0.0f*m_windims, 0.0f, m_amount_textures[m_amount], m_amount_sprite);
 
-    extract_file_vector(m_folder, m_player_names);
+    extract_file_vector(m_foldername, m_player_names);
 
     init_textures(m_player_names, m_player_textures);
     init_sprites(m_player_textures, m_player_sprites);
@@ -306,7 +310,7 @@ int Choice::run(sf::RenderWindow& window,
     const std::string menu_file
     { "Menu_Loop.ogg" };
 
-    extract_file(m_folder, menu_file);
+    extract_file(m_foldername, menu_file);
 
     sf::Music menu_music;
 

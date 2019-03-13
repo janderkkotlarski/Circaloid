@@ -12,16 +12,16 @@
 
 class Todio
 {
-    std::string m_folder;
-    std::string m_name;
+    std::string m_foldername;
+    std::string m_filename;
     bool m_loops;
     sf::SoundBuffer m_buffer;
     sf::Sound m_sound;
 
 public:
 
-    Todio(const std::string& folder,
-          const std::string& name,
+    Todio(const std::string& foldername,
+          const std::string& filename,
           const bool loops);
 
     void rebuff();

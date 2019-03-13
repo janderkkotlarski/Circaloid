@@ -17,12 +17,15 @@ class Game
     const int m_div;
     float m_amount;
 
+    std::string m_foldername;
+
     std::vector <std::string> init_names();
     std::vector <std::vector <sf::Keyboard::Key>> init_keybindings();
 
     std::vector <Tohoid> init_tohoids(const sf::Vector2f& windims,
                                       const std::vector <sf::Vector2f>& posits,
                                       const std::vector <float>& rotats,
+                                      const std::string& foldername,
                                       const std::vector <std::string>& names,
                                       const std::vector <std::vector <sf::Keyboard::Key>>& keys,
                                       const float frame);
@@ -46,6 +49,7 @@ public:
              const float frame,
              const int amount,
              bool& nope,
+             const std::string& foldername,
              const std::vector<std::string>& touhou_names);
 };
 

@@ -11,6 +11,9 @@ Bullet::Bullet(const float boundary,
       m_direction(direction),
       m_frame(frame),
       m_circle(),
+      m_filename("Star_128.png"),
+      m_texture(),
+      m_sprite(),
       m_type(type)
 {
     assert(boundary > 0.0f);

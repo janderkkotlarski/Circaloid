@@ -1,10 +1,12 @@
 #include "tophics.h"
 
-Tophics::Tophics(const std::string& sprite_name,
+Tophics::Tophics(const std::string& foldername,
+                 const std::string& filename,
                  const sf::Vector2f& posit,
                  const float boundary,
                  const float rotation)
-    : m_boundary(boundary),
+    : m_foldername(foldername),
+      m_boundary(boundary),
       m_texture(),
       m_sprite(),
       m_smite(),
@@ -12,23 +14,20 @@ Tophics::Tophics(const std::string& sprite_name,
       m_direct(),
       m_disect()
 {
-    assert(sprite_name != "");
+    assert(m_foldername != "");
+    assert(filename != "");
 
-    set_texture(sprite_name, m_texture);
+    set_texture(filename, m_texture);
 
     set_sprite(posit, rotation, m_texture, m_sprite);
     set_sprite(posit, rotation, m_texture, m_smite);
-
-    const std::string folder
-    { "/Circaloid/Resources/" };
-    assert(folder != "");
 
     const std::string direct_name
     { "Direction_64.png" };
     assert(direct_name != "");
 
 
-    extract_file(folder, direct_name);
+    extract_file(m_foldername, direct_name);
     set_texture(direct_name, m_dexture);
 
     set_sprite(posit, rotation, m_dexture, m_direct);
