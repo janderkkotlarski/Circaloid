@@ -26,8 +26,6 @@ Tophics::Tophics(const std::string& foldername,
     { "Direction_64.png" };
     assert(direct_name != "");
 
-
-    extract_file(m_foldername, direct_name);
     set_texture(direct_name, m_dexture);
 
     set_sprite(posit, rotation, m_dexture, m_direct);

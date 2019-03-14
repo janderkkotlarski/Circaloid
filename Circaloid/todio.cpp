@@ -18,9 +18,7 @@ void Todio::rebuff()
     assert(m_filename != "");
 
     if (m_foldername != "" && m_filename != "")
-    {
-        extract_file(m_foldername, m_filename);
-
+    {       
         if (!m_buffer.loadFromFile(m_filename))
         { std::cerr << "Failed to load " << m_filename << "\n"; }
 

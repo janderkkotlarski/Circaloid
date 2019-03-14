@@ -7,9 +7,16 @@ Menu::Menu()
       m_window(sf::VideoMode(static_cast<int>(m_side), static_cast<int>(m_side)), m_name, sf::Style::Default),
       m_fps(60.0f),
       m_frame(1/m_fps),
+      m_art_names(),
+      m_number_names(),
+      m_touhou_names(),
+      m_chara_names(),
+      m_projectile_names(),
+      m_track_names(),
+      m_sound_names(),
       m_foldername("/Circaloid/Resources/"),
-      m_filenames(),
-      m_touhou_names()
+      m_filenames()
+
 {
     assert(m_name != "");
     assert(m_side > 0.0f);
@@ -17,6 +24,7 @@ Menu::Menu()
     assert(m_fps > 0.0f);
     assert(m_foldername != "");
 
+    list_files();
     transfer_files();
 
     m_window.setVerticalSyncEnabled(true);
@@ -27,22 +35,31 @@ Menu::~Menu()
 
 void Menu::list_files()
 {
-    m_filenames.push_back("Dimensional_Chaos.png");
-    m_filenames.push_back("Dimensional_Grid.png");
-    m_filenames.push_back("Zero_64.png");
-    m_filenames.push_back("One_64.png");
-    m_filenames.push_back("Two_64.png");
-    m_filenames.push_back("Three_64.png");
-    m_filenames.push_back("Four_64.png");
-    m_filenames.push_back("Keine_64.png");
-    m_filenames.push_back("Meiling_64.png");
-    m_filenames.push_back("Patchouli_64.png");
-    m_filenames.push_back("Sakuya_64.png");
-    m_filenames.push_back("Direction_64.png");
-    m_filenames.push_back("Star_128.png");
-    m_filenames.push_back("Menu_Loop.ogg");
-    m_filenames.push_back("Single_Shot.wav");
-    m_filenames.push_back("Danmaku_Shot.wav");
+    m_art_names.push_back("Dimensional_Chaos.png");
+    m_art_names.push_back("Dimensional_Grid.png");
+
+    m_number_names.push_back("Zero_64.png");
+    m_number_names.push_back("One_64.png");
+    m_number_names.push_back("Two_64.png");
+    m_number_names.push_back("Three_64.png");
+    m_number_names.push_back("Four_64.png");
+
+    m_touhou_names.push_back("Keine_64.png");
+    m_touhou_names.push_back("Meiling_64.png");
+    m_touhou_names.push_back("Patchouli_64.png");
+    m_touhou_names.push_back("Sakuya_64.png");
+
+    m_chara_names.push_back("Direction_64.png");
+
+    m_projectile_names.push_back("Star_128.png");
+
+    m_track_names.push_back("Menu_Loop.ogg");
+
+    m_sound_names.push_back("Single_Shot.wav");
+    m_sound_names.push_back("Danmaku_Shot.wav");
+
+
+
 }
 
 void Menu::transfer_files()
