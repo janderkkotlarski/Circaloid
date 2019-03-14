@@ -39,7 +39,8 @@ class Bullet
     void set_circle(const float radius,
                     const sf::Vector2f& posit);
 
-    void set_sprite();
+    void set_sprite(const float radius,
+                    const sf::Vector2f& posit);
 
     void danmaku_transform(const std::vector<bool> alives,
                            const std::vector<sf::Vector2f>& targets,

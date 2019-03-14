@@ -46,6 +46,16 @@ void Bullet::set_circle(const float radius,
     m_circle.setFillColor(color);
 }
 
+void Bullet::set_sprite(const float radius,
+                        const sf::Vector2f& posit)
+{
+    const sf::Color color
+    { 191, 63, 63 };
+    assert(color != sf::Color(0, 0, 0));
+
+
+}
+
 void Bullet::bullet_speed(const float light,
                           const std::vector <bool>& alives,
                           const std::vector <sf::Vector2f>& targets,

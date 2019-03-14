@@ -18,7 +18,11 @@ class Menu
     const float m_frame;
 
     std::string m_foldername;
+    std::vector <std::string> m_filenames;
     std::vector <std::string> m_touhou_names;
+
+    void list_files();
+    void transfer_files();
 
 public:
 

@@ -8,6 +8,7 @@ Menu::Menu()
       m_fps(60.0f),
       m_frame(1/m_fps),
       m_foldername("/Circaloid/Resources/"),
+      m_filenames(),
       m_touhou_names()
 {
     assert(m_name != "");
@@ -16,11 +17,38 @@ Menu::Menu()
     assert(m_fps > 0.0f);
     assert(m_foldername != "");
 
+    transfer_files();
+
     m_window.setVerticalSyncEnabled(true);
 }
 
 Menu::~Menu()
 {}
+
+void Menu::list_files()
+{
+    m_filenames.push_back("Dimensional_Chaos.png");
+    m_filenames.push_back("Dimensional_Grid.png");
+    m_filenames.push_back("Zero_64.png");
+    m_filenames.push_back("One_64.png");
+    m_filenames.push_back("Two_64.png");
+    m_filenames.push_back("Three_64.png");
+    m_filenames.push_back("Four_64.png");
+    m_filenames.push_back("Keine_64.png");
+    m_filenames.push_back("Meiling_64.png");
+    m_filenames.push_back("Patchouli_64.png");
+    m_filenames.push_back("Sakuya_64.png");
+    m_filenames.push_back("Direction_64.png");
+    m_filenames.push_back("Star_128.png");
+    m_filenames.push_back("Menu_Loop.ogg");
+    m_filenames.push_back("Single_Shot.wav");
+    m_filenames.push_back("Danmaku_Shot.wav");
+}
+
+void Menu::transfer_files()
+{
+    extract_file_vector(m_foldername, m_filenames);
+}
 
 void Menu::start()
 {
