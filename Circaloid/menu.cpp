@@ -38,27 +38,39 @@ void Menu::list_files()
     m_art_names.push_back("Dimensional_Chaos.png");
     m_art_names.push_back("Dimensional_Grid.png");
 
+    m_filenames.insert(m_filenames.end(), m_art_names.begin(), m_art_names.end());
+
     m_number_names.push_back("Zero_64.png");
     m_number_names.push_back("One_64.png");
     m_number_names.push_back("Two_64.png");
     m_number_names.push_back("Three_64.png");
     m_number_names.push_back("Four_64.png");
 
+    m_filenames.insert(m_filenames.end(), m_number_names.begin(), m_number_names.end());
+
     m_touhou_names.push_back("Keine_64.png");
     m_touhou_names.push_back("Meiling_64.png");
     m_touhou_names.push_back("Patchouli_64.png");
     m_touhou_names.push_back("Sakuya_64.png");
 
+    m_filenames.insert(m_filenames.end(), m_touhou_names.begin(), m_touhou_names.end());
+
     m_chara_names.push_back("Direction_64.png");
+
+    m_filenames.insert(m_filenames.end(), m_chara_names.begin(), m_chara_names.end());
 
     m_projectile_names.push_back("Star_128.png");
 
+    m_filenames.insert(m_filenames.end(), m_projectile_names.begin(), m_projectile_names.end());
+
     m_track_names.push_back("Menu_Loop.ogg");
+
+    m_filenames.insert(m_filenames.end(), m_track_names.begin(), m_track_names.end());
 
     m_sound_names.push_back("Single_Shot.wav");
     m_sound_names.push_back("Danmaku_Shot.wav");
 
-
+    m_filenames.insert(m_filenames.end(), m_sound_names.begin(), m_sound_names.end());
 
 }
 
