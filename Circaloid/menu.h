@@ -17,9 +17,17 @@ class Menu
     const float m_fps;
     const float m_frame;
 
+    std::vector <std::string> m_art_names;
+    std::vector <std::string> m_number_names;
+    std::vector <std::string> m_touhou_names;
+    std::vector <std::string> m_chara_names;
+    std::vector <std::string> m_projectile_names;
+    std::vector <std::string> m_track_names;
+    std::vector <std::string> m_sound_names;
+
     std::string m_foldername;
     std::vector <std::string> m_filenames;
-    std::vector <std::string> m_touhou_names;
+
 
     void list_files();
     void transfer_files();

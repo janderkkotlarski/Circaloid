@@ -210,6 +210,8 @@ void extract_file(const std::string& folder,
 void extract_file_vector(const std::string& folder,
                          const std::vector <std::string>& names)
 {
+    assert(names.size() > 0);
+
     for (const std::string& name: names)
     { extract_file(folder, name); }
 }
