@@ -128,7 +128,7 @@ bool Game::game_loop(sf::RenderWindow& window,
         sf::Clock clock;
         sf::Time time;
 
-        if (polling(window, event, loop))
+        if (poll_reset_quit(window, event, loop))
         { return true; }
 
         window.clear(background);

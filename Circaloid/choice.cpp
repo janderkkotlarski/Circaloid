@@ -157,7 +157,7 @@ void Choice::chara_click(sf::RenderWindow& window,
                 { mouse_posit - sprite_posit };
 
                 const float dist
-                { std::sqrt(vectralize(delta)) };
+                { std::sqrt(squaring_vector(delta)) };
 
                 const float radius
                 { sprite_radius(player_sprite) };
@@ -194,7 +194,7 @@ void Choice::amount_click(sf::RenderWindow& window,
         { mouse_posit - sprite_posit };
 
         const float dist
-        { std::sqrt(vectralize(delta)) };
+        { std::sqrt(squaring_vector(delta)) };
 
         const float radius
         { sprite_radius(m_amount_sprite) };
@@ -238,7 +238,7 @@ bool Choice::choose_loop(sf::RenderWindow &window,
         sf::Clock clock;
         sf::Time time;
 
-        if (polling(window, event, loop))
+        if (poll_reset_quit(window, event, loop))
         { return true; }
         else if (!loop)
         { m_amount = 0; }
@@ -302,7 +302,7 @@ int Choice::run(sf::RenderWindow& window,
     const std::string menu_file
     { "Menu_Loop.ogg" };
 
-    extract_file(m_foldername, menu_file);
+    copy_file(m_foldername, menu_file);
 
     sf::Music menu_music;
 

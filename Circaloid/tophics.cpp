@@ -63,7 +63,7 @@ void Tophics::move_sprite(const sf::Vector2f& delta_posit)
 
 void Tophics::check_border(const sf::Vector2f& speed)
 {
-    if (vectralize(get_posit()) > squr(m_boundary))
+    if (squaring_vector(get_posit()) > squaring_scalar(m_boundary))
     {
         m_sprite.setPosition(mirrorize(m_boundary, get_posit(), speed));
         m_direct.setPosition(get_posit());
@@ -87,7 +87,7 @@ void Tophics::display(sf::RenderWindow& window)
     window.draw(m_direct);
     window.draw(m_sprite);
 
-    if (vectralize(get_mosit()) < squr(m_boundary + m_smite.getLocalBounds().width))
+    if (squaring_vector(get_mosit()) < squaring_scalar(m_boundary + m_smite.getLocalBounds().width))
     {
         window.draw(m_disect);
         window.draw(m_smite);

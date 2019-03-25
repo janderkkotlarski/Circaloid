@@ -17,7 +17,7 @@ Bullet::Bullet(const float boundary,
       m_type(type)
 {
     assert(boundary > 0.0f);
-    assert(vectralize(posit) <= squr(boundary));
+    assert(squaring_vector(posit) <= squaring_scalar(boundary));
 
     assert(veloc >= 0.0f);
     assert(frame > 0.0f);
@@ -106,13 +106,13 @@ void Bullet::danmaku_transform(const std::vector <bool> alives,
     for (const sf::Vector2f& target : targets)
     {
         const float devi_2
-        { vectralize(target - otaku) };
+        { squaring_vector(target - otaku) };
 
         if ((devi_2 > max_2) &&
             alives[count])
         {
             const float dist_2
-            { vectralize(target - get_posit()) };
+            { squaring_vector(target - get_posit()) };
 
             if (dist_2 < min_2)
             {

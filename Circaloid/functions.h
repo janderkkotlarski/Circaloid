@@ -12,9 +12,11 @@
 
 #include "SFML/Graphics.hpp"
 
-float squr(const float scalar) noexcept;
+/// square of a scalar
+float squaring_scalar(const float scalar) noexcept;
 
-float vectralize(const sf::Vector2f& vectol) noexcept;
+/// absolute square of a vector
+float squaring_vector(const sf::Vector2f& vectol) noexcept;
 
 float average(const sf::Vector2f& vectol);
 
@@ -42,25 +44,30 @@ sf::Vector2f mirrorize(const float boundary,
 
 float sprite_radius(sf::Sprite& sprite);
 
-bool polling(sf::RenderWindow& window,
+/// See whether to reset or quit
+bool poll_reset_quit(sf::RenderWindow& window,
              sf::Event& event,
              bool& loop);
 
+/// Initialize touhoid rotations
 std::vector <float> init_rotats(const int amount);
 
+/// Initializing touhoid positions
 std::vector <sf::Vector2f> init_posits(const sf::Vector2f& windims,
                                        const std::vector <float>& rotats,
                                        const float amount);
 
+///
 void cout_vect2f(const sf::Vector2f& vectol);
 
-void extract_file(const std::string& folder,
+/// Copy file from folder to other folder
+void copy_file(const std::string& folder,
                   const std::string& name);
 
-void extract_file_vector(const std::string& folder,
+void copy_file_vector(const std::string& folder,
                          const std::vector <std::string>& names);
 
-void dir_path_couter(const QString& dir_path);
+void dir_path_couter(const QString& dir_path) noexcept;
 
 void check_path(const QString& dir_path);
 

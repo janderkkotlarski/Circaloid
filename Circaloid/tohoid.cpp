@@ -69,8 +69,8 @@ void Tohoid::relativate()
     { 0.25f };
     assert(minim > 0.0f);
 
-    if (vectralize(m_speed) < squr(m_light))
-    { m_relative = (1.0f - minim)*sqrt(1 - vectralize(m_speed)/squr(m_light)) + minim; }
+    if (squaring_vector(m_speed) < squaring_scalar(m_light))
+    { m_relative = (1.0f - minim)*sqrt(1 - squaring_vector(m_speed)/squaring_scalar(m_light)) + minim; }
 
     if (m_relative < minim)
     { m_relative = minim; }
@@ -96,8 +96,8 @@ void Tohoid::accelerate()
 
 void Tohoid::ceiling()
 {
-    if (vectralize(m_speed) > squr(m_light))
-    { m_speed *= m_light/std::sqrt(vectralize(m_speed)); }
+    if (squaring_vector(m_speed) > squaring_scalar(m_light))
+    { m_speed *= m_light/std::sqrt(squaring_vector(m_speed)); }
 }
 
 void Tohoid::rotate()
@@ -270,7 +270,7 @@ void Tohoid::check_bullet_border()
     {
         for (int count{0}; count < static_cast<int>(m_bullets.size()); ++count)
         {
-            if (vectralize(m_bullets[count].get_posit()) > squr(m_boundary - m_bullets[count].get_radius()))
+            if (squaring_vector(m_bullets[count].get_posit()) > squaring_scalar(m_boundary - m_bullets[count].get_radius()))
             {
                 m_bullets[count] = m_bullets.back();
                 m_bullets.pop_back();
@@ -286,7 +286,7 @@ void Tohoid::check_seeker_border()
     {
         for (int count{0}; count < static_cast<int>(m_seeker.size()); ++count)
         {
-            if (vectralize(m_seeker[count].get_posit()) > squr(m_boundary - m_seeker[count].get_radius()))
+            if (squaring_vector(m_seeker[count].get_posit()) > squaring_scalar(m_boundary - m_seeker[count].get_radius()))
             {
                 m_seeker[count] = m_seeker.back();
                 m_seeker.pop_back();
@@ -404,7 +404,7 @@ int Tohoid::touhou_self(std::vector<Tohoid>& touhous)
 
     for (Tohoid& touhou : touhous)
     {
-        if (vectralize(touhou.get_posit() - get_posit()) < 10.0f)
+        if (squaring_vector(touhou.get_posit() - get_posit()) < 10.0f)
         { self = count; }
 
         ++count;
@@ -438,7 +438,7 @@ int Tohoid::touhou_target(std::vector <Tohoid>& touhous)
         if ((count != self) && touhou.is_alive())
         {
             const float dist_2
-            { vectralize(touhou.get_posit() - self_posit) };
+            { squaring_vector(touhou.get_posit() - self_posit) };
 
             if (dist_2 < max_2)
             {
@@ -490,19 +490,19 @@ void bullets_hit(Tohoid& touhou,
         for (int count{0}; count < static_cast<int>(bullets.size()); ++count)
         {
             const float dist_2
-            { vectralize(bullets[count].get_posit() - touhou.get_posit()) };
+            { squaring_vector(bullets[count].get_posit() - touhou.get_posit()) };
             const float mist_2
-            { vectralize(bullets[count].get_posit() - touhou.get_mosit()) };
+            { squaring_vector(bullets[count].get_posit() - touhou.get_mosit()) };
 
             const float radi_2
-            { squr(bullets[count].get_radius() + scale*touhou.get_radius()) };
+            { squaring_scalar(bullets[count].get_radius() + scale*touhou.get_radius()) };
             const float madi_2
-            { squr(bullets[count].get_radius() + scale*touhou.get_madius()) };
+            { squaring_scalar(bullets[count].get_radius() + scale*touhou.get_madius()) };
 
             const float bound_2
-            { squr(boundary + scale*touhou.get_madius()) };
+            { squaring_scalar(boundary + scale*touhou.get_madius()) };
             const float mosit_2
-            { vectralize(touhou.get_mosit()) };
+            { squaring_vector(touhou.get_mosit()) };
 
             if ((dist_2 <= radi_2) ||
                 ((mist_2 <= madi_2) && (mosit_2 <= bound_2)))
@@ -527,19 +527,19 @@ void seeker_hit(Tohoid& touhou,
         for (int count{0}; count < static_cast<int>(seeker.size()); ++count)
         {
             const float dist_2
-            { vectralize(seeker[count].get_posit() - touhou.get_posit()) };
+            { squaring_vector(seeker[count].get_posit() - touhou.get_posit()) };
             const float mist_2
-            { vectralize(seeker[count].get_posit() - touhou.get_mosit()) };
+            { squaring_vector(seeker[count].get_posit() - touhou.get_mosit()) };
 
             const float radi_2
-            { squr(seeker[count].get_radius() + scale*touhou.get_radius()) };
+            { squaring_scalar(seeker[count].get_radius() + scale*touhou.get_radius()) };
             const float madi_2
-            { squr(seeker[count].get_radius() + scale*touhou.get_madius()) };
+            { squaring_scalar(seeker[count].get_radius() + scale*touhou.get_madius()) };
 
             const float bound_2
-            { squr(boundary + scale*touhou.get_madius()) };
+            { squaring_scalar(boundary + scale*touhou.get_madius()) };
             const float mosit_2
-            { vectralize(touhou.get_mosit()) };
+            { squaring_vector(touhou.get_mosit()) };
 
             if ((dist_2 <= radi_2) ||
                 ((mist_2 <= madi_2) && (mosit_2 <= bound_2)))

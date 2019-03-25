@@ -76,7 +76,7 @@ void Menu::list_files()
 
 void Menu::transfer_files()
 {
-    extract_file_vector(m_foldername, m_filenames);
+    copy_file_vector(m_foldername, m_filenames);
 }
 
 void Menu::start()

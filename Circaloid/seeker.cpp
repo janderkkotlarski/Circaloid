@@ -14,7 +14,7 @@ Seeker::Seeker(const float boundary,
       m_circle()
 {
     assert(boundary > 0.0f);
-    assert(vectralize(posit) <= squr(boundary));
+    assert(squaring_vector(posit) <= squaring_scalar(boundary));
     assert(frame > 0.0f);
 
     assert(m_accel > 0.0f);

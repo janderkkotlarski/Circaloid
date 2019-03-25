@@ -1,10 +1,10 @@
 #include "functions.h"
 
-float squr(const float scalar) noexcept
+float squaring_scalar(const float scalar) noexcept
 { return scalar*scalar; }
 
-float vectralize(const sf::Vector2f& vectol) noexcept
-{ return squr(vectol.x) + squr(vectol.y); }
+float squaring_vector(const sf::Vector2f& vectol) noexcept
+{ return squaring_scalar(vectol.x) + squaring_scalar(vectol.y); }
 
 float average(const sf::Vector2f& vectol)
 { return 0.5f*(vectol.x + vectol.y); }
@@ -47,7 +47,7 @@ sf::Vector2f normalize_direction(const sf::Vector2f& direction)
     assert(direction.x != 0.0f &&
            direction.y != 0.0f);
 
-    return direction/std::sqrt(vectralize(direction));
+    return direction/std::sqrt(squaring_vector(direction));
 }
 
 void set_texture(const std::string& filename,
@@ -92,16 +92,16 @@ sf::Vector2f mirrorize(const float boundary,
                        const sf::Vector2f& posit,
                        const sf::Vector2f& speed)
 {
-    if (vectralize(posit) == 0.0f)
-    { return (1.0f - 2.0f*boundary/std::sqrt(vectralize(speed)))*speed; }
+    if (squaring_vector(posit) == 0.0f)
+    { return (1.0f - 2.0f*boundary/std::sqrt(squaring_vector(speed)))*speed; }
 
-    return (1.0f - 2.0f*boundary/std::sqrt(vectralize(posit)))*posit;
+    return (1.0f - 2.0f*boundary/std::sqrt(squaring_vector(posit)))*posit;
 }
 
 float sprite_radius(sf::Sprite& sprite)
 { return 0.25f*(sprite.getGlobalBounds().width + sprite.getGlobalBounds().height); }
 
-bool polling(sf::RenderWindow& window,
+bool poll_reset_quit(sf::RenderWindow& window,
              sf::Event& event,
              bool& loop)
 {
@@ -156,16 +156,18 @@ std::vector <sf::Vector2f> init_posits(const sf::Vector2f& windims,
 void cout_vect2f(const sf::Vector2f& vectol)
 { std::cout << '[' << vectol.x << ':' << vectol.y << "]\n"; }
 
-void extract_file(const std::string& folder,
+void copy_file(const std::string& folder,
                   const std::string& name)
 {
-    const QDir home_dir
-    { QDir::current() };
-
     const QString home_path
-    { home_dir.absolutePath() };
+    { QDir::current().absolutePath() };
 
     // dir_path_couter(home_path);
+
+    const QString home_name
+    { home_path + QString::fromStdString("/" + name) };
+
+    // dir_path_couter(home_name);
 
     QDir base_dir
     { QDir::current() };
@@ -177,17 +179,8 @@ void extract_file(const std::string& folder,
 
     // dir_path_couter(base_path);
 
-    const QString q_folder
-    { QString::fromStdString(folder) };
-
-    const QString slash
-    { QString::fromStdString("/") };
-
-    const QString q_name
-    { QString::fromStdString(name) };
-
     const QString base_name
-    { base_path + q_folder + q_name };
+    { base_path + QString::fromStdString(folder + name) };
 
     // dir_path_couter(base_name);
 
@@ -196,27 +189,22 @@ void extract_file(const std::string& folder,
 
     QFile file(base_name);
 
-    const QString home_name
-    { home_path + slash + q_name };
-
-    // dir_path_couter(home_name);
-
     file.copy(home_name);
 
     assert(QFile::exists(home_name));
     check_path(home_name);
 }
 
-void extract_file_vector(const std::string& folder,
+void copy_file_vector(const std::string& folder,
                          const std::vector <std::string>& names)
 {
     assert(names.size() > 0);
 
     for (const std::string& name: names)
-    { extract_file(folder, name); }
+    { copy_file(folder, name); }
 }
 
-void dir_path_couter(const QString& dir_path)
+void dir_path_couter(const QString& dir_path) noexcept
 { std::cout << dir_path.toStdString() << '\n'; }
 
 void check_path(const QString& dir_path)
