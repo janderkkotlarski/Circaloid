@@ -37,14 +37,14 @@ Tophics::~Tophics()
 
 void Tophics::init_sprite()
 {
-    set_sprite(get_posit(), get_rotate(), m_texture, m_sprite);
-    set_sprite(get_posit(), get_rotate(), m_texture, m_smite);
+    set_sprite(get_position(), get_rotate(), m_texture, m_sprite);
+    set_sprite(get_position(), get_rotate(), m_texture, m_smite);
 }
 
 void Tophics::init_direct()
 {
-    set_sprite(get_posit(), get_rotate(), m_dexture, m_direct);
-    set_sprite(get_posit(), get_rotate(), m_dexture, m_disect);
+    set_sprite(get_position(), get_rotate(), m_dexture, m_direct);
+    set_sprite(get_position(), get_rotate(), m_dexture, m_disect);
 }
 
 void Tophics::rotate(const float rotation)
@@ -63,16 +63,16 @@ void Tophics::move_sprite(const sf::Vector2f& delta_posit)
 
 void Tophics::check_border(const sf::Vector2f& speed)
 {
-    if (squaring_vector(get_posit()) > squaring_scalar(m_boundary))
+    if (squaring_vector(get_position()) > squaring_scalar(m_boundary))
     {
-        m_sprite.setPosition(mirrorize(m_boundary, get_posit(), speed));
-        m_direct.setPosition(get_posit());
+        m_sprite.setPosition(mirrorize(m_boundary, get_position(), speed));
+        m_direct.setPosition(get_position());
     }
 }
 
 void Tophics::move_smite(const sf::Vector2f& speed)
 {
-    m_smite.setPosition(mirrorize(m_boundary, get_posit(), speed));
+    m_smite.setPosition(mirrorize(m_boundary, get_position(), speed));
     m_disect.setPosition(get_mosit());
 }
 

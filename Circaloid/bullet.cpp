@@ -112,7 +112,7 @@ void Bullet::danmaku_transform(const std::vector <bool> alives,
             alives[count])
         {
             const float dist_2
-            { squaring_vector(target - get_posit()) };
+            { squaring_vector(target - get_position()) };
 
             if (dist_2 < min_2)
             {
@@ -125,5 +125,5 @@ void Bullet::danmaku_transform(const std::vector <bool> alives,
     }
 
     if (marked != -1)
-    { set_direction(normalize_direction(targets[marked] - get_posit())); }
+    { set_direction(normalize_vector(targets[marked] - get_position())); }
 }

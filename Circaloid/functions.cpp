@@ -3,51 +3,51 @@
 float squaring_scalar(const float scalar) noexcept
 { return scalar*scalar; }
 
-float squaring_vector(const sf::Vector2f& vectol) noexcept
-{ return squaring_scalar(vectol.x) + squaring_scalar(vectol.y); }
+float squaring_vector(const sf::Vector2f& vector) noexcept
+{ return squaring_scalar(vector.x) + squaring_scalar(vector.y); }
 
-float average(const sf::Vector2f& vectol)
-{ return 0.5f*(vectol.x + vectol.y); }
+float averaging_vector(const sf::Vector2f& vector)
+{ return 0.5f*(vector.x + vector.y); }
 
-sf::Vector2f rotation2direction(const float rotation)
+sf::Vector2f rotation_to_vector(const float rotation)
 {
     const float divide
-    { M_PI/180.0f };
+    { static_cast<float>(M_PI)/180.0f };
     return sf::Vector2f(std::sin(divide*rotation), -std::cos(divide*rotation));
 }
 
-float direction2rotation(const sf::Vector2f& direction)
+float vector_to_rotation(const sf::Vector2f& vector)
 {
     const float multiply
-    { 180.0f/M_PI };
+    { 180.0f/static_cast<float>(M_PI) };
 
     float rotation
     { 0.0f };
 
-    if (direction.x == 0.0f)
+    if (vector.x == 0.0f)
     {
-        if (direction.y < 0.0f)
+        if (vector.y < 0.0f)
         { rotation = 90.0f; }
         else
         { rotation = -90.0f; }
     }
     else
     {
-        if (direction.y < 0.0f)
-        { rotation = multiply*std::atan(direction.y/direction.x); }
+        if (vector.y < 0.0f)
+        { rotation = multiply*std::atan(vector.y/vector.x); }
         else
-        { rotation = -multiply*std::atan(direction.y/direction.x); }
+        { rotation = -multiply*std::atan(vector.y/vector.x); }
     }
 
     return rotation;
 }
 
-sf::Vector2f normalize_direction(const sf::Vector2f& direction)
+sf::Vector2f normalize_vector(const sf::Vector2f& vector)
 {
-    assert(direction.x != 0.0f &&
-           direction.y != 0.0f);
+    assert(vector.x != 0.0f &&
+           vector.y != 0.0f);
 
-    return direction/std::sqrt(squaring_vector(direction));
+    return vector/std::sqrt(squaring_vector(vector));
 }
 
 void set_texture(const std::string& filename,
@@ -61,19 +61,19 @@ void set_texture(const std::string& filename,
     texture.setSmooth(true);
 }
 
-void set_sprite(const sf::Vector2f& posit,
+void set_sprite(const sf::Vector2f& position,
                 const float rotation,
                 sf::Texture& texture,
                 sf::Sprite &sprite)
 {    
     sprite.setTexture(texture);
     sprite.setOrigin(0.5f*sprite.getLocalBounds().width, 0.5f*sprite.getLocalBounds().height);
-    sprite.setPosition(posit);
+    sprite.setPosition(position);
     sprite.setRotation(rotation);
 }
 
 void set_image(const std::string& name,
-               const sf::Vector2f& windims,
+               const sf::Vector2f& window_dimensions,
                sf::Texture& texture,
                sf::Sprite& sprite)
 {
@@ -84,8 +84,8 @@ void set_image(const std::string& name,
 
     texture.setSmooth(true);
     sprite.setTexture(texture);
-    sprite.setOrigin(0.5f*windims);
-    sprite.setPosition(0.0f*windims);
+    sprite.setOrigin(0.5f*window_dimensions);
+    sprite.setPosition(0.0f*window_dimensions);
 }
 
 sf::Vector2f mirrorize(const float boundary,
@@ -147,7 +147,7 @@ std::vector <sf::Vector2f> init_posits(const sf::Vector2f& windims,
     assert(rel_dist > 0.0f);
 
     for (int count {0}; count < amount; ++count)
-    { posits.push_back(-0.7f*average(windims)*rotation2direction(rotats[count])); }
+    { posits.push_back(-0.7f*averaging_vector(windims)*rotation_to_vector(rotats[count])); }
 
     assert(posits.size() == static_cast<unsigned>(amount));
     return posits;

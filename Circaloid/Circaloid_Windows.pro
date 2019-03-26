@@ -36,6 +36,5 @@ HEADERS += \
     choice.h \
     todio.h
 
-RESOURCES += \
-    resources.qrc
+RESOURCES +=
 

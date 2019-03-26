@@ -94,8 +94,8 @@ public:
 
     ~Tohoid();
 
-    sf::Vector2f get_posit() const noexcept
-    { return m_tophics.get_posit(); }
+    sf::Vector2f get_position() const noexcept
+    { return m_tophics.get_position(); }
     sf::Vector2f get_mosit() const noexcept
     { return m_tophics.get_mosit(); }
 

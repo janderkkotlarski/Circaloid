@@ -12,31 +12,39 @@
 
 #include "SFML/Graphics.hpp"
 
-/// square of a scalar
+/// Square of a scalar
 float squaring_scalar(const float scalar) noexcept;
 
-/// absolute square of a vector
-float squaring_vector(const sf::Vector2f& vectol) noexcept;
+/// Absolute square of a vector
+float squaring_vector(const sf::Vector2f& vector) noexcept;
 
-float average(const sf::Vector2f& vectol);
+/// Average of x and y of a vector
+float averaging_vector(const sf::Vector2f& vector);
 
-sf::Vector2f rotation2direction(const float rotation);
+/// Change a scalar rotation into a directional unit vector
+sf::Vector2f rotation_to_vector(const float rotation);
 
-float direction2rotation(const sf::Vector2f& direction);
+/// Change a vector into a scalar rotation
+float vector_to_rotation(const sf::Vector2f& vector);
 
-sf::Vector2f normalize_direction(const sf::Vector2f& direction);
+/// Turn a vector into a unit vector having the same direction
+sf::Vector2f normalize_vector(const sf::Vector2f& vector);
 
+/// Make a texture from a file
 void set_texture(const std::string& filename, sf::Texture& texture);
 
-void set_sprite(const sf::Vector2f& posit,
+/// Make a sprite using a postion, rotation and a texture
+void set_sprite(const sf::Vector2f& position,
                 const float rotation,
                 sf::Texture& texture,
                 sf::Sprite& sprite);
 
+/// Make an image sprite using a name
 void set_image(const std::string& name,
-               const sf::Vector2f& windims,
+               const sf::Vector2f& window_dimensions,
                sf::Texture& texture,
                sf::Sprite& sprite);
+
 
 sf::Vector2f mirrorize(const float boundary,
                        const sf::Vector2f& posit,

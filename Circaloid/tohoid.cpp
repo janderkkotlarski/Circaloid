@@ -79,7 +79,7 @@ void Tohoid::relativate()
 void Tohoid::accelerate()
 {
     const sf::Vector2f accer
-    { m_relative*m_accel*rotation2direction(get_rotate()) };
+    { m_relative*m_accel*rotation_to_vector(get_rotate()) };
 
     if (sf::Keyboard::isKeyPressed(m_keys[0]))
     {
@@ -142,10 +142,10 @@ void Tohoid::bullet_shoot()
 
             m_quinergy += qi_bullet;
 
-            m_bullets.push_back(Bullet(m_boundary, get_posit(), m_light,
-                                       rotation2direction(get_rotate()), m_frame, bullet_type::normal));
+            m_bullets.push_back(Bullet(m_boundary, get_position(), m_light,
+                                       rotation_to_vector(get_rotate()), m_frame, bullet_type::normal));
 
-            const sf::Vector2f leap{(scale*get_radius() + scale*m_bullets.back().get_radius())*rotation2direction(get_rotate())};
+            const sf::Vector2f leap{(scale*get_radius() + scale*m_bullets.back().get_radius())*rotation_to_vector(get_rotate())};
 
             m_bullets.back().jump(leap);
             m_bullet_shot = true;
@@ -189,9 +189,9 @@ void Tohoid::danmaku_shoot()
                 const float rotation
                 { rotate + get_rotate() };
                 const sf::Vector2f direction
-                { rotation2direction(rotation) };
+                { rotation_to_vector(rotation) };
 
-                m_bullets.push_back(Bullet(m_boundary, get_posit(), m_light,
+                m_bullets.push_back(Bullet(m_boundary, get_position(), m_light,
                                            direction, m_frame, bullet_type::danmaku));
 
                 const sf::Vector2f leap
@@ -227,11 +227,11 @@ void Tohoid::seeker_shoot(std::vector <Tohoid>& touhous)
 
             m_quinergy += qi_loss;
 
-            m_seeker.push_back(Seeker(m_boundary, get_posit(), m_speed, m_frame,
+            m_seeker.push_back(Seeker(m_boundary, get_position(), m_speed, m_frame,
                                       touhou_self(touhous), touhou_target(touhous)));
 
             const sf::Vector2f leap
-            { (scale*get_radius() + scale*m_seeker.back().get_radius())*rotation2direction(get_rotate()) };
+            { (scale*get_radius() + scale*m_seeker.back().get_radius())*rotation_to_vector(get_rotate()) };
 
             m_seeker.back().jump(leap);
             m_seeker_shot = true;
@@ -250,7 +250,7 @@ void Tohoid::move_bullets(std::vector <Tohoid>& touhous)
 
     for (Bullet& bull : m_bullets)
     {
-        bull.bullet_speed(m_light, alives, posits, get_posit());
+        bull.bullet_speed(m_light, alives, posits, get_position());
         bull.move();
     }
 
@@ -270,7 +270,7 @@ void Tohoid::check_bullet_border()
     {
         for (int count{0}; count < static_cast<int>(m_bullets.size()); ++count)
         {
-            if (squaring_vector(m_bullets[count].get_posit()) > squaring_scalar(m_boundary - m_bullets[count].get_radius()))
+            if (squaring_vector(m_bullets[count].get_position()) > squaring_scalar(m_boundary - m_bullets[count].get_radius()))
             {
                 m_bullets[count] = m_bullets.back();
                 m_bullets.pop_back();
@@ -286,7 +286,7 @@ void Tohoid::check_seeker_border()
     {
         for (int count{0}; count < static_cast<int>(m_seeker.size()); ++count)
         {
-            if (squaring_vector(m_seeker[count].get_posit()) > squaring_scalar(m_boundary - m_seeker[count].get_radius()))
+            if (squaring_vector(m_seeker[count].get_position()) > squaring_scalar(m_boundary - m_seeker[count].get_radius()))
             {
                 m_seeker[count] = m_seeker.back();
                 m_seeker.pop_back();
@@ -400,11 +400,11 @@ int Tohoid::touhou_self(std::vector<Tohoid>& touhous)
     assert(count == 0);
 
     const sf::Vector2f posit
-    { get_posit() };
+    { get_position() };
 
     for (Tohoid& touhou : touhous)
     {
-        if (squaring_vector(touhou.get_posit() - get_posit()) < 10.0f)
+        if (squaring_vector(touhou.get_position() - get_position()) < 10.0f)
         { self = count; }
 
         ++count;
@@ -427,7 +427,7 @@ int Tohoid::touhou_target(std::vector <Tohoid>& touhous)
     { touhou_self(touhous) };
 
     const sf::Vector2f self_posit
-    { touhous[self].get_posit() };
+    { touhous[self].get_position() };
 
     float max_2
     { 1.0e10f };
@@ -438,7 +438,7 @@ int Tohoid::touhou_target(std::vector <Tohoid>& touhous)
         if ((count != self) && touhou.is_alive())
         {
             const float dist_2
-            { squaring_vector(touhou.get_posit() - self_posit) };
+            { squaring_vector(touhou.get_position() - self_posit) };
 
             if (dist_2 < max_2)
             {
@@ -464,7 +464,7 @@ std::vector <sf::Vector2f> touhous2posits(std::vector <Tohoid>& touhous)
     std::vector <sf::Vector2f> posits;
 
     for (Tohoid toho : touhous)
-    { posits.push_back(toho.get_posit()); }
+    { posits.push_back(toho.get_position()); }
 
     return posits;
 }
@@ -490,9 +490,9 @@ void bullets_hit(Tohoid& touhou,
         for (int count{0}; count < static_cast<int>(bullets.size()); ++count)
         {
             const float dist_2
-            { squaring_vector(bullets[count].get_posit() - touhou.get_posit()) };
+            { squaring_vector(bullets[count].get_position() - touhou.get_position()) };
             const float mist_2
-            { squaring_vector(bullets[count].get_posit() - touhou.get_mosit()) };
+            { squaring_vector(bullets[count].get_position() - touhou.get_mosit()) };
 
             const float radi_2
             { squaring_scalar(bullets[count].get_radius() + scale*touhou.get_radius()) };
@@ -527,9 +527,9 @@ void seeker_hit(Tohoid& touhou,
         for (int count{0}; count < static_cast<int>(seeker.size()); ++count)
         {
             const float dist_2
-            { squaring_vector(seeker[count].get_posit() - touhou.get_posit()) };
+            { squaring_vector(seeker[count].get_position() - touhou.get_position()) };
             const float mist_2
-            { squaring_vector(seeker[count].get_posit() - touhou.get_mosit()) };
+            { squaring_vector(seeker[count].get_position() - touhou.get_mosit()) };
 
             const float radi_2
             { squaring_scalar(seeker[count].get_radius() + scale*touhou.get_radius()) };

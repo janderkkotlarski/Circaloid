@@ -34,7 +34,7 @@ public:
 
     ~Seeker();
 
-    sf::Vector2f get_posit() const noexcept
+    sf::Vector2f get_position() const noexcept
     { return m_circle.getPosition(); }
     float get_radius() const noexcept
     { return m_circle.getRadius(); }

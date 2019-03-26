@@ -32,7 +32,7 @@ public:
 
     ~Tophics();
 
-    sf::Vector2f get_posit() const noexcept
+    sf::Vector2f get_position() const noexcept
     { return m_sprite.getPosition();}
     sf::Vector2f get_mosit() const noexcept
     { return m_smite.getPosition(); }
