@@ -5,7 +5,7 @@ Tophics::Tophics(const std::string& foldername,
                  const sf::Vector2f& posit,
                  const float boundary_radius,
                  const float rotation)
-    : m_foldername(foldername),
+    : m_folder_name(foldername),
       m_boundary_radius(boundary_radius),
       m_texture(),
       m_sprite(),
@@ -15,7 +15,7 @@ Tophics::Tophics(const std::string& foldername,
       m_disect()
 {
     assert(m_boundary_radius > 0.0f);
-    assert(m_foldername != "");
+    assert(m_folder_name != "");
     assert(filename != "");
 
     set_texture(filename, m_texture);

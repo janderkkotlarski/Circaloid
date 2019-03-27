@@ -20,7 +20,7 @@ class Choice
 
     int m_amount;
 
-    std::string m_foldername;
+    std::string m_folder_name;
 
     std::vector <std::string> m_amount_names;
     std::vector <sf::Texture> m_amount_textures;

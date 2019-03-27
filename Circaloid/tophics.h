@@ -8,7 +8,7 @@
 
 class Tophics
 {
-    const std::string m_foldername;
+    const std::string m_folder_name;
 
     const float m_boundary_radius;
 

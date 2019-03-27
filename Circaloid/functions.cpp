@@ -161,16 +161,16 @@ std::vector <sf::Vector2f> initialize_positions(const sf::Vector2f& window_dimen
 void cout_vect2f(const sf::Vector2f& vector)
 { std::cout << '[' << vector.x << ':' << vector.y << "]\n"; }
 
-void copy_file(const std::string& folder,
+void copy_file(const std::string& folder_name,
                const std::string& file_name)
 {
     const QString home_path
     { QDir::current().absolutePath() };
-    // dir_path_couter(home_path);
+    // cout_directory_path(home_path);
 
     const QString home_name
     { home_path + QString::fromStdString("/" + file_name) };
-    // dir_path_couter(home_name);
+    // cout_directory_path(home_name);
 
     QDir base_dir
     { QDir::current() };    
@@ -178,36 +178,36 @@ void copy_file(const std::string& folder,
 
     QString base_path
     { base_dir.absolutePath() };
-    // dir_path_couter(base_path);
+    // cout_directory_path(base_path);
 
     const QString base_name
-    { base_path + QString::fromStdString(folder + file_name) };
-    // dir_path_couter(base_name);
+    { base_path + QString::fromStdString(folder_name + file_name) };
+    // cout_directory_path(base_name);
 
     assert(QFile::exists(base_name));
-    check_path(base_name);
+    check_directory_path(base_name);
 
     QFile file(base_name);
 
     file.copy(home_name);
     assert(QFile::exists(home_name));
-    check_path(home_name);
+    check_directory_path(home_name);
 }
 
-void copy_file_vector(const std::string& folder,
-                         const std::vector <std::string>& names)
+void copy_file_vector(const std::string& folder_name,
+                      const std::vector <std::string>& file_names)
 {
-    assert(names.size() > 0);
+    assert(file_names.size() > 0);
 
-    for (const std::string& name: names)
-    { copy_file(folder, name); }
+    for (const std::string& file_name: file_names)
+    { copy_file(folder_name, file_name); }
 }
 
-void dir_path_couter(const QString& dir_path) noexcept
-{ std::cout << dir_path.toStdString() << '\n'; }
+void cout_directory_path(const QString& directory_path) noexcept
+{ std::cout << directory_path.toStdString() << '\n'; }
 
-void check_path(const QString& dir_path)
+void check_directory_path(const QString& directory_path)
 {
-   if (!QFile::exists(dir_path))
-   { std::cout << dir_path.toStdString() << " was not found.\n"; }
+   if (!QFile::exists(directory_path))
+   { std::cout << directory_path.toStdString() << " was not found.\n"; }
 }

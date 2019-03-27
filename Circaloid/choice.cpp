@@ -4,7 +4,7 @@ Choice::Choice(const sf::Vector2f& windims)
     : m_windims(windims),
       m_chosen(false),
       m_amount(0),
-      m_foldername(""),
+      m_folder_name(""),
       m_amount_names(),
       m_amount_textures(),
       m_amount_sprite(),
@@ -17,7 +17,7 @@ Choice::Choice(const sf::Vector2f& windims)
     assert(windims.y > 0.0f);
     assert(!m_chosen);
     assert(m_amount == 0);
-    assert(m_foldername == "");
+    assert(m_folder_name == "");
 
     m_amount_names.push_back("Zero_64.png");
     m_amount_names.push_back("One_64.png");
@@ -279,7 +279,7 @@ int Choice::run(sf::RenderWindow& window,
                 std::vector <std::string>& touhou_names)
 {
     assert(foldername != "");
-    m_foldername = foldername;
+    m_folder_name = foldername;
 
     init_textures(m_amount_names, m_amount_textures);
 
@@ -302,7 +302,7 @@ int Choice::run(sf::RenderWindow& window,
     const std::string menu_file
     { "Menu_Loop.ogg" };
 
-    copy_file(m_foldername, menu_file);
+    copy_file(m_folder_name, menu_file);
 
     sf::Music menu_music;
 

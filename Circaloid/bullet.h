@@ -26,7 +26,7 @@ class Bullet
 
     sf::CircleShape m_circle;
 
-    std::string m_foldername;
+    std::string m_folder_name;
 
     std::string m_filename;
 

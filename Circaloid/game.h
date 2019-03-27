@@ -17,7 +17,7 @@ class Game
     const int m_div;
     int m_amount;
 
-    std::string m_foldername;
+    std::string m_folder_name;
 
     std::vector <std::string> init_names();
     std::vector <std::vector <sf::Keyboard::Key>> init_keybindings();

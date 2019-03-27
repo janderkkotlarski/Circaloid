@@ -12,7 +12,7 @@
 
 class Todio
 {
-    std::string m_foldername;
+    std::string m_folder_name;
     std::string m_filename;
     bool m_loops;
     sf::SoundBuffer m_buffer;

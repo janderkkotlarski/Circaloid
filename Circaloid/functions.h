@@ -67,18 +67,21 @@ std::vector <sf::Vector2f> initialize_positions(const sf::Vector2f& window_dimen
                                                 const std::vector <float>& rotations,
                                                 const int amount);
 
-///
-void cout_vector2f(const sf::Vector2f& vectol);
+/// Displaying a vector2f on the terminal
+void cout_vector2f(const sf::Vector2f& vector);
 
-/// Copy file from folder to other folder
-void copy_file(const std::string& folder,
-                  const std::string& name);
+/// Copy a file from a folder to another folder
+void copy_file(const std::string& folder_name,
+               const std::string& file_name);
 
-void copy_file_vector(const std::string& folder,
-                         const std::vector <std::string>& names);
+/// Copy a vector of files using previous function
+void copy_file_vector(const std::string& folder_name,
+                      const std::vector <std::string>& file_names);
 
-void dir_path_couter(const QString& dir_path) noexcept;
+/// Displaying a directory path on the terminal
+void cout_directory_path(const QString& directory_path) noexcept;
 
-void check_path(const QString& dir_path);
+/// Checking the validity of a directory path
+void check_directory_path(const QString& directory_path);
 
 #endif // FUNCTIONS_H

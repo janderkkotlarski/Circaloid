@@ -3,7 +3,7 @@
 Todio::Todio(const std::string& foldername,
              const std::string& filename,
              const bool loops)
-    : m_foldername(foldername),
+    : m_folder_name(foldername),
       m_filename(filename),
       m_loops(loops),
       m_buffer(),
@@ -14,10 +14,10 @@ Todio::Todio(const std::string& foldername,
 
 void Todio::rebuff()
 {
-    assert(m_foldername != "");
+    assert(m_folder_name != "");
     assert(m_filename != "");
 
-    if (m_foldername != "" && m_filename != "")
+    if (m_folder_name != "" && m_filename != "")
     {       
         if (!m_buffer.loadFromFile(m_filename))
         { std::cerr << "Failed to load " << m_filename << "\n"; }

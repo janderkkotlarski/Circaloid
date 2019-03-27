@@ -25,7 +25,7 @@ class Menu
     std::vector <std::string> m_track_names;
     std::vector <std::string> m_sound_names;
 
-    std::string m_foldername;
+    std::string m_folder_name;
     std::vector <std::string> m_filenames;
 
 

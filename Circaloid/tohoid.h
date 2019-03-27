@@ -30,7 +30,7 @@ class Tohoid
     float m_quinergy;
     const float m_questore;
 
-    const std::string m_foldername;
+    const std::string m_folder_name;
 
     Tophics m_tophics;
 

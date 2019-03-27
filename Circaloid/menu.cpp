@@ -14,7 +14,7 @@ Menu::Menu()
       m_projectile_names(),
       m_track_names(),
       m_sound_names(),
-      m_foldername("/Circaloid/Resources/"),
+      m_folder_name("/Circaloid/Resources/"),
       m_filenames()
 
 {
@@ -22,7 +22,7 @@ Menu::Menu()
     assert(m_side > 0.0f);
     assert(m_background == sf::Color(0, 0, 0));
     assert(m_fps > 0.0f);
-    assert(m_foldername != "");
+    assert(m_folder_name != "");
 
     list_files();
     transfer_files();
@@ -76,7 +76,7 @@ void Menu::list_files()
 
 void Menu::transfer_files()
 {
-    copy_file_vector(m_foldername, m_filenames);
+    copy_file_vector(m_folder_name, m_filenames);
 }
 
 void Menu::start()
@@ -96,11 +96,11 @@ void Menu::start()
         Choice choice(windims);
 
         const int amount
-        { choice.run(m_window, m_background, m_frame, nope, m_foldername, m_touhou_names) };
+        { choice.run(m_window, m_background, m_frame, nope, m_folder_name, m_touhou_names) };
 
         Game game;
 
         if (amount > 0)
-        { game.run(m_window, windims, m_background, m_frame, amount, nope, m_foldername, m_touhou_names); }
+        { game.run(m_window, windims, m_background, m_frame, amount, nope, m_folder_name, m_touhou_names); }
     }
 }

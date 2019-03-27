@@ -3,11 +3,11 @@
 Game::Game()
     : m_div(100),
       m_amount(4),
-      m_foldername()
+      m_folder_name()
 {
     assert(m_div > 0);
     assert(m_amount > 0);
-    assert(m_foldername == "");
+    assert(m_folder_name == "");
 }
 
 Game::~Game()
@@ -164,7 +164,7 @@ void Game::run(sf::RenderWindow& window,
                const std::vector <std::string>& touhou_names)
 {
     assert(foldername != "");
-    m_foldername = foldername;
+    m_folder_name = foldername;
 
     assert(frame > 0.0f);
     assert(amount > 0);
