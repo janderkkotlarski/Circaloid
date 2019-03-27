@@ -185,25 +185,25 @@ void Choice::amount_click(sf::RenderWindow& window,
 {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
-        const sf::Vector2f mouse_posit
+        const sf::Vector2f mouse_position
         {
             static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)) -
             0.5f*m_window_dimensions
         };
 
-        const sf::Vector2f sprite_posit
+        const sf::Vector2f sprite_position
         { m_amount_sprite.getPosition() };
 
-        const sf::Vector2f delta
-        { mouse_posit - sprite_posit };
+        const sf::Vector2f delta_position
+        { mouse_position - sprite_position };
 
-        const float dist
-        { std::sqrt(squaring_vector(delta)) };
+        const float distance
+        { std::sqrt(squaring_vector(delta_position)) };
 
         const float radius
         { sprite_radius(m_amount_sprite) };
 
-        if (dist <= radius &&
+        if (distance <= radius &&
             m_amount > 0)
         { loop = false; }
     }
