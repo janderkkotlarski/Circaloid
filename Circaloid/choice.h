@@ -14,7 +14,7 @@
 
 class Choice
 {
-    const sf::Vector2f m_windims;
+    const sf::Vector2f m_window_dimensions;
 
     bool m_chosen;
 
@@ -34,7 +34,7 @@ class Choice
 
 public:
 
-    explicit Choice(const sf::Vector2f& windims);
+    explicit Choice(const sf::Vector2f& window_dimensions);
     ~Choice();
 
     void init_textures(std::vector <std::string>& names,
@@ -57,7 +57,7 @@ public:
                       bool& loop);
 
     bool choose_loop(sf::RenderWindow& window,
-                     const sf::Color& background,
+                     const sf::Color& background_color,
                      const float frame,
                      std::vector<std::string>& touhou_names);
 

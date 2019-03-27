@@ -1,7 +1,7 @@
 #include "choice.h"
 
-Choice::Choice(const sf::Vector2f& windims)
-    : m_windims(windims),
+Choice::Choice(const sf::Vector2f& window_dimensions)
+    : m_window_dimensions(window_dimensions),
       m_chosen(false),
       m_amount(0),
       m_folder_name(""),
@@ -13,8 +13,8 @@ Choice::Choice(const sf::Vector2f& windims)
       m_player_sprites(),
       m_player_chosen()
 {
-    assert(windims.x > 0.0f);
-    assert(windims.y > 0.0f);
+    assert(window_dimensions.x > 0.0f);
+    assert(window_dimensions.y > 0.0f);
     assert(!m_chosen);
     assert(m_amount == 0);
     assert(m_folder_name == "");
@@ -88,7 +88,7 @@ void Choice::init_sprites(std::vector <sf::Texture>& textures,
     { initialize_rotations(textures_size) };
 
     const std::vector <sf::Vector2f> posits
-    { initialize_positions(0.5f*m_windims, rotats, textures_size) };
+    { initialize_positions(0.5f*m_window_dimensions, rotats, textures_size) };
 
     int count
     { 0 };
@@ -131,7 +131,7 @@ void Choice::chara_click(sf::RenderWindow& window,
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
         const sf::Vector2f windims
-        { m_windims };
+        { m_window_dimensions };
 
         const std::vector <std::string> player_names
         { m_player_names };
@@ -184,7 +184,7 @@ void Choice::amount_click(sf::RenderWindow& window,
         const sf::Vector2f mouse_posit
         {
             static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)) -
-            0.5f*m_windims
+            0.5f*m_window_dimensions
         };
 
         const sf::Vector2f sprite_posit
@@ -206,7 +206,7 @@ void Choice::amount_click(sf::RenderWindow& window,
 }
 
 bool Choice::choose_loop(sf::RenderWindow &window,
-                         const sf::Color &background,
+                         const sf::Color &background_color,
                          const float frame,
                          std::vector <std::string>& touhou_names)
 {
@@ -221,7 +221,7 @@ bool Choice::choose_loop(sf::RenderWindow &window,
     sf::Texture texture_background;
     sf::Sprite sprite_background;
 
-    set_image(background_file, m_windims, texture_background, sprite_background);
+    set_image(background_file, m_window_dimensions, texture_background, sprite_background);
 
     const std::string border_file
     { "Dimensional_Chaos.png" };
@@ -230,7 +230,7 @@ bool Choice::choose_loop(sf::RenderWindow &window,
     sf::Texture text_border;
     sf::Sprite sprite_border;
 
-    set_image(border_file, m_windims, text_border, sprite_border);
+    set_image(border_file, m_window_dimensions, text_border, sprite_border);
 
     while (loop)
     {
@@ -252,7 +252,7 @@ bool Choice::choose_loop(sf::RenderWindow &window,
 
         amount_click(window, loop);
 
-        window.clear(background);
+        window.clear(background_color);
         window.draw(sprite_background);
 
         show_sprites(window, m_player_chosen);
@@ -283,7 +283,7 @@ int Choice::run(sf::RenderWindow& window,
 
     init_textures(m_amount_names, m_amount_textures);
 
-    set_sprite(0.0f*m_windims, 0.0f, m_amount_textures[m_amount], m_amount_sprite);
+    set_sprite(0.0f*m_window_dimensions, 0.0f, m_amount_textures[m_amount], m_amount_sprite);
 
     init_textures(m_player_names, m_player_textures);
     init_sprites(m_player_textures, m_player_sprites);
