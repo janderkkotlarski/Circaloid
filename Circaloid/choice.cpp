@@ -48,10 +48,10 @@ Choice::Choice(const sf::Vector2f& window_dimensions)
 Choice::~Choice()
 {}
 
-void Choice::init_textures(std::vector<std::string>& names,
+void Choice::init_textures(std::vector<std::string>& texture_file_names,
                            std::vector<sf::Texture>& textures)
 {
-    assert(names.size() > 0);
+    assert(texture_file_names.size() > 0);
 
     int count
     { 0 };
@@ -59,19 +59,19 @@ void Choice::init_textures(std::vector<std::string>& names,
 
     sf::Texture texture;
 
-    for (const std::string& name : names)
+    for (const std::string& texture_file_name : texture_file_names)
     {
-        assert(name != "");
+        assert(texture_file_name != "");
 
         textures.push_back(texture);
 
-        if (!textures[count].loadFromFile(name))
-        { std::cerr << name << "not found!\n"; }
+        if (!textures[static_cast<unsigned int>(count)].loadFromFile(texture_file_name))
+        { std::cerr << texture_file_name << "not found!\n"; }
 
         ++count;
     }
 
-    assert(names.size() == textures.size());
+    assert(texture_file_names.size() == textures.size());
 }
 
 void Choice::init_sprites(std::vector <sf::Texture>& textures,
@@ -79,25 +79,29 @@ void Choice::init_sprites(std::vector <sf::Texture>& textures,
 {
     assert(textures.size() > 0);
 
-    sf::Sprite sprite;
-
     const int textures_size
     { static_cast<int>(textures.size()) };
 
-    const std::vector <float> rotats
+    const std::vector <float> rotations
     { initialize_rotations(textures_size) };
+    assert(rotations.size() == textures.size());
 
-    const std::vector <sf::Vector2f> posits
-    { initialize_positions(0.5f*m_window_dimensions, rotats, textures_size) };
+    const std::vector <sf::Vector2f> positions
+    { initialize_positions(0.5f*m_window_dimensions, rotations, textures_size) };
+    assert(positions.size() == textures.size());
 
     int count
     { 0 };
     assert(count == 0);
 
-    for (const sf::Vector2f& posit : posits)
-    {
+    for (const sf::Vector2f& position : positions)
+    {      
+        sf::Sprite sprite;
+
         sprites.push_back(sprite);
-        set_sprite(posit, 0.0f, textures[count], sprites[count]);
+        set_sprite(position, 0.0f,
+                   textures[static_cast<unsigned int>(count)],
+                   sprites[static_cast<unsigned int>(count)]);
 
         ++count;
     }
@@ -114,7 +118,7 @@ void Choice::show_sprites(sf::RenderWindow& window,
 
     for(sf::Sprite& sprite : m_player_sprites)
     {
-        if (!player_chosen[count])
+        if (!player_chosen[static_cast<unsigned int>(count)])
         { window.draw(sprite); }
 
         ++count;
@@ -122,7 +126,7 @@ void Choice::show_sprites(sf::RenderWindow& window,
 }
 
 void Choice::chara_click(sf::RenderWindow& window,
-                         std::vector <std::string>& touhou_names,
+                         std::vector <std::string>& touhou_name_files,
                          std::vector <bool>& player_chosen,
                          std::vector<sf::Texture>& amount_textures,
                          sf::Sprite& amount_sprite,
@@ -130,16 +134,16 @@ void Choice::chara_click(sf::RenderWindow& window,
 {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
-        const sf::Vector2f windims
+        const sf::Vector2f window_dimensions
         { m_window_dimensions };
 
-        const std::vector <std::string> player_names
+        const std::vector <std::string> player_name_files
         { m_player_names };
 
         const sf::Vector2f mouse_posit
         {
             static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)) -
-            0.5f*windims
+            0.5f*window_dimensions
         };
 
         int count
@@ -148,7 +152,7 @@ void Choice::chara_click(sf::RenderWindow& window,
 
         for (sf::Sprite& player_sprite : m_player_sprites)
         {
-            if (!player_chosen[count])
+            if (!player_chosen[static_cast<unsigned int>(count)])
             {
                 const sf::Vector2f sprite_posit
                 { player_sprite.getPosition() };
@@ -164,10 +168,10 @@ void Choice::chara_click(sf::RenderWindow& window,
 
                 if (dist <= radius)
                 {
-                    player_chosen[count] = true;
+                    player_chosen[static_cast<unsigned int>(count)] = true;
                     ++amount;
-                    set_sprite(0.0f*windims, 0.0f, amount_textures[amount], amount_sprite);
-                    touhou_names.push_back(player_names[count]);
+                    set_sprite(0.0f*window_dimensions, 0.0f, amount_textures[static_cast<unsigned int>(count)], amount_sprite);
+                    touhou_name_files.push_back(player_name_files[static_cast<unsigned int>(count)]);
                 }
             }
 
@@ -214,23 +218,23 @@ bool Choice::choose_loop(sf::RenderWindow &window,
     { true };
     assert(loop);
 
-    const std::string background_file
+    const std::string background_file_name
     { "Dimensional_Grid.png" };
-    assert(background_file != "");
+    assert(background_file_name != "");
 
     sf::Texture texture_background;
     sf::Sprite sprite_background;
 
-    set_image(background_file, m_window_dimensions, texture_background, sprite_background);
+    set_image(background_file_name, m_window_dimensions, texture_background, sprite_background);
 
-    const std::string border_file
+    const std::string border_file_name
     { "Dimensional_Chaos.png" };
-    assert(border_file != "");
+    assert(border_file_name != "");
 
     sf::Texture text_border;
     sf::Sprite sprite_border;
 
-    set_image(border_file, m_window_dimensions, text_border, sprite_border);
+    set_image(border_file_name, m_window_dimensions, text_border, sprite_border);
 
     while (loop)
     {

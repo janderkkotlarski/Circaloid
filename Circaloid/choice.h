@@ -37,7 +37,7 @@ public:
     explicit Choice(const sf::Vector2f& window_dimensions);
     ~Choice();
 
-    void init_textures(std::vector <std::string>& names,
+    void init_textures(std::vector <std::string>& texture_file_names,
                        std::vector <sf::Texture>& textures);
 
     void init_sprites(std::vector <sf::Texture>& textures,
@@ -47,7 +47,7 @@ public:
                       std::vector<bool>& player_chosen);
 
     void chara_click(sf::RenderWindow& window,
-                     std::vector<std::string>& touhou_names,
+                     std::vector<std::string>& touhou_name_files,
                      std::vector <bool>& player_chosen,
                      std::vector <sf::Texture>& amount_textures,
                      sf::Sprite& amount_sprite,
