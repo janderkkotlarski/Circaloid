@@ -158,35 +158,30 @@ std::vector <sf::Vector2f> initialize_positions(const sf::Vector2f& window_dimen
     return positions;
 }
 
-void cout_vect2f(const sf::Vector2f& vectol)
-{ std::cout << '[' << vectol.x << ':' << vectol.y << "]\n"; }
+void cout_vect2f(const sf::Vector2f& vector)
+{ std::cout << '[' << vector.x << ':' << vector.y << "]\n"; }
 
 void copy_file(const std::string& folder,
-                  const std::string& name)
+               const std::string& file_name)
 {
     const QString home_path
     { QDir::current().absolutePath() };
-
     // dir_path_couter(home_path);
 
     const QString home_name
-    { home_path + QString::fromStdString("/" + name) };
-
+    { home_path + QString::fromStdString("/" + file_name) };
     // dir_path_couter(home_name);
 
     QDir base_dir
-    { QDir::current() };
-
+    { QDir::current() };    
     base_dir.cdUp();
 
     QString base_path
     { base_dir.absolutePath() };
-
     // dir_path_couter(base_path);
 
     const QString base_name
-    { base_path + QString::fromStdString(folder + name) };
-
+    { base_path + QString::fromStdString(folder + file_name) };
     // dir_path_couter(base_name);
 
     assert(QFile::exists(base_name));
@@ -195,7 +190,6 @@ void copy_file(const std::string& folder,
     QFile file(base_name);
 
     file.copy(home_name);
-
     assert(QFile::exists(home_name));
     check_path(home_name);
 }
