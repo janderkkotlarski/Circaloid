@@ -85,7 +85,7 @@ void Choice::init_sprites(std::vector <sf::Texture>& textures,
     { static_cast<int>(textures.size()) };
 
     const std::vector <float> rotats
-    { init_rotats(textures_size) };
+    { initialize_rotations(textures_size) };
 
     const std::vector <sf::Vector2f> posits
     { init_posits(0.5f*m_windims, rotats, textures_size) };

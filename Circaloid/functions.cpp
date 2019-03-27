@@ -88,14 +88,19 @@ void set_image(const std::string& name,
     sprite.setPosition(0.0f*window_dimensions);
 }
 
-sf::Vector2f mirrorize(const float boundary,
-                       const sf::Vector2f& posit,
+sf::Vector2f mirrorize(const float boundary_radius,
+                       const sf::Vector2f& position,
                        const sf::Vector2f& speed)
 {
-    if (squaring_vector(posit) == 0.0f)
-    { return (1.0f - 2.0f*boundary/std::sqrt(squaring_vector(speed)))*speed; }
+  if (squaring_vector(position) == 0.0f)
+    {
+      if (squaring_vector(speed) == 0.0f)
+      { return 2.0f*boundary_radius*sf::Vector2f{1.0f, 0.0f}; }
 
-    return (1.0f - 2.0f*boundary/std::sqrt(squaring_vector(posit)))*posit;
+      return (1.0f - 2.0f*boundary_radius/std::sqrt(squaring_vector(speed)))*speed;
+    }
+
+    return (1.0f - 2.0f*boundary_radius/std::sqrt(squaring_vector(position)))*position;
 }
 
 float sprite_radius(sf::Sprite& sprite)
@@ -125,7 +130,7 @@ bool poll_reset_quit(sf::RenderWindow& window,
     return false;
 }
 
-std::vector <float> init_rotats(const int amount)
+std::vector <float> initialize_rotations(const int amount)
 {
     std::vector <float> rotats;
 

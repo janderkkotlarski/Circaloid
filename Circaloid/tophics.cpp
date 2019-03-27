@@ -3,10 +3,10 @@
 Tophics::Tophics(const std::string& foldername,
                  const std::string& filename,
                  const sf::Vector2f& posit,
-                 const float boundary,
+                 const float boundary_radius,
                  const float rotation)
     : m_foldername(foldername),
-      m_boundary(boundary),
+      m_boundary_radius(boundary_radius),
       m_texture(),
       m_sprite(),
       m_smite(),
@@ -14,6 +14,7 @@ Tophics::Tophics(const std::string& foldername,
       m_direct(),
       m_disect()
 {
+    assert(m_boundary_radius > 0.0f);
     assert(m_foldername != "");
     assert(filename != "");
 
@@ -63,16 +64,16 @@ void Tophics::move_sprite(const sf::Vector2f& delta_posit)
 
 void Tophics::check_border(const sf::Vector2f& speed)
 {
-    if (squaring_vector(get_position()) > squaring_scalar(m_boundary))
+    if (squaring_vector(get_position()) > squaring_scalar(m_boundary_radius))
     {
-        m_sprite.setPosition(mirrorize(m_boundary, get_position(), speed));
+        m_sprite.setPosition(mirrorize(m_boundary_radius, get_position(), speed));
         m_direct.setPosition(get_position());
     }
 }
 
 void Tophics::move_smite(const sf::Vector2f& speed)
 {
-    m_smite.setPosition(mirrorize(m_boundary, get_position(), speed));
+    m_smite.setPosition(mirrorize(m_boundary_radius, get_position(), speed));
     m_disect.setPosition(get_mosit());
 }
 
@@ -87,7 +88,7 @@ void Tophics::display(sf::RenderWindow& window)
     window.draw(m_direct);
     window.draw(m_sprite);
 
-    if (squaring_vector(get_mosit()) < squaring_scalar(m_boundary + m_smite.getLocalBounds().width))
+    if (squaring_vector(get_mosit()) < squaring_scalar(m_boundary_radius + m_smite.getLocalBounds().width))
     {
         window.draw(m_disect);
         window.draw(m_smite);

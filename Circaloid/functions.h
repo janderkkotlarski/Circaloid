@@ -45,20 +45,22 @@ void set_image(const std::string& name,
                sf::Texture& texture,
                sf::Sprite& sprite);
 
-
-sf::Vector2f mirrorize(const float boundary,
+/// Mirror position on boundary based upon position or speed
+sf::Vector2f mirrorize(const float boundary_radius,
                        const sf::Vector2f& posit,
                        const sf::Vector2f& speed);
 
+/// Calculate the radius of a sprite with a circle
+/// Actually takes half of sprite width and height and averages them
 float sprite_radius(sf::Sprite& sprite);
 
-/// See whether to reset or quit
+/// See whether the Delete of Escape button if pressed to either reset or quit
 bool poll_reset_quit(sf::RenderWindow& window,
              sf::Event& event,
              bool& loop);
 
 /// Initialize touhoid rotations
-std::vector <float> init_rotats(const int amount);
+std::vector <float> initialize_rotations(const int amount);
 
 /// Initializing touhoid positions
 std::vector <sf::Vector2f> init_posits(const sf::Vector2f& windims,
@@ -66,7 +68,7 @@ std::vector <sf::Vector2f> init_posits(const sf::Vector2f& windims,
                                        const float amount);
 
 ///
-void cout_vect2f(const sf::Vector2f& vectol);
+void cout_vector2f(const sf::Vector2f& vectol);
 
 /// Copy file from folder to other folder
 void copy_file(const std::string& folder,
