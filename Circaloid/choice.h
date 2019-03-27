@@ -49,9 +49,7 @@ public:
     void chara_click(sf::RenderWindow& window,
                      std::vector<std::string>& touhou_name_files,
                      std::vector <bool>& player_chosen,
-                     std::vector <sf::Texture>& amount_textures,
-                     sf::Sprite& amount_sprite,
-                     int& amount);
+                     std::vector <sf::Texture>& amount_textures);
 
     void amount_click(sf::RenderWindow& window,
                       bool& loop);

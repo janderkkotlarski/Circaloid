@@ -128,22 +128,17 @@ void Choice::show_sprites(sf::RenderWindow& window,
 void Choice::chara_click(sf::RenderWindow& window,
                          std::vector <std::string>& touhou_name_files,
                          std::vector <bool>& player_chosen,
-                         std::vector<sf::Texture>& amount_textures,
-                         sf::Sprite& amount_sprite,
-                         int& amount)
+                         std::vector<sf::Texture>& amount_textures)
 {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
-        const sf::Vector2f window_dimensions
-        { m_window_dimensions };
-
         const std::vector <std::string> player_name_files
         { m_player_names };
 
         const sf::Vector2f mouse_posit
         {
             static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)) -
-            0.5f*window_dimensions
+            0.5f*m_window_dimensions
         };
 
         int count
@@ -152,7 +147,7 @@ void Choice::chara_click(sf::RenderWindow& window,
 
         for (sf::Sprite& player_sprite : m_player_sprites)
         {
-            if (!player_chosen[static_cast<unsigned int>(count)])
+            if (!m_player_chosen[static_cast<unsigned int>(count)])
             {
                 const sf::Vector2f sprite_posit
                 { player_sprite.getPosition() };
@@ -168,14 +163,21 @@ void Choice::chara_click(sf::RenderWindow& window,
 
                 if (dist <= radius)
                 {
-                    player_chosen[static_cast<unsigned int>(count)] = true;
-                    ++amount;
-                    set_sprite(0.0f*window_dimensions, 0.0f, amount_textures[static_cast<unsigned int>(count)], amount_sprite);
+                    m_player_chosen[static_cast<unsigned int>(count)] = true;
+
+                    ++m_amount;
+
+                    set_sprite(0.0f*m_window_dimensions,
+                               0.0f,
+                               m_amount_textures[static_cast<unsigned int>(m_amount)],
+                               m_amount_sprite);
+
                     touhou_name_files.push_back(player_name_files[static_cast<unsigned int>(count)]);
                 }
             }
 
             ++count;
+
         }
     }
 }
@@ -250,9 +252,7 @@ bool Choice::choose_loop(sf::RenderWindow &window,
         chara_click(window,
                     touhou_names,
                     m_player_chosen,
-                    m_amount_textures,
-                    m_amount_sprite,
-                    m_amount);
+                    m_amount_textures);
 
         amount_click(window, loop);
 
