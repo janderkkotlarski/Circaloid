@@ -22,11 +22,11 @@ class Choice
 
     std::string m_folder_name;
 
-    std::vector <std::string> m_amount_names;
+    std::vector <std::string> m_amount_name_files;
     std::vector <sf::Texture> m_amount_textures;
     sf::Sprite m_amount_sprite;
 
-    std::vector <std::string> m_player_names;
+    std::vector <std::string> m_player_name_files;
     std::vector <sf::Texture> m_player_textures;
     std::vector <sf::Sprite> m_player_sprites;
 

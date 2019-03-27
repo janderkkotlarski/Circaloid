@@ -5,10 +5,10 @@ Choice::Choice(const sf::Vector2f& window_dimensions)
       m_chosen(false),
       m_amount(0),
       m_folder_name(""),
-      m_amount_names(),
+      m_amount_name_files(),
       m_amount_textures(),
       m_amount_sprite(),
-      m_player_names(),
+      m_player_name_files(),
       m_player_textures(),
       m_player_sprites(),
       m_player_chosen()
@@ -19,25 +19,25 @@ Choice::Choice(const sf::Vector2f& window_dimensions)
     assert(m_amount == 0);
     assert(m_folder_name == "");
 
-    m_amount_names.push_back("Zero_64.png");
-    m_amount_names.push_back("One_64.png");
-    m_amount_names.push_back("Two_64.png");
-    m_amount_names.push_back("Three_64.png");
-    m_amount_names.push_back("Four_64.png");
+    m_amount_name_files.push_back("Zero_64.png");
+    m_amount_name_files.push_back("One_64.png");
+    m_amount_name_files.push_back("Two_64.png");
+    m_amount_name_files.push_back("Three_64.png");
+    m_amount_name_files.push_back("Four_64.png");
 
-    assert(m_amount_names.size() == 5);
+    assert(m_amount_name_files.size() == 5);
 
-    for (const std::string& name : m_amount_names)
+    for (const std::string& name : m_amount_name_files)
     { assert(name != ""); }
 
-    m_player_names.push_back("Patchouli_64.png");
-    m_player_names.push_back("Meiling_64.png");
-    m_player_names.push_back("Sakuya_64.png");
-    m_player_names.push_back("Keine_64.png");
+    m_player_name_files.push_back("Patchouli_64.png");
+    m_player_name_files.push_back("Meiling_64.png");
+    m_player_name_files.push_back("Sakuya_64.png");
+    m_player_name_files.push_back("Keine_64.png");
 
-    assert(m_player_names.size() == 4);
+    assert(m_player_name_files.size() == 4);
 
-    for (const std::string& name : m_player_names)
+    for (const std::string& name : m_player_name_files)
     {
         assert(name != "");
 
@@ -133,7 +133,7 @@ void Choice::chara_click(sf::RenderWindow& window,
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
         const std::vector <std::string> player_name_files
-        { m_player_names };
+        { m_player_name_files };
 
         const sf::Vector2f mouse_posit
         {
@@ -163,6 +163,7 @@ void Choice::chara_click(sf::RenderWindow& window,
 
                 if (dist <= radius)
                 {
+                    std::cout << count << "\n"  ;
                     m_player_chosen[static_cast<unsigned int>(count)] = true;
 
                     ++m_amount;
@@ -285,11 +286,11 @@ int Choice::run(sf::RenderWindow& window,
     assert(foldername != "");
     m_folder_name = foldername;
 
-    init_textures(m_amount_names, m_amount_textures);
+    init_textures(m_amount_name_files, m_amount_textures);
 
     set_sprite(0.0f*m_window_dimensions, 0.0f, m_amount_textures[m_amount], m_amount_sprite);
 
-    init_textures(m_player_names, m_player_textures);
+    init_textures(m_player_name_files, m_player_textures);
     init_sprites(m_player_textures, m_player_sprites);
 
     std::vector <std::string> sound_names
