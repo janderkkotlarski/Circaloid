@@ -88,7 +88,7 @@ void Choice::init_sprites(std::vector <sf::Texture>& textures,
     { initialize_rotations(textures_size) };
 
     const std::vector <sf::Vector2f> posits
-    { init_posits(0.5f*m_windims, rotats, textures_size) };
+    { initialize_positions(0.5f*m_windims, rotats, textures_size) };
 
     int count
     { 0 };

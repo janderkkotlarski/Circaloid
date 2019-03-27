@@ -174,7 +174,7 @@ void Game::run(sf::RenderWindow& window,
     { initialize_rotations(m_amount) };
 
     const std::vector <sf::Vector2f> posits
-    { init_posits(windims, rotats, m_amount) };
+    { initialize_positions(windims, rotats, m_amount) };
 
     const std::vector <std::vector <sf::Keyboard::Key>> keys
     { init_keybindings() };

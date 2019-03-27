@@ -63,9 +63,9 @@ bool poll_reset_quit(sf::RenderWindow& window,
 std::vector <float> initialize_rotations(const int amount);
 
 /// Initializing touhoid positions
-std::vector <sf::Vector2f> init_posits(const sf::Vector2f& windims,
-                                       const std::vector <float>& rotats,
-                                       const float amount);
+std::vector <sf::Vector2f> initialize_positions(const sf::Vector2f& window_dimensions,
+                                                const std::vector <float>& rotations,
+                                                const int amount);
 
 ///
 void cout_vector2f(const sf::Vector2f& vectol);

@@ -15,7 +15,7 @@
 class Game
 {
     const int m_div;
-    float m_amount;
+    int m_amount;
 
     std::string m_foldername;
 

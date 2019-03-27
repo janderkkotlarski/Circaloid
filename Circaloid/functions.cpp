@@ -132,30 +132,30 @@ bool poll_reset_quit(sf::RenderWindow& window,
 
 std::vector <float> initialize_rotations(const int amount)
 {
-    std::vector <float> rotats;
+    std::vector <float> rotations;
 
     for (int count {0}; count < amount; ++count)
-    { rotats.push_back(static_cast<float>(count)*360.0f/static_cast<float>(amount)); }
+    { rotations.push_back(static_cast<float>(count)*360.0f/static_cast<float>(amount)); }
 
-    assert(rotats.size() == static_cast<unsigned>(amount));
-    return rotats;
+    assert(rotations.size() == static_cast<unsigned>(amount));
+    return rotations;
 }
 
-std::vector <sf::Vector2f> init_posits(const sf::Vector2f& windims,
-                                       const std::vector <float>& rotats,
-                                       const float amount)
+std::vector <sf::Vector2f> initialize_positions(const sf::Vector2f& window_dimensions,
+                                                const std::vector <float>& rotations,
+                                                const int amount)
 {
-    std::vector <sf::Vector2f> posits;
+    std::vector <sf::Vector2f> positions;
 
     const float rel_dist
     { 0.7f };
     assert(rel_dist > 0.0f);
 
-    for (int count {0}; count < amount; ++count)
-    { posits.push_back(-0.7f*averaging_vector(windims)*rotation_to_vector(rotats[count])); }
+    for (unsigned int count {0}; count < static_cast<unsigned int>(amount); ++count)
+    { positions.push_back(-0.7f*averaging_vector(window_dimensions)*rotation_to_vector(rotations[count])); }
 
-    assert(posits.size() == static_cast<unsigned>(amount));
-    return posits;
+    assert(positions.size() == static_cast<unsigned>(amount));
+    return positions;
 }
 
 void cout_vect2f(const sf::Vector2f& vectol)
